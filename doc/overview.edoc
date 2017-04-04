@@ -1,0 +1,28 @@
+@author Krzysztof Jurewicz <krzysztof.jurewicz@gmail.com> [http://jurewicz.org.pl]
+@reference <a href="https://tendermint.com">Tendermint</a>.
+@reference <a href="https://github.com/KrzysiekJ/abci_counter">An example application</a>.
+@doc An Erlang application that allows writing <a href="https://github.com/tendermint/abci">Application Blockchain Interface</a> servers.
+
+To start a server on port `46658' that delegates calls to the `foo' module, write:
+
+```
+{ok, _} = abci_server:start_listener(foo, 46658).
+'''
+
+To stop this server, write:
+
+```
+ok = abci_server:stop_listener(foo).
+'''
+
+If you instead want to put the server into your own supervision tree, you may use the {@link abci_server_sup} module, specifying a childspec like this:
+
+```
+#{id => abci_server,
+  start => {abci_server_sup, start_link, [{foo, 46658}]},
+  type => supervisor},
+'''
+
+You may also use the {@link abci_server:child_spec/2} function.
+
+`foo' module needs to implement the {@link abci_app} behaviour. See the `include/abci.hrl' file for record definitions.
