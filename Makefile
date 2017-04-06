@@ -5,6 +5,7 @@ PROJECT_VERSION = 0.1.0
 BUILD_DEPS = gpb
 dep_gpb_commit = 3.26.8
 DEPS = ranch
+dep_ranch_commit = 1.3.2
 
 # Whitespace to be used when creating files from templates.
 SP = 4
