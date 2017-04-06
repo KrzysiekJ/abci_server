@@ -82,6 +82,8 @@ handle_info({tcp, Socket, Data}, State=#state{socket=Socket, buffered=Buffered})
     {Requests, Rest} = unpack_requests(<<Buffered/binary, Data/binary>>),
     NewState = handle_requests(Requests, State#state{buffered=Rest}),
     {noreply, NewState};
+handle_info({tcp_closed, Socket}, State=#state{socket=Socket}) ->
+    {stop, normal, State};
 handle_info(_Info, State) ->
     {noreply, State}.
 
