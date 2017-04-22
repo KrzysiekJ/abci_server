@@ -25,4 +25,4 @@ If you instead want to put the server into your own supervision tree, you may us
 
 You may also use the {@link abci_server:child_spec/2} function.
 
-`foo' module needs to implement the {@link abci_app} behaviour. See the `include/abci.hrl' file for record definitions.
+`foo' module needs to implement the {@link abci_app} behaviour. See the `include/abci.hrl' file for record definitions. Note that handling of `Echo' and `Flush' requests is done by `abci_server' on its own, without invoking callback.

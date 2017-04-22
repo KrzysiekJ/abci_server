@@ -21,9 +21,7 @@
                    abci:'RequestEndBlock'() |
                    abci:'RequestInitChain'() |
                    abci:'RequestQuery'() |
-                   abci:'RequestSetOption'() |
-                   abci:'RequestFlush'() |
-                   abci:'RequestEcho'().
+                   abci:'RequestSetOption'().
 -type response() :: abci:'ResponseInitChain'() |
                     abci:'ResponseEndBlock'() |
                     abci:'ResponseInfo'() |
@@ -32,9 +30,7 @@
                     abci:'ResponseDeliverTx'() |
                     abci:'ResponseBeginBlock'() |
                     abci:'ResponseQuery'() |
-                    abci:'ResponseFlush'() |
-                    abci:'ResponseCommit'() |
-                    abci:'ResponseEcho'().
+                    abci:'ResponseCommit'().
 
 -export_type(
    [request/0,

@@ -107,7 +107,15 @@ unpack_requests(Data) ->
 -spec handle_requests(list(abci:'Request'()), #state{}) -> #state{}.
 handle_requests([#'Request'{value={MsgName, RequestValue}}|RestRequests], State=#state{callback_mod=CallbackMod}) ->
     %% io:format("Received request ~w~n", [RequestValue]),
-    ResponseValue = CallbackMod:handle_request(RequestValue),
+    ResponseValue =
+        case RequestValue of
+            #'RequestFlush'{} ->
+                #'ResponseFlush'{};
+            #'RequestEcho'{message=Message} ->
+                #'ResponseEcho'{message=Message};
+            _ ->
+                CallbackMod:handle_request(RequestValue)
+        end,
     ok = send_response({MsgName, ResponseValue}, State),
     handle_requests(RestRequests, State);
 handle_requests([], State) ->

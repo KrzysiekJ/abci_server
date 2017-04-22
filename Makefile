@@ -1,6 +1,6 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.1.0
+PROJECT_VERSION = 0.2.0
 
 BUILD_DEPS = gpb
 dep_gpb_commit = 3.26.8
