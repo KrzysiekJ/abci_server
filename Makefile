@@ -3,9 +3,9 @@ PROJECT_DESCRIPTION = An Application Blockchain Interface server
 PROJECT_VERSION = 0.2.0
 
 BUILD_DEPS = gpb
-dep_gpb_commit = 3.26.8
+dep_gpb = git https://github.com/tomas-abrahamsson/gpb 3.26.8
 DEPS = ranch
-dep_ranch_commit = 1.3.2
+dep_ranch = git https://github.com/ninenines/ranch 1.3.2
 
 # Whitespace to be used when creating files from templates.
 SP = 4
