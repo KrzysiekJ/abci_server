@@ -1,6 +1,6 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.3.0
+PROJECT_VERSION = 0.4.0
 
 BUILD_DEPS = gpb
 dep_gpb = git https://github.com/tomas-abrahamsson/gpb 4.0.2

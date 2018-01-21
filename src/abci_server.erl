@@ -145,12 +145,12 @@ unpack_requests_test_() ->
         {[#'Request'{value={info, #'RequestInfo'{}}},
           #'Request'{value={flush, #'RequestFlush'{}}}],
          <<>>},
-        unpack_requests(<<1,2,26,0,1,2,18,0>>)),
+        unpack_requests(<<1,2,34,0,1,2,26,0>>)),
      ?_assertEqual(
         {[#'Request'{value={info, #'RequestInfo'{}}},
           #'Request'{value={flush, #'RequestFlush'{}}}],
          <<10,11>>},
-        unpack_requests(<<1,2,26,0,1,2,18,0,10,11>>))].
+        unpack_requests(<<1,2,34,0,1,2,26,0,10,11>>))].
 
 encode_length_test_() ->
     [?_assertEqual(
