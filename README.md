@@ -2,9 +2,33 @@
 
 An Erlang application that allows writing [Application Blockchain Interface](https://github.com/tendermint/abci) servers.
 
+ABCI Server with Erlang bindings is used by the [Tendermint Ecosystem](http://tendermint.readthedocs.io/projects/tools/en/master/ecosystem.html#abci-servers)
+
 This application uses [semantic versioning 2.0](http://semver.org/).
 
 [erlang.mk](https://erlang.mk/) is used as a build tool.
+
+## Installation with Mix
+
+* Add ABCI Server (Erlang) to mix.exs. [Choose a Release Tag](https://github.com/KrzysiekJ/abci_server/tags)
+  ```elixir
+  defp deps do
+    [
+      # ABCI Server (Erlang) - https://github.com/KrzysiekJ/abci_server
+      {:abci_server, git: "https://github.com/KrzysiekJ/abci_server.git", tag: "v0.4.0"}
+    ]
+  end
+  ```
+
+* Install Mix Dependencies
+  ```bash
+  mix deps.get
+  ```
+
+* Documentation Generation. Open Documentation in Web Browser
+  ```bash
+  cd deps/abci_server/ && make docs && open doc/index.html && cd ../../
+  ```
 
 ## Documentation
 
