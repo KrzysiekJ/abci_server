@@ -83,6 +83,22 @@ This application uses [semantic versioning 2.0](http://semver.org/).
     abci-cli test
     ```
 
+## Troubleshooting
+
+If when running IEX you get error `(Mix) Could not start application ranch: could not find application file: ranch.app` then a possible solution is to install Ranch 1.4.0.
+  * Remove existing Mix dependencies
+    ```bash
+    rm -rf deps
+    ```
+  * Adding Ranch 1.4.0 to the mix.exs file of your Mix project.    
+    ```elixir
+    {:ranch, git: "https://github.com/ninenines/ranch.git", tag: "1.4.0"}
+    ```
+  * Install Mix Dependencies
+    ```bash
+    mix deps.get
+    ```
+
 ## Documentation
 
 Run `make docs` and open `doc/index.html`.
