@@ -78,6 +78,11 @@ This application uses [semantic versioning 2.0](http://semver.org/).
     :ok
     ```
 
+  * Test the Running ABCI Server (Erlang) in separate Bash Terminal Tab - https://github.com/tendermint/abci#tools
+    ```
+    abci-cli test
+    ```
+
 ## Documentation
 
 Run `make docs` and open `doc/index.html`.
