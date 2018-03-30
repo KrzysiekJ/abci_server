@@ -1,11 +1,13 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.4.0
+PROJECT_VERSION = 0.5.0
 
-BUILD_DEPS = gpb
+DEPS = gpb ranch
 dep_gpb = git https://github.com/tomas-abrahamsson/gpb 4.0.2
-DEPS = ranch
 dep_ranch = git https://github.com/ninenines/ranch 1.3.2
+
+TEST_DEPS = triq
+dep_triq = git https://gitlab.com/triq/triq.git 79bd272025434e152745067c36350faa7274c653
 
 # Whitespace to be used when creating files from templates.
 SP = 4

@@ -7,11 +7,93 @@
 
 -define(abci_gpb_version, "4.0.2").
 
--ifndef('REQUESTSETOPTION_PB_H').
--define('REQUESTSETOPTION_PB_H', true).
--record('RequestSetOption',
-        {key = []               :: iolist() | undefined, % = 1
-         value = []             :: iolist() | undefined % = 2
+-ifndef('REQUESTDELIVERTX_PB_H').
+-define('REQUESTDELIVERTX_PB_H', true).
+-record('RequestDeliverTx',
+        {tx = <<>>              :: binary() | undefined % = 1
+        }).
+-endif.
+
+-ifndef('KI64PAIR_PB_H').
+-define('KI64PAIR_PB_H', true).
+-record('KI64Pair',
+        {key = <<>>             :: binary() | undefined, % = 1
+         value = 0              :: integer() | undefined % = 2, 32 bits
+        }).
+-endif.
+
+-ifndef('KVPAIR_PB_H').
+-define('KVPAIR_PB_H', true).
+-record('KVPair',
+        {key = <<>>             :: binary() | undefined, % = 1
+         value = <<>>           :: binary() | undefined % = 2
+        }).
+-endif.
+
+-ifndef('RESPONSEDELIVERTX_PB_H').
+-define('RESPONSEDELIVERTX_PB_H', true).
+-record('ResponseDeliverTx',
+        {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
+         data = <<>>            :: binary() | undefined, % = 2
+         log = []               :: iolist() | undefined, % = 3
+         info = []              :: iolist() | undefined, % = 4
+         gas_wanted = 0         :: integer() | undefined, % = 5, 32 bits
+         gas_used = 0           :: integer() | undefined, % = 6, 32 bits
+         tags = []              :: [#'KVPair'{}] | undefined, % = 7
+         fee = undefined        :: #'KI64Pair'{} | undefined % = 8
+        }).
+-endif.
+
+-ifndef('RESPONSEFLUSH_PB_H').
+-define('RESPONSEFLUSH_PB_H', true).
+-record('ResponseFlush',
+        {
+        }).
+-endif.
+
+-ifndef('RESPONSECOMMIT_PB_H').
+-define('RESPONSECOMMIT_PB_H', true).
+-record('ResponseCommit',
+        {data = <<>>            :: binary() | undefined % = 2
+        }).
+-endif.
+
+-ifndef('REQUESTCHECKTX_PB_H').
+-define('REQUESTCHECKTX_PB_H', true).
+-record('RequestCheckTx',
+        {tx = <<>>              :: binary() | undefined % = 1
+        }).
+-endif.
+
+-ifndef('EVIDENCE_PB_H').
+-define('EVIDENCE_PB_H', true).
+-record('Evidence',
+        {pub_key = <<>>         :: binary() | undefined, % = 1
+         height = 0             :: integer() | undefined % = 2, 32 bits
+        }).
+-endif.
+
+-ifndef('RESPONSEINFO_PB_H').
+-define('RESPONSEINFO_PB_H', true).
+-record('ResponseInfo',
+        {data = []              :: iolist() | undefined, % = 1
+         version = []           :: iolist() | undefined, % = 2
+         last_block_height = 0  :: integer() | undefined, % = 3, 32 bits
+         last_block_app_hash = <<>> :: binary() | undefined % = 4
+        }).
+-endif.
+
+-ifndef('RESPONSECHECKTX_PB_H').
+-define('RESPONSECHECKTX_PB_H', true).
+-record('ResponseCheckTx',
+        {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
+         data = <<>>            :: binary() | undefined, % = 2
+         log = []               :: iolist() | undefined, % = 3
+         info = []              :: iolist() | undefined, % = 4
+         gas_wanted = 0         :: integer() | undefined, % = 5, 32 bits
+         gas_used = 0           :: integer() | undefined, % = 6, 32 bits
+         tags = []              :: [#'KVPair'{}] | undefined, % = 7
+         fee = undefined        :: #'KI64Pair'{} | undefined % = 8
         }).
 -endif.
 
@@ -31,14 +113,6 @@
         }).
 -endif.
 
--ifndef('EVIDENCE_PB_H').
--define('EVIDENCE_PB_H', true).
--record('Evidence',
-        {pub_key = <<>>         :: binary() | undefined, % = 1
-         height = 0             :: integer() | undefined % = 2, 32 bits
-        }).
--endif.
-
 -ifndef('HEADER_PB_H').
 -define('HEADER_PB_H', true).
 -record('Header',
@@ -54,13 +128,10 @@
         }).
 -endif.
 
--ifndef('REQUESTBEGINBLOCK_PB_H').
--define('REQUESTBEGINBLOCK_PB_H', true).
--record('RequestBeginBlock',
-        {hash = <<>>            :: binary() | undefined, % = 1
-         header = undefined     :: #'Header'{} | undefined, % = 2
-         absent_validators = [] :: [integer()] | undefined, % = 3, 32 bits
-         byzantine_validators = [] :: [#'Evidence'{}] | undefined % = 4
+-ifndef('REQUESTENDBLOCK_PB_H').
+-define('REQUESTENDBLOCK_PB_H', true).
+-record('RequestEndBlock',
+        {height = 0             :: integer() | undefined % = 1, 32 bits
         }).
 -endif.
 
@@ -71,68 +142,10 @@
         }).
 -endif.
 
--ifndef('REQUESTECHO_PB_H').
--define('REQUESTECHO_PB_H', true).
--record('RequestEcho',
-        {message = []           :: iolist() | undefined % = 1
-        }).
--endif.
-
--ifndef('REQUESTCHECKTX_PB_H').
--define('REQUESTCHECKTX_PB_H', true).
--record('RequestCheckTx',
-        {tx = <<>>              :: binary() | undefined % = 1
-        }).
--endif.
-
--ifndef('RESPONSEINFO_PB_H').
--define('RESPONSEINFO_PB_H', true).
--record('ResponseInfo',
-        {data = []              :: iolist() | undefined, % = 1
-         version = []           :: iolist() | undefined, % = 2
-         last_block_height = 0  :: integer() | undefined, % = 3, 32 bits
-         last_block_app_hash = <<>> :: binary() | undefined % = 4
-        }).
--endif.
-
 -ifndef('RESPONSEECHO_PB_H').
 -define('RESPONSEECHO_PB_H', true).
 -record('ResponseEcho',
         {message = []           :: iolist() | undefined % = 1
-        }).
--endif.
-
--ifndef('RESPONSECHECKTX_PB_H').
--define('RESPONSECHECKTX_PB_H', true).
--record('ResponseCheckTx',
-        {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
-         data = <<>>            :: binary() | undefined, % = 2
-         log = []               :: iolist() | undefined, % = 3
-         gas = 0                :: integer() | undefined, % = 4, 32 bits
-         fee = 0                :: integer() | undefined % = 5, 32 bits
-        }).
--endif.
-
--ifndef('REQUESTCOMMIT_PB_H').
--define('REQUESTCOMMIT_PB_H', true).
--record('RequestCommit',
-        {
-        }).
--endif.
-
--ifndef('RESPONSEEXCEPTION_PB_H').
--define('RESPONSEEXCEPTION_PB_H', true).
--record('ResponseException',
-        {error = []             :: iolist() | undefined % = 1
-        }).
--endif.
-
--ifndef('RESPONSECOMMIT_PB_H').
--define('RESPONSECOMMIT_PB_H', true).
--record('ResponseCommit',
-        {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
-         data = <<>>            :: binary() | undefined, % = 2
-         log = []               :: iolist() | undefined % = 3
         }).
 -endif.
 
@@ -185,36 +198,17 @@
         }).
 -endif.
 
--ifndef('KVPAIR_PB_H').
--define('KVPAIR_PB_H', true).
--record('KVPair',
-        {key = []               :: iolist() | undefined, % = 1
-         value_type = 'STRING'  :: 'STRING' | 'INT' | integer() | undefined, % = 2, enum KVPair.Type
-         value_string = []      :: iolist() | undefined, % = 3
-         value_int = 0          :: integer() | undefined % = 4, 32 bits
-        }).
--endif.
-
--ifndef('RESPONSEDELIVERTX_PB_H').
--define('RESPONSEDELIVERTX_PB_H', true).
--record('ResponseDeliverTx',
-        {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
-         data = <<>>            :: binary() | undefined, % = 2
-         log = []               :: iolist() | undefined, % = 3
-         tags = []              :: [#'KVPair'{}] | undefined % = 4
-        }).
--endif.
-
 -ifndef('RESPONSEQUERY_PB_H').
 -define('RESPONSEQUERY_PB_H', true).
 -record('ResponseQuery',
         {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
-         index = 0              :: integer() | undefined, % = 2, 32 bits
-         key = <<>>             :: binary() | undefined, % = 3
-         value = <<>>           :: binary() | undefined, % = 4
-         proof = <<>>           :: binary() | undefined, % = 5
-         height = 0             :: integer() | undefined, % = 6, 32 bits
-         log = []               :: iolist() | undefined % = 7
+         log = []               :: iolist() | undefined, % = 3
+         info = []              :: iolist() | undefined, % = 4
+         index = 0              :: integer() | undefined, % = 5, 32 bits
+         key = <<>>             :: binary() | undefined, % = 6
+         value = <<>>           :: binary() | undefined, % = 7
+         proof = <<>>           :: binary() | undefined, % = 8
+         height = 0             :: integer() | undefined % = 9, 32 bits
         }).
 -endif.
 
@@ -229,14 +223,15 @@
 -define('RESPONSESETOPTION_PB_H', true).
 -record('ResponseSetOption',
         {code = 0               :: non_neg_integer() | undefined, % = 1, 32 bits
-         log = []               :: iolist() | undefined % = 2
+         log = []               :: iolist() | undefined, % = 3
+         info = []              :: iolist() | undefined % = 4
         }).
 -endif.
 
--ifndef('RESPONSEFLUSH_PB_H').
--define('RESPONSEFLUSH_PB_H', true).
--record('ResponseFlush',
-        {
+-ifndef('RESPONSEEXCEPTION_PB_H').
+-define('RESPONSEEXCEPTION_PB_H', true).
+-record('ResponseException',
+        {error = []             :: iolist() | undefined % = 1
         }).
 -endif.
 
@@ -244,6 +239,38 @@
 -define('RESPONSE_PB_H', true).
 -record('Response',
         {value                  :: {exception, #'ResponseException'{}} | {echo, #'ResponseEcho'{}} | {flush, #'ResponseFlush'{}} | {info, #'ResponseInfo'{}} | {set_option, #'ResponseSetOption'{}} | {init_chain, #'ResponseInitChain'{}} | {query, #'ResponseQuery'{}} | {begin_block, #'ResponseBeginBlock'{}} | {check_tx, #'ResponseCheckTx'{}} | {deliver_tx, #'ResponseDeliverTx'{}} | {end_block, #'ResponseEndBlock'{}} | {commit, #'ResponseCommit'{}} | undefined % oneof
+        }).
+-endif.
+
+-ifndef('REQUESTBEGINBLOCK_PB_H').
+-define('REQUESTBEGINBLOCK_PB_H', true).
+-record('RequestBeginBlock',
+        {hash = <<>>            :: binary() | undefined, % = 1
+         header = undefined     :: #'Header'{} | undefined, % = 2
+         absent_validators = [] :: [integer()] | undefined, % = 3, 32 bits
+         byzantine_validators = [] :: [#'Evidence'{}] | undefined % = 4
+        }).
+-endif.
+
+-ifndef('REQUESTSETOPTION_PB_H').
+-define('REQUESTSETOPTION_PB_H', true).
+-record('RequestSetOption',
+        {key = []               :: iolist() | undefined, % = 1
+         value = []             :: iolist() | undefined % = 2
+        }).
+-endif.
+
+-ifndef('REQUESTINFO_PB_H').
+-define('REQUESTINFO_PB_H', true).
+-record('RequestInfo',
+        {version = []           :: iolist() | undefined % = 1
+        }).
+-endif.
+
+-ifndef('REQUESTCOMMIT_PB_H').
+-define('REQUESTCOMMIT_PB_H', true).
+-record('RequestCommit',
+        {
         }).
 -endif.
 
@@ -257,10 +284,11 @@
         }).
 -endif.
 
--ifndef('REQUESTENDBLOCK_PB_H').
--define('REQUESTENDBLOCK_PB_H', true).
--record('RequestEndBlock',
-        {height = 0             :: integer() | undefined % = 1, 32 bits
+-ifndef('REQUESTINITCHAIN_PB_H').
+-define('REQUESTINITCHAIN_PB_H', true).
+-record('RequestInitChain',
+        {validators = []        :: [#'Validator'{}] | undefined, % = 1
+         app_state_bytes = <<>> :: binary() | undefined % = 2
         }).
 -endif.
 
@@ -271,24 +299,10 @@
         }).
 -endif.
 
--ifndef('REQUESTINITCHAIN_PB_H').
--define('REQUESTINITCHAIN_PB_H', true).
--record('RequestInitChain',
-        {validators = []        :: [#'Validator'{}] | undefined % = 1
-        }).
--endif.
-
--ifndef('REQUESTINFO_PB_H').
--define('REQUESTINFO_PB_H', true).
--record('RequestInfo',
-        {version = []           :: iolist() | undefined % = 1
-        }).
--endif.
-
--ifndef('REQUESTDELIVERTX_PB_H').
--define('REQUESTDELIVERTX_PB_H', true).
--record('RequestDeliverTx',
-        {tx = <<>>              :: binary() | undefined % = 1
+-ifndef('REQUESTECHO_PB_H').
+-define('REQUESTECHO_PB_H', true).
+-record('RequestEcho',
+        {message = []           :: iolist() | undefined % = 1
         }).
 -endif.
 

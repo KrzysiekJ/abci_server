@@ -15,7 +15,6 @@
 -export([find_msg_def/1, fetch_msg_def/1]).
 -export([find_enum_def/1, fetch_enum_def/1]).
 -export([enum_symbol_by_value/2, enum_value_by_symbol/2]).
--export(['enum_symbol_by_value_KVPair.Type'/1, 'enum_value_by_symbol_KVPair.Type'/1]).
 -export([get_service_names/0]).
 -export([get_service_def/1]).
 -export([get_rpc_names/1]).
@@ -27,52 +26,53 @@
 -include_lib("gpb/include/gpb.hrl").
 
 %% enumerated types
--type 'KVPair.Type'() :: 'STRING' | 'INT'.
--export_type(['KVPair.Type'/0]).
+
+-export_type([]).
 
 %% message types
--type 'RequestSetOption'() :: #'RequestSetOption'{}.
+-type 'RequestDeliverTx'() :: #'RequestDeliverTx'{}.
+-type 'KI64Pair'() :: #'KI64Pair'{}.
+-type 'KVPair'() :: #'KVPair'{}.
+-type 'ResponseDeliverTx'() :: #'ResponseDeliverTx'{}.
+-type 'ResponseFlush'() :: #'ResponseFlush'{}.
+-type 'ResponseCommit'() :: #'ResponseCommit'{}.
+-type 'RequestCheckTx'() :: #'RequestCheckTx'{}.
+-type 'Evidence'() :: #'Evidence'{}.
+-type 'ResponseInfo'() :: #'ResponseInfo'{}.
+-type 'ResponseCheckTx'() :: #'ResponseCheckTx'{}.
 -type 'PartSetHeader'() :: #'PartSetHeader'{}.
 -type 'BlockID'() :: #'BlockID'{}.
--type 'Evidence'() :: #'Evidence'{}.
 -type 'Header'() :: #'Header'{}.
--type 'RequestBeginBlock'() :: #'RequestBeginBlock'{}.
+-type 'RequestEndBlock'() :: #'RequestEndBlock'{}.
 -type 'ResponseBeginBlock'() :: #'ResponseBeginBlock'{}.
--type 'RequestEcho'() :: #'RequestEcho'{}.
--type 'RequestCheckTx'() :: #'RequestCheckTx'{}.
--type 'ResponseInfo'() :: #'ResponseInfo'{}.
 -type 'ResponseEcho'() :: #'ResponseEcho'{}.
--type 'ResponseCheckTx'() :: #'ResponseCheckTx'{}.
--type 'RequestCommit'() :: #'RequestCommit'{}.
--type 'ResponseException'() :: #'ResponseException'{}.
--type 'ResponseCommit'() :: #'ResponseCommit'{}.
 -type 'BlockGossip'() :: #'BlockGossip'{}.
 -type 'TxSize'() :: #'TxSize'{}.
 -type 'BlockSize'() :: #'BlockSize'{}.
 -type 'ConsensusParams'() :: #'ConsensusParams'{}.
 -type 'Validator'() :: #'Validator'{}.
 -type 'ResponseEndBlock'() :: #'ResponseEndBlock'{}.
--type 'KVPair'() :: #'KVPair'{}.
--type 'ResponseDeliverTx'() :: #'ResponseDeliverTx'{}.
 -type 'ResponseQuery'() :: #'ResponseQuery'{}.
 -type 'ResponseInitChain'() :: #'ResponseInitChain'{}.
 -type 'ResponseSetOption'() :: #'ResponseSetOption'{}.
--type 'ResponseFlush'() :: #'ResponseFlush'{}.
+-type 'ResponseException'() :: #'ResponseException'{}.
 -type 'Response'() :: #'Response'{}.
--type 'RequestQuery'() :: #'RequestQuery'{}.
--type 'RequestEndBlock'() :: #'RequestEndBlock'{}.
--type 'RequestFlush'() :: #'RequestFlush'{}.
--type 'RequestInitChain'() :: #'RequestInitChain'{}.
+-type 'RequestBeginBlock'() :: #'RequestBeginBlock'{}.
+-type 'RequestSetOption'() :: #'RequestSetOption'{}.
 -type 'RequestInfo'() :: #'RequestInfo'{}.
--type 'RequestDeliverTx'() :: #'RequestDeliverTx'{}.
+-type 'RequestCommit'() :: #'RequestCommit'{}.
+-type 'RequestQuery'() :: #'RequestQuery'{}.
+-type 'RequestInitChain'() :: #'RequestInitChain'{}.
+-type 'RequestFlush'() :: #'RequestFlush'{}.
+-type 'RequestEcho'() :: #'RequestEcho'{}.
 -type 'Request'() :: #'Request'{}.
--export_type(['RequestSetOption'/0, 'PartSetHeader'/0, 'BlockID'/0, 'Evidence'/0, 'Header'/0, 'RequestBeginBlock'/0, 'ResponseBeginBlock'/0, 'RequestEcho'/0, 'RequestCheckTx'/0, 'ResponseInfo'/0, 'ResponseEcho'/0, 'ResponseCheckTx'/0, 'RequestCommit'/0, 'ResponseException'/0, 'ResponseCommit'/0, 'BlockGossip'/0, 'TxSize'/0, 'BlockSize'/0, 'ConsensusParams'/0, 'Validator'/0, 'ResponseEndBlock'/0, 'KVPair'/0, 'ResponseDeliverTx'/0, 'ResponseQuery'/0, 'ResponseInitChain'/0, 'ResponseSetOption'/0, 'ResponseFlush'/0, 'Response'/0, 'RequestQuery'/0, 'RequestEndBlock'/0, 'RequestFlush'/0, 'RequestInitChain'/0, 'RequestInfo'/0, 'RequestDeliverTx'/0, 'Request'/0]).
+-export_type(['RequestDeliverTx'/0, 'KI64Pair'/0, 'KVPair'/0, 'ResponseDeliverTx'/0, 'ResponseFlush'/0, 'ResponseCommit'/0, 'RequestCheckTx'/0, 'Evidence'/0, 'ResponseInfo'/0, 'ResponseCheckTx'/0, 'PartSetHeader'/0, 'BlockID'/0, 'Header'/0, 'RequestEndBlock'/0, 'ResponseBeginBlock'/0, 'ResponseEcho'/0, 'BlockGossip'/0, 'TxSize'/0, 'BlockSize'/0, 'ConsensusParams'/0, 'Validator'/0, 'ResponseEndBlock'/0, 'ResponseQuery'/0, 'ResponseInitChain'/0, 'ResponseSetOption'/0, 'ResponseException'/0, 'Response'/0, 'RequestBeginBlock'/0, 'RequestSetOption'/0, 'RequestInfo'/0, 'RequestCommit'/0, 'RequestQuery'/0, 'RequestInitChain'/0, 'RequestFlush'/0, 'RequestEcho'/0, 'Request'/0]).
 
--spec encode_msg(#'RequestSetOption'{} | #'PartSetHeader'{} | #'BlockID'{} | #'Evidence'{} | #'Header'{} | #'RequestBeginBlock'{} | #'ResponseBeginBlock'{} | #'RequestEcho'{} | #'RequestCheckTx'{} | #'ResponseInfo'{} | #'ResponseEcho'{} | #'ResponseCheckTx'{} | #'RequestCommit'{} | #'ResponseException'{} | #'ResponseCommit'{} | #'BlockGossip'{} | #'TxSize'{} | #'BlockSize'{} | #'ConsensusParams'{} | #'Validator'{} | #'ResponseEndBlock'{} | #'KVPair'{} | #'ResponseDeliverTx'{} | #'ResponseQuery'{} | #'ResponseInitChain'{} | #'ResponseSetOption'{} | #'ResponseFlush'{} | #'Response'{} | #'RequestQuery'{} | #'RequestEndBlock'{} | #'RequestFlush'{} | #'RequestInitChain'{} | #'RequestInfo'{} | #'RequestDeliverTx'{} | #'Request'{}) -> binary().
+-spec encode_msg(#'RequestDeliverTx'{} | #'KI64Pair'{} | #'KVPair'{} | #'ResponseDeliverTx'{} | #'ResponseFlush'{} | #'ResponseCommit'{} | #'RequestCheckTx'{} | #'Evidence'{} | #'ResponseInfo'{} | #'ResponseCheckTx'{} | #'PartSetHeader'{} | #'BlockID'{} | #'Header'{} | #'RequestEndBlock'{} | #'ResponseBeginBlock'{} | #'ResponseEcho'{} | #'BlockGossip'{} | #'TxSize'{} | #'BlockSize'{} | #'ConsensusParams'{} | #'Validator'{} | #'ResponseEndBlock'{} | #'ResponseQuery'{} | #'ResponseInitChain'{} | #'ResponseSetOption'{} | #'ResponseException'{} | #'Response'{} | #'RequestBeginBlock'{} | #'RequestSetOption'{} | #'RequestInfo'{} | #'RequestCommit'{} | #'RequestQuery'{} | #'RequestInitChain'{} | #'RequestFlush'{} | #'RequestEcho'{} | #'Request'{}) -> binary().
 encode_msg(Msg) -> encode_msg(Msg, []).
 
 
--spec encode_msg(#'RequestSetOption'{} | #'PartSetHeader'{} | #'BlockID'{} | #'Evidence'{} | #'Header'{} | #'RequestBeginBlock'{} | #'ResponseBeginBlock'{} | #'RequestEcho'{} | #'RequestCheckTx'{} | #'ResponseInfo'{} | #'ResponseEcho'{} | #'ResponseCheckTx'{} | #'RequestCommit'{} | #'ResponseException'{} | #'ResponseCommit'{} | #'BlockGossip'{} | #'TxSize'{} | #'BlockSize'{} | #'ConsensusParams'{} | #'Validator'{} | #'ResponseEndBlock'{} | #'KVPair'{} | #'ResponseDeliverTx'{} | #'ResponseQuery'{} | #'ResponseInitChain'{} | #'ResponseSetOption'{} | #'ResponseFlush'{} | #'Response'{} | #'RequestQuery'{} | #'RequestEndBlock'{} | #'RequestFlush'{} | #'RequestInitChain'{} | #'RequestInfo'{} | #'RequestDeliverTx'{} | #'Request'{}, list()) -> binary().
+-spec encode_msg(#'RequestDeliverTx'{} | #'KI64Pair'{} | #'KVPair'{} | #'ResponseDeliverTx'{} | #'ResponseFlush'{} | #'ResponseCommit'{} | #'RequestCheckTx'{} | #'Evidence'{} | #'ResponseInfo'{} | #'ResponseCheckTx'{} | #'PartSetHeader'{} | #'BlockID'{} | #'Header'{} | #'RequestEndBlock'{} | #'ResponseBeginBlock'{} | #'ResponseEcho'{} | #'BlockGossip'{} | #'TxSize'{} | #'BlockSize'{} | #'ConsensusParams'{} | #'Validator'{} | #'ResponseEndBlock'{} | #'ResponseQuery'{} | #'ResponseInitChain'{} | #'ResponseSetOption'{} | #'ResponseException'{} | #'Response'{} | #'RequestBeginBlock'{} | #'RequestSetOption'{} | #'RequestInfo'{} | #'RequestCommit'{} | #'RequestQuery'{} | #'RequestInitChain'{} | #'RequestFlush'{} | #'RequestEcho'{} | #'Request'{}, list()) -> binary().
 encode_msg(Msg, Opts) ->
     case proplists:get_bool(verify, Opts) of
       true -> verify_msg(Msg, Opts);
@@ -80,32 +80,33 @@ encode_msg(Msg, Opts) ->
     end,
     TrUserData = proplists:get_value(user_data, Opts),
     case Msg of
-      #'RequestSetOption'{} ->
-	  e_msg_RequestSetOption(Msg, TrUserData);
+      #'RequestDeliverTx'{} ->
+	  e_msg_RequestDeliverTx(Msg, TrUserData);
+      #'KI64Pair'{} -> e_msg_KI64Pair(Msg, TrUserData);
+      #'KVPair'{} -> e_msg_KVPair(Msg, TrUserData);
+      #'ResponseDeliverTx'{} ->
+	  e_msg_ResponseDeliverTx(Msg, TrUserData);
+      #'ResponseFlush'{} ->
+	  e_msg_ResponseFlush(Msg, TrUserData);
+      #'ResponseCommit'{} ->
+	  e_msg_ResponseCommit(Msg, TrUserData);
+      #'RequestCheckTx'{} ->
+	  e_msg_RequestCheckTx(Msg, TrUserData);
+      #'Evidence'{} -> e_msg_Evidence(Msg, TrUserData);
+      #'ResponseInfo'{} ->
+	  e_msg_ResponseInfo(Msg, TrUserData);
+      #'ResponseCheckTx'{} ->
+	  e_msg_ResponseCheckTx(Msg, TrUserData);
       #'PartSetHeader'{} ->
 	  e_msg_PartSetHeader(Msg, TrUserData);
       #'BlockID'{} -> e_msg_BlockID(Msg, TrUserData);
-      #'Evidence'{} -> e_msg_Evidence(Msg, TrUserData);
       #'Header'{} -> e_msg_Header(Msg, TrUserData);
-      #'RequestBeginBlock'{} ->
-	  e_msg_RequestBeginBlock(Msg, TrUserData);
+      #'RequestEndBlock'{} ->
+	  e_msg_RequestEndBlock(Msg, TrUserData);
       #'ResponseBeginBlock'{} ->
 	  e_msg_ResponseBeginBlock(Msg, TrUserData);
-      #'RequestEcho'{} -> e_msg_RequestEcho(Msg, TrUserData);
-      #'RequestCheckTx'{} ->
-	  e_msg_RequestCheckTx(Msg, TrUserData);
-      #'ResponseInfo'{} ->
-	  e_msg_ResponseInfo(Msg, TrUserData);
       #'ResponseEcho'{} ->
 	  e_msg_ResponseEcho(Msg, TrUserData);
-      #'ResponseCheckTx'{} ->
-	  e_msg_ResponseCheckTx(Msg, TrUserData);
-      #'RequestCommit'{} ->
-	  e_msg_RequestCommit(Msg, TrUserData);
-      #'ResponseException'{} ->
-	  e_msg_ResponseException(Msg, TrUserData);
-      #'ResponseCommit'{} ->
-	  e_msg_ResponseCommit(Msg, TrUserData);
       #'BlockGossip'{} -> e_msg_BlockGossip(Msg, TrUserData);
       #'TxSize'{} -> e_msg_TxSize(Msg, TrUserData);
       #'BlockSize'{} -> e_msg_BlockSize(Msg, TrUserData);
@@ -114,41 +115,259 @@ encode_msg(Msg, Opts) ->
       #'Validator'{} -> e_msg_Validator(Msg, TrUserData);
       #'ResponseEndBlock'{} ->
 	  e_msg_ResponseEndBlock(Msg, TrUserData);
-      #'KVPair'{} -> e_msg_KVPair(Msg, TrUserData);
-      #'ResponseDeliverTx'{} ->
-	  e_msg_ResponseDeliverTx(Msg, TrUserData);
       #'ResponseQuery'{} ->
 	  e_msg_ResponseQuery(Msg, TrUserData);
       #'ResponseInitChain'{} ->
 	  e_msg_ResponseInitChain(Msg, TrUserData);
       #'ResponseSetOption'{} ->
 	  e_msg_ResponseSetOption(Msg, TrUserData);
-      #'ResponseFlush'{} ->
-	  e_msg_ResponseFlush(Msg, TrUserData);
+      #'ResponseException'{} ->
+	  e_msg_ResponseException(Msg, TrUserData);
       #'Response'{} -> e_msg_Response(Msg, TrUserData);
+      #'RequestBeginBlock'{} ->
+	  e_msg_RequestBeginBlock(Msg, TrUserData);
+      #'RequestSetOption'{} ->
+	  e_msg_RequestSetOption(Msg, TrUserData);
+      #'RequestInfo'{} -> e_msg_RequestInfo(Msg, TrUserData);
+      #'RequestCommit'{} ->
+	  e_msg_RequestCommit(Msg, TrUserData);
       #'RequestQuery'{} ->
 	  e_msg_RequestQuery(Msg, TrUserData);
-      #'RequestEndBlock'{} ->
-	  e_msg_RequestEndBlock(Msg, TrUserData);
-      #'RequestFlush'{} ->
-	  e_msg_RequestFlush(Msg, TrUserData);
       #'RequestInitChain'{} ->
 	  e_msg_RequestInitChain(Msg, TrUserData);
-      #'RequestInfo'{} -> e_msg_RequestInfo(Msg, TrUserData);
-      #'RequestDeliverTx'{} ->
-	  e_msg_RequestDeliverTx(Msg, TrUserData);
+      #'RequestFlush'{} ->
+	  e_msg_RequestFlush(Msg, TrUserData);
+      #'RequestEcho'{} -> e_msg_RequestEcho(Msg, TrUserData);
       #'Request'{} -> e_msg_Request(Msg, TrUserData)
     end.
 
 
 
-e_msg_RequestSetOption(Msg, TrUserData) ->
-    e_msg_RequestSetOption(Msg, <<>>, TrUserData).
+e_msg_RequestDeliverTx(Msg, TrUserData) ->
+    e_msg_RequestDeliverTx(Msg, <<>>, TrUserData).
 
 
-e_msg_RequestSetOption(#'RequestSetOption'{key = F1,
-					   value = F2},
+e_msg_RequestDeliverTx(#'RequestDeliverTx'{tx = F1},
 		       Bin, TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     case iolist_size(TrF1) of
+	       0 -> Bin;
+	       _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+	     end
+	   end
+    end.
+
+e_msg_KI64Pair(Msg, TrUserData) ->
+    e_msg_KI64Pair(Msg, <<>>, TrUserData).
+
+
+e_msg_KI64Pair(#'KI64Pair'{key = F1, value = F2}, Bin,
+	       TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  case iolist_size(TrF1) of
+		    0 -> Bin;
+		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+		  end
+		end
+	 end,
+    if F2 == undefined -> B1;
+       true ->
+	   begin
+	     TrF2 = id(F2, TrUserData),
+	     if TrF2 =:= 0 -> B1;
+		true -> e_type_int64(TrF2, <<B1/binary, 16>>)
+	     end
+	   end
+    end.
+
+e_msg_KVPair(Msg, TrUserData) ->
+    e_msg_KVPair(Msg, <<>>, TrUserData).
+
+
+e_msg_KVPair(#'KVPair'{key = F1, value = F2}, Bin,
+	     TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  case iolist_size(TrF1) of
+		    0 -> Bin;
+		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+		  end
+		end
+	 end,
+    if F2 == undefined -> B1;
+       true ->
+	   begin
+	     TrF2 = id(F2, TrUserData),
+	     case iolist_size(TrF2) of
+	       0 -> B1;
+	       _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
+	     end
+	   end
+    end.
+
+e_msg_ResponseDeliverTx(Msg, TrUserData) ->
+    e_msg_ResponseDeliverTx(Msg, <<>>, TrUserData).
+
+
+e_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code = F1,
+					     data = F2, log = F3, info = F4,
+					     gas_wanted = F5, gas_used = F6,
+					     tags = F7, fee = F8},
+			Bin, TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  if TrF1 =:= 0 -> Bin;
+		     true -> e_varint(TrF1, <<Bin/binary, 8>>)
+		  end
+		end
+	 end,
+    B2 = if F2 == undefined -> B1;
+	    true ->
+		begin
+		  TrF2 = id(F2, TrUserData),
+		  case iolist_size(TrF2) of
+		    0 -> B1;
+		    _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
+		  end
+		end
+	 end,
+    B3 = if F3 == undefined -> B2;
+	    true ->
+		begin
+		  TrF3 = id(F3, TrUserData),
+		  case is_empty_string(TrF3) of
+		    true -> B2;
+		    false -> e_type_string(TrF3, <<B2/binary, 26>>)
+		  end
+		end
+	 end,
+    B4 = if F4 == undefined -> B3;
+	    true ->
+		begin
+		  TrF4 = id(F4, TrUserData),
+		  case is_empty_string(TrF4) of
+		    true -> B3;
+		    false -> e_type_string(TrF4, <<B3/binary, 34>>)
+		  end
+		end
+	 end,
+    B5 = if F5 == undefined -> B4;
+	    true ->
+		begin
+		  TrF5 = id(F5, TrUserData),
+		  if TrF5 =:= 0 -> B4;
+		     true -> e_type_int64(TrF5, <<B4/binary, 40>>)
+		  end
+		end
+	 end,
+    B6 = if F6 == undefined -> B5;
+	    true ->
+		begin
+		  TrF6 = id(F6, TrUserData),
+		  if TrF6 =:= 0 -> B5;
+		     true -> e_type_int64(TrF6, <<B5/binary, 48>>)
+		  end
+		end
+	 end,
+    B7 = begin
+	   TrF7 = id(F7, TrUserData),
+	   if TrF7 == [] -> B6;
+	      true ->
+		  e_field_ResponseDeliverTx_tags(TrF7, B6, TrUserData)
+	   end
+	 end,
+    if F8 == undefined -> B7;
+       true ->
+	   begin
+	     TrF8 = id(F8, TrUserData),
+	     if TrF8 =:= undefined -> B7;
+		true ->
+		    e_mfield_ResponseDeliverTx_fee(TrF8, <<B7/binary, 66>>,
+						   TrUserData)
+	     end
+	   end
+    end.
+
+e_msg_ResponseFlush(_Msg, _TrUserData) -> <<>>.
+
+e_msg_ResponseCommit(Msg, TrUserData) ->
+    e_msg_ResponseCommit(Msg, <<>>, TrUserData).
+
+
+e_msg_ResponseCommit(#'ResponseCommit'{data = F1}, Bin,
+		     TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     case iolist_size(TrF1) of
+	       0 -> Bin;
+	       _ -> e_type_bytes(TrF1, <<Bin/binary, 18>>)
+	     end
+	   end
+    end.
+
+e_msg_RequestCheckTx(Msg, TrUserData) ->
+    e_msg_RequestCheckTx(Msg, <<>>, TrUserData).
+
+
+e_msg_RequestCheckTx(#'RequestCheckTx'{tx = F1}, Bin,
+		     TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     case iolist_size(TrF1) of
+	       0 -> Bin;
+	       _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+	     end
+	   end
+    end.
+
+e_msg_Evidence(Msg, TrUserData) ->
+    e_msg_Evidence(Msg, <<>>, TrUserData).
+
+
+e_msg_Evidence(#'Evidence'{pub_key = F1, height = F2},
+	       Bin, TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  case iolist_size(TrF1) of
+		    0 -> Bin;
+		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+		  end
+		end
+	 end,
+    if F2 == undefined -> B1;
+       true ->
+	   begin
+	     TrF2 = id(F2, TrUserData),
+	     if TrF2 =:= 0 -> B1;
+		true -> e_type_int64(TrF2, <<B1/binary, 16>>)
+	     end
+	   end
+    end.
+
+e_msg_ResponseInfo(Msg, TrUserData) ->
+    e_msg_ResponseInfo(Msg, <<>>, TrUserData).
+
+
+e_msg_ResponseInfo(#'ResponseInfo'{data = F1,
+				   version = F2, last_block_height = F3,
+				   last_block_app_hash = F4},
+		   Bin, TrUserData) ->
     B1 = if F1 == undefined -> Bin;
 	    true ->
 		begin
@@ -159,13 +378,117 @@ e_msg_RequestSetOption(#'RequestSetOption'{key = F1,
 		  end
 		end
 	 end,
-    if F2 == undefined -> B1;
+    B2 = if F2 == undefined -> B1;
+	    true ->
+		begin
+		  TrF2 = id(F2, TrUserData),
+		  case is_empty_string(TrF2) of
+		    true -> B1;
+		    false -> e_type_string(TrF2, <<B1/binary, 18>>)
+		  end
+		end
+	 end,
+    B3 = if F3 == undefined -> B2;
+	    true ->
+		begin
+		  TrF3 = id(F3, TrUserData),
+		  if TrF3 =:= 0 -> B2;
+		     true -> e_type_int64(TrF3, <<B2/binary, 24>>)
+		  end
+		end
+	 end,
+    if F4 == undefined -> B3;
        true ->
 	   begin
-	     TrF2 = id(F2, TrUserData),
-	     case is_empty_string(TrF2) of
-	       true -> B1;
-	       false -> e_type_string(TrF2, <<B1/binary, 18>>)
+	     TrF4 = id(F4, TrUserData),
+	     case iolist_size(TrF4) of
+	       0 -> B3;
+	       _ -> e_type_bytes(TrF4, <<B3/binary, 34>>)
+	     end
+	   end
+    end.
+
+e_msg_ResponseCheckTx(Msg, TrUserData) ->
+    e_msg_ResponseCheckTx(Msg, <<>>, TrUserData).
+
+
+e_msg_ResponseCheckTx(#'ResponseCheckTx'{code = F1,
+					 data = F2, log = F3, info = F4,
+					 gas_wanted = F5, gas_used = F6,
+					 tags = F7, fee = F8},
+		      Bin, TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  if TrF1 =:= 0 -> Bin;
+		     true -> e_varint(TrF1, <<Bin/binary, 8>>)
+		  end
+		end
+	 end,
+    B2 = if F2 == undefined -> B1;
+	    true ->
+		begin
+		  TrF2 = id(F2, TrUserData),
+		  case iolist_size(TrF2) of
+		    0 -> B1;
+		    _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
+		  end
+		end
+	 end,
+    B3 = if F3 == undefined -> B2;
+	    true ->
+		begin
+		  TrF3 = id(F3, TrUserData),
+		  case is_empty_string(TrF3) of
+		    true -> B2;
+		    false -> e_type_string(TrF3, <<B2/binary, 26>>)
+		  end
+		end
+	 end,
+    B4 = if F4 == undefined -> B3;
+	    true ->
+		begin
+		  TrF4 = id(F4, TrUserData),
+		  case is_empty_string(TrF4) of
+		    true -> B3;
+		    false -> e_type_string(TrF4, <<B3/binary, 34>>)
+		  end
+		end
+	 end,
+    B5 = if F5 == undefined -> B4;
+	    true ->
+		begin
+		  TrF5 = id(F5, TrUserData),
+		  if TrF5 =:= 0 -> B4;
+		     true -> e_type_int64(TrF5, <<B4/binary, 40>>)
+		  end
+		end
+	 end,
+    B6 = if F6 == undefined -> B5;
+	    true ->
+		begin
+		  TrF6 = id(F6, TrUserData),
+		  if TrF6 =:= 0 -> B5;
+		     true -> e_type_int64(TrF6, <<B5/binary, 48>>)
+		  end
+		end
+	 end,
+    B7 = begin
+	   TrF7 = id(F7, TrUserData),
+	   if TrF7 == [] -> B6;
+	      true ->
+		  e_field_ResponseCheckTx_tags(TrF7, B6, TrUserData)
+	   end
+	 end,
+    if F8 == undefined -> B7;
+       true ->
+	   begin
+	     TrF8 = id(F8, TrUserData),
+	     if TrF8 =:= undefined -> B7;
+		true ->
+		    e_mfield_ResponseCheckTx_fee(TrF8, <<B7/binary, 66>>,
+						 TrUserData)
 	     end
 	   end
     end.
@@ -221,32 +544,6 @@ e_msg_BlockID(#'BlockID'{hash = F1, parts = F2}, Bin,
 		true ->
 		    e_mfield_BlockID_parts(TrF2, <<B1/binary, 18>>,
 					   TrUserData)
-	     end
-	   end
-    end.
-
-e_msg_Evidence(Msg, TrUserData) ->
-    e_msg_Evidence(Msg, <<>>, TrUserData).
-
-
-e_msg_Evidence(#'Evidence'{pub_key = F1, height = F2},
-	       Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  case iolist_size(TrF1) of
-		    0 -> Bin;
-		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
-		  end
-		end
-	 end,
-    if F2 == undefined -> B1;
-       true ->
-	   begin
-	     TrF2 = id(F2, TrUserData),
-	     if TrF2 =:= 0 -> B1;
-		true -> e_type_int64(TrF2, <<B1/binary, 16>>)
 	     end
 	   end
     end.
@@ -349,137 +646,23 @@ e_msg_Header(#'Header'{chain_id = F1, height = F2,
 	   end
     end.
 
-e_msg_RequestBeginBlock(Msg, TrUserData) ->
-    e_msg_RequestBeginBlock(Msg, <<>>, TrUserData).
+e_msg_RequestEndBlock(Msg, TrUserData) ->
+    e_msg_RequestEndBlock(Msg, <<>>, TrUserData).
 
 
-e_msg_RequestBeginBlock(#'RequestBeginBlock'{hash = F1,
-					     header = F2,
-					     absent_validators = F3,
-					     byzantine_validators = F4},
-			Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  case iolist_size(TrF1) of
-		    0 -> Bin;
-		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  if TrF2 =:= undefined -> B1;
-		     true ->
-			 e_mfield_RequestBeginBlock_header(TrF2,
-							   <<B1/binary, 18>>,
-							   TrUserData)
-		  end
-		end
-	 end,
-    B3 = begin
-	   TrF3 = id(F3, TrUserData),
-	   if TrF3 == [] -> B2;
-	      true ->
-		  e_field_RequestBeginBlock_absent_validators(TrF3, B2,
-							      TrUserData)
+e_msg_RequestEndBlock(#'RequestEndBlock'{height = F1},
+		      Bin, TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     if TrF1 =:= 0 -> Bin;
+		true -> e_type_int64(TrF1, <<Bin/binary, 8>>)
+	     end
 	   end
-	 end,
-    begin
-      TrF4 = id(F4, TrUserData),
-      if TrF4 == [] -> B3;
-	 true ->
-	     e_field_RequestBeginBlock_byzantine_validators(TrF4, B3,
-							    TrUserData)
-      end
     end.
 
 e_msg_ResponseBeginBlock(_Msg, _TrUserData) -> <<>>.
-
-e_msg_RequestEcho(Msg, TrUserData) ->
-    e_msg_RequestEcho(Msg, <<>>, TrUserData).
-
-
-e_msg_RequestEcho(#'RequestEcho'{message = F1}, Bin,
-		  TrUserData) ->
-    if F1 == undefined -> Bin;
-       true ->
-	   begin
-	     TrF1 = id(F1, TrUserData),
-	     case is_empty_string(TrF1) of
-	       true -> Bin;
-	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-	     end
-	   end
-    end.
-
-e_msg_RequestCheckTx(Msg, TrUserData) ->
-    e_msg_RequestCheckTx(Msg, <<>>, TrUserData).
-
-
-e_msg_RequestCheckTx(#'RequestCheckTx'{tx = F1}, Bin,
-		     TrUserData) ->
-    if F1 == undefined -> Bin;
-       true ->
-	   begin
-	     TrF1 = id(F1, TrUserData),
-	     case iolist_size(TrF1) of
-	       0 -> Bin;
-	       _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
-	     end
-	   end
-    end.
-
-e_msg_ResponseInfo(Msg, TrUserData) ->
-    e_msg_ResponseInfo(Msg, <<>>, TrUserData).
-
-
-e_msg_ResponseInfo(#'ResponseInfo'{data = F1,
-				   version = F2, last_block_height = F3,
-				   last_block_app_hash = F4},
-		   Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  case is_empty_string(TrF1) of
-		    true -> Bin;
-		    false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  case is_empty_string(TrF2) of
-		    true -> B1;
-		    false -> e_type_string(TrF2, <<B1/binary, 18>>)
-		  end
-		end
-	 end,
-    B3 = if F3 == undefined -> B2;
-	    true ->
-		begin
-		  TrF3 = id(F3, TrUserData),
-		  if TrF3 =:= 0 -> B2;
-		     true -> e_type_int64(TrF3, <<B2/binary, 24>>)
-		  end
-		end
-	 end,
-    if F4 == undefined -> B3;
-       true ->
-	   begin
-	     TrF4 = id(F4, TrUserData),
-	     case iolist_size(TrF4) of
-	       0 -> B3;
-	       _ -> e_type_bytes(TrF4, <<B3/binary, 34>>)
-	     end
-	   end
-    end.
 
 e_msg_ResponseEcho(Msg, TrUserData) ->
     e_msg_ResponseEcho(Msg, <<>>, TrUserData).
@@ -494,119 +677,6 @@ e_msg_ResponseEcho(#'ResponseEcho'{message = F1}, Bin,
 	     case is_empty_string(TrF1) of
 	       true -> Bin;
 	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-	     end
-	   end
-    end.
-
-e_msg_ResponseCheckTx(Msg, TrUserData) ->
-    e_msg_ResponseCheckTx(Msg, <<>>, TrUserData).
-
-
-e_msg_ResponseCheckTx(#'ResponseCheckTx'{code = F1,
-					 data = F2, log = F3, gas = F4,
-					 fee = F5},
-		      Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  if TrF1 =:= 0 -> Bin;
-		     true -> e_varint(TrF1, <<Bin/binary, 8>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  case iolist_size(TrF2) of
-		    0 -> B1;
-		    _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
-		  end
-		end
-	 end,
-    B3 = if F3 == undefined -> B2;
-	    true ->
-		begin
-		  TrF3 = id(F3, TrUserData),
-		  case is_empty_string(TrF3) of
-		    true -> B2;
-		    false -> e_type_string(TrF3, <<B2/binary, 26>>)
-		  end
-		end
-	 end,
-    B4 = if F4 == undefined -> B3;
-	    true ->
-		begin
-		  TrF4 = id(F4, TrUserData),
-		  if TrF4 =:= 0 -> B3;
-		     true -> e_type_int64(TrF4, <<B3/binary, 32>>)
-		  end
-		end
-	 end,
-    if F5 == undefined -> B4;
-       true ->
-	   begin
-	     TrF5 = id(F5, TrUserData),
-	     if TrF5 =:= 0 -> B4;
-		true -> e_type_int64(TrF5, <<B4/binary, 40>>)
-	     end
-	   end
-    end.
-
-e_msg_RequestCommit(_Msg, _TrUserData) -> <<>>.
-
-e_msg_ResponseException(Msg, TrUserData) ->
-    e_msg_ResponseException(Msg, <<>>, TrUserData).
-
-
-e_msg_ResponseException(#'ResponseException'{error =
-						 F1},
-			Bin, TrUserData) ->
-    if F1 == undefined -> Bin;
-       true ->
-	   begin
-	     TrF1 = id(F1, TrUserData),
-	     case is_empty_string(TrF1) of
-	       true -> Bin;
-	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-	     end
-	   end
-    end.
-
-e_msg_ResponseCommit(Msg, TrUserData) ->
-    e_msg_ResponseCommit(Msg, <<>>, TrUserData).
-
-
-e_msg_ResponseCommit(#'ResponseCommit'{code = F1,
-				       data = F2, log = F3},
-		     Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  if TrF1 =:= 0 -> Bin;
-		     true -> e_varint(TrF1, <<Bin/binary, 8>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  case iolist_size(TrF2) of
-		    0 -> B1;
-		    _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
-		  end
-		end
-	 end,
-    if F3 == undefined -> B2;
-       true ->
-	   begin
-	     TrF3 = id(F3, TrUserData),
-	     case is_empty_string(TrF3) of
-	       true -> B2;
-	       false -> e_type_string(TrF3, <<B2/binary, 26>>)
 	     end
 	   end
     end.
@@ -789,103 +859,13 @@ e_msg_ResponseEndBlock(#'ResponseEndBlock'{validator_updates
 	   end
     end.
 
-e_msg_KVPair(Msg, TrUserData) ->
-    e_msg_KVPair(Msg, <<>>, TrUserData).
-
-
-e_msg_KVPair(#'KVPair'{key = F1, value_type = F2,
-		       value_string = F3, value_int = F4},
-	     Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  case is_empty_string(TrF1) of
-		    true -> Bin;
-		    false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  if TrF2 =:= 'STRING' -> B1;
-		     true -> 'e_enum_KVPair.Type'(TrF2, <<B1/binary, 16>>)
-		  end
-		end
-	 end,
-    B3 = if F3 == undefined -> B2;
-	    true ->
-		begin
-		  TrF3 = id(F3, TrUserData),
-		  case is_empty_string(TrF3) of
-		    true -> B2;
-		    false -> e_type_string(TrF3, <<B2/binary, 26>>)
-		  end
-		end
-	 end,
-    if F4 == undefined -> B3;
-       true ->
-	   begin
-	     TrF4 = id(F4, TrUserData),
-	     if TrF4 =:= 0 -> B3;
-		true -> e_type_int64(TrF4, <<B3/binary, 32>>)
-	     end
-	   end
-    end.
-
-e_msg_ResponseDeliverTx(Msg, TrUserData) ->
-    e_msg_ResponseDeliverTx(Msg, <<>>, TrUserData).
-
-
-e_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code = F1,
-					     data = F2, log = F3, tags = F4},
-			Bin, TrUserData) ->
-    B1 = if F1 == undefined -> Bin;
-	    true ->
-		begin
-		  TrF1 = id(F1, TrUserData),
-		  if TrF1 =:= 0 -> Bin;
-		     true -> e_varint(TrF1, <<Bin/binary, 8>>)
-		  end
-		end
-	 end,
-    B2 = if F2 == undefined -> B1;
-	    true ->
-		begin
-		  TrF2 = id(F2, TrUserData),
-		  case iolist_size(TrF2) of
-		    0 -> B1;
-		    _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
-		  end
-		end
-	 end,
-    B3 = if F3 == undefined -> B2;
-	    true ->
-		begin
-		  TrF3 = id(F3, TrUserData),
-		  case is_empty_string(TrF3) of
-		    true -> B2;
-		    false -> e_type_string(TrF3, <<B2/binary, 26>>)
-		  end
-		end
-	 end,
-    begin
-      TrF4 = id(F4, TrUserData),
-      if TrF4 == [] -> B3;
-	 true ->
-	     e_field_ResponseDeliverTx_tags(TrF4, B3, TrUserData)
-      end
-    end.
-
 e_msg_ResponseQuery(Msg, TrUserData) ->
     e_msg_ResponseQuery(Msg, <<>>, TrUserData).
 
 
 e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
-				     index = F2, key = F3, value = F4,
-				     proof = F5, height = F6, log = F7},
+				     log = F2, info = F3, index = F4, key = F5,
+				     value = F6, proof = F7, height = F8},
 		    Bin, TrUserData) ->
     B1 = if F1 == undefined -> Bin;
 	    true ->
@@ -900,8 +880,9 @@ e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
 	    true ->
 		begin
 		  TrF2 = id(F2, TrUserData),
-		  if TrF2 =:= 0 -> B1;
-		     true -> e_type_int64(TrF2, <<B1/binary, 16>>)
+		  case is_empty_string(TrF2) of
+		    true -> B1;
+		    false -> e_type_string(TrF2, <<B1/binary, 26>>)
 		  end
 		end
 	 end,
@@ -909,9 +890,9 @@ e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
 	    true ->
 		begin
 		  TrF3 = id(F3, TrUserData),
-		  case iolist_size(TrF3) of
-		    0 -> B2;
-		    _ -> e_type_bytes(TrF3, <<B2/binary, 26>>)
+		  case is_empty_string(TrF3) of
+		    true -> B2;
+		    false -> e_type_string(TrF3, <<B2/binary, 34>>)
 		  end
 		end
 	 end,
@@ -919,9 +900,8 @@ e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
 	    true ->
 		begin
 		  TrF4 = id(F4, TrUserData),
-		  case iolist_size(TrF4) of
-		    0 -> B3;
-		    _ -> e_type_bytes(TrF4, <<B3/binary, 34>>)
+		  if TrF4 =:= 0 -> B3;
+		     true -> e_type_int64(TrF4, <<B3/binary, 40>>)
 		  end
 		end
 	 end,
@@ -931,7 +911,7 @@ e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
 		  TrF5 = id(F5, TrUserData),
 		  case iolist_size(TrF5) of
 		    0 -> B4;
-		    _ -> e_type_bytes(TrF5, <<B4/binary, 42>>)
+		    _ -> e_type_bytes(TrF5, <<B4/binary, 50>>)
 		  end
 		end
 	 end,
@@ -939,18 +919,28 @@ e_msg_ResponseQuery(#'ResponseQuery'{code = F1,
 	    true ->
 		begin
 		  TrF6 = id(F6, TrUserData),
-		  if TrF6 =:= 0 -> B5;
-		     true -> e_type_int64(TrF6, <<B5/binary, 48>>)
+		  case iolist_size(TrF6) of
+		    0 -> B5;
+		    _ -> e_type_bytes(TrF6, <<B5/binary, 58>>)
 		  end
 		end
 	 end,
-    if F7 == undefined -> B6;
+    B7 = if F7 == undefined -> B6;
+	    true ->
+		begin
+		  TrF7 = id(F7, TrUserData),
+		  case iolist_size(TrF7) of
+		    0 -> B6;
+		    _ -> e_type_bytes(TrF7, <<B6/binary, 66>>)
+		  end
+		end
+	 end,
+    if F8 == undefined -> B7;
        true ->
 	   begin
-	     TrF7 = id(F7, TrUserData),
-	     case is_empty_string(TrF7) of
-	       true -> B6;
-	       false -> e_type_string(TrF7, <<B6/binary, 58>>)
+	     TrF8 = id(F8, TrUserData),
+	     if TrF8 =:= 0 -> B7;
+		true -> e_type_int64(TrF8, <<B7/binary, 72>>)
 	     end
 	   end
     end.
@@ -962,7 +952,7 @@ e_msg_ResponseSetOption(Msg, TrUserData) ->
 
 
 e_msg_ResponseSetOption(#'ResponseSetOption'{code = F1,
-					     log = F2},
+					     log = F2, info = F3},
 			Bin, TrUserData) ->
     B1 = if F1 == undefined -> Bin;
 	    true ->
@@ -973,18 +963,44 @@ e_msg_ResponseSetOption(#'ResponseSetOption'{code = F1,
 		  end
 		end
 	 end,
-    if F2 == undefined -> B1;
+    B2 = if F2 == undefined -> B1;
+	    true ->
+		begin
+		  TrF2 = id(F2, TrUserData),
+		  case is_empty_string(TrF2) of
+		    true -> B1;
+		    false -> e_type_string(TrF2, <<B1/binary, 26>>)
+		  end
+		end
+	 end,
+    if F3 == undefined -> B2;
        true ->
 	   begin
-	     TrF2 = id(F2, TrUserData),
-	     case is_empty_string(TrF2) of
-	       true -> B1;
-	       false -> e_type_string(TrF2, <<B1/binary, 18>>)
+	     TrF3 = id(F3, TrUserData),
+	     case is_empty_string(TrF3) of
+	       true -> B2;
+	       false -> e_type_string(TrF3, <<B2/binary, 34>>)
 	     end
 	   end
     end.
 
-e_msg_ResponseFlush(_Msg, _TrUserData) -> <<>>.
+e_msg_ResponseException(Msg, TrUserData) ->
+    e_msg_ResponseException(Msg, <<>>, TrUserData).
+
+
+e_msg_ResponseException(#'ResponseException'{error =
+						 F1},
+			Bin, TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     case is_empty_string(TrF1) of
+	       true -> Bin;
+	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
+	     end
+	   end
+    end.
 
 e_msg_Response(Msg, TrUserData) ->
     e_msg_Response(Msg, <<>>, TrUserData).
@@ -1068,6 +1084,101 @@ e_msg_Response(#'Response'{value = F1}, Bin,
 	  end
     end.
 
+e_msg_RequestBeginBlock(Msg, TrUserData) ->
+    e_msg_RequestBeginBlock(Msg, <<>>, TrUserData).
+
+
+e_msg_RequestBeginBlock(#'RequestBeginBlock'{hash = F1,
+					     header = F2,
+					     absent_validators = F3,
+					     byzantine_validators = F4},
+			Bin, TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  case iolist_size(TrF1) of
+		    0 -> Bin;
+		    _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
+		  end
+		end
+	 end,
+    B2 = if F2 == undefined -> B1;
+	    true ->
+		begin
+		  TrF2 = id(F2, TrUserData),
+		  if TrF2 =:= undefined -> B1;
+		     true ->
+			 e_mfield_RequestBeginBlock_header(TrF2,
+							   <<B1/binary, 18>>,
+							   TrUserData)
+		  end
+		end
+	 end,
+    B3 = begin
+	   TrF3 = id(F3, TrUserData),
+	   if TrF3 == [] -> B2;
+	      true ->
+		  e_field_RequestBeginBlock_absent_validators(TrF3, B2,
+							      TrUserData)
+	   end
+	 end,
+    begin
+      TrF4 = id(F4, TrUserData),
+      if TrF4 == [] -> B3;
+	 true ->
+	     e_field_RequestBeginBlock_byzantine_validators(TrF4, B3,
+							    TrUserData)
+      end
+    end.
+
+e_msg_RequestSetOption(Msg, TrUserData) ->
+    e_msg_RequestSetOption(Msg, <<>>, TrUserData).
+
+
+e_msg_RequestSetOption(#'RequestSetOption'{key = F1,
+					   value = F2},
+		       Bin, TrUserData) ->
+    B1 = if F1 == undefined -> Bin;
+	    true ->
+		begin
+		  TrF1 = id(F1, TrUserData),
+		  case is_empty_string(TrF1) of
+		    true -> Bin;
+		    false -> e_type_string(TrF1, <<Bin/binary, 10>>)
+		  end
+		end
+	 end,
+    if F2 == undefined -> B1;
+       true ->
+	   begin
+	     TrF2 = id(F2, TrUserData),
+	     case is_empty_string(TrF2) of
+	       true -> B1;
+	       false -> e_type_string(TrF2, <<B1/binary, 18>>)
+	     end
+	   end
+    end.
+
+e_msg_RequestInfo(Msg, TrUserData) ->
+    e_msg_RequestInfo(Msg, <<>>, TrUserData).
+
+
+e_msg_RequestInfo(#'RequestInfo'{version = F1}, Bin,
+		  TrUserData) ->
+    if F1 == undefined -> Bin;
+       true ->
+	   begin
+	     TrF1 = id(F1, TrUserData),
+	     case is_empty_string(TrF1) of
+	       true -> Bin;
+	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
+	     end
+	   end
+    end.
+
+e_msg_RequestCommit(_Msg, _TrUserData) -> <<>>.
+
 e_msg_RequestQuery(Msg, TrUserData) ->
     e_msg_RequestQuery(Msg, <<>>, TrUserData).
 
@@ -1114,45 +1225,40 @@ e_msg_RequestQuery(#'RequestQuery'{data = F1, path = F2,
 	   end
     end.
 
-e_msg_RequestEndBlock(Msg, TrUserData) ->
-    e_msg_RequestEndBlock(Msg, <<>>, TrUserData).
+e_msg_RequestInitChain(Msg, TrUserData) ->
+    e_msg_RequestInitChain(Msg, <<>>, TrUserData).
 
 
-e_msg_RequestEndBlock(#'RequestEndBlock'{height = F1},
-		      Bin, TrUserData) ->
-    if F1 == undefined -> Bin;
+e_msg_RequestInitChain(#'RequestInitChain'{validators =
+					       F1,
+					   app_state_bytes = F2},
+		       Bin, TrUserData) ->
+    B1 = begin
+	   TrF1 = id(F1, TrUserData),
+	   if TrF1 == [] -> Bin;
+	      true ->
+		  e_field_RequestInitChain_validators(TrF1, Bin,
+						      TrUserData)
+	   end
+	 end,
+    if F2 == undefined -> B1;
        true ->
 	   begin
-	     TrF1 = id(F1, TrUserData),
-	     if TrF1 =:= 0 -> Bin;
-		true -> e_type_int64(TrF1, <<Bin/binary, 8>>)
+	     TrF2 = id(F2, TrUserData),
+	     case iolist_size(TrF2) of
+	       0 -> B1;
+	       _ -> e_type_bytes(TrF2, <<B1/binary, 18>>)
 	     end
 	   end
     end.
 
 e_msg_RequestFlush(_Msg, _TrUserData) -> <<>>.
 
-e_msg_RequestInitChain(Msg, TrUserData) ->
-    e_msg_RequestInitChain(Msg, <<>>, TrUserData).
+e_msg_RequestEcho(Msg, TrUserData) ->
+    e_msg_RequestEcho(Msg, <<>>, TrUserData).
 
 
-e_msg_RequestInitChain(#'RequestInitChain'{validators =
-					       F1},
-		       Bin, TrUserData) ->
-    begin
-      TrF1 = id(F1, TrUserData),
-      if TrF1 == [] -> Bin;
-	 true ->
-	     e_field_RequestInitChain_validators(TrF1, Bin,
-						 TrUserData)
-      end
-    end.
-
-e_msg_RequestInfo(Msg, TrUserData) ->
-    e_msg_RequestInfo(Msg, <<>>, TrUserData).
-
-
-e_msg_RequestInfo(#'RequestInfo'{version = F1}, Bin,
+e_msg_RequestEcho(#'RequestEcho'{message = F1}, Bin,
 		  TrUserData) ->
     if F1 == undefined -> Bin;
        true ->
@@ -1161,23 +1267,6 @@ e_msg_RequestInfo(#'RequestInfo'{version = F1}, Bin,
 	     case is_empty_string(TrF1) of
 	       true -> Bin;
 	       false -> e_type_string(TrF1, <<Bin/binary, 10>>)
-	     end
-	   end
-    end.
-
-e_msg_RequestDeliverTx(Msg, TrUserData) ->
-    e_msg_RequestDeliverTx(Msg, <<>>, TrUserData).
-
-
-e_msg_RequestDeliverTx(#'RequestDeliverTx'{tx = F1},
-		       Bin, TrUserData) ->
-    if F1 == undefined -> Bin;
-       true ->
-	   begin
-	     TrF1 = id(F1, TrUserData),
-	     case iolist_size(TrF1) of
-	       0 -> Bin;
-	       _ -> e_type_bytes(TrF1, <<Bin/binary, 10>>)
 	     end
 	   end
     end.
@@ -1258,6 +1347,46 @@ e_msg_Request(#'Request'{value = F1}, Bin,
 	  end
     end.
 
+e_mfield_ResponseDeliverTx_tags(Msg, Bin, TrUserData) ->
+    SubBin = e_msg_KVPair(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_field_ResponseDeliverTx_tags([Elem | Rest], Bin,
+			       TrUserData) ->
+    Bin2 = <<Bin/binary, 58>>,
+    Bin3 = e_mfield_ResponseDeliverTx_tags(id(Elem,
+					      TrUserData),
+					   Bin2, TrUserData),
+    e_field_ResponseDeliverTx_tags(Rest, Bin3, TrUserData);
+e_field_ResponseDeliverTx_tags([], Bin, _TrUserData) ->
+    Bin.
+
+e_mfield_ResponseDeliverTx_fee(Msg, Bin, TrUserData) ->
+    SubBin = e_msg_KI64Pair(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_mfield_ResponseCheckTx_tags(Msg, Bin, TrUserData) ->
+    SubBin = e_msg_KVPair(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_field_ResponseCheckTx_tags([Elem | Rest], Bin,
+			     TrUserData) ->
+    Bin2 = <<Bin/binary, 58>>,
+    Bin3 = e_mfield_ResponseCheckTx_tags(id(Elem,
+					    TrUserData),
+					 Bin2, TrUserData),
+    e_field_ResponseCheckTx_tags(Rest, Bin3, TrUserData);
+e_field_ResponseCheckTx_tags([], Bin, _TrUserData) ->
+    Bin.
+
+e_mfield_ResponseCheckTx_fee(Msg, Bin, TrUserData) ->
+    SubBin = e_msg_KI64Pair(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
 e_mfield_BlockID_parts(Msg, Bin, TrUserData) ->
     SubBin = e_msg_PartSetHeader(Msg, <<>>, TrUserData),
     Bin2 = e_varint(byte_size(SubBin), Bin),
@@ -1267,55 +1396,6 @@ e_mfield_Header_last_block_id(Msg, Bin, TrUserData) ->
     SubBin = e_msg_BlockID(Msg, <<>>, TrUserData),
     Bin2 = e_varint(byte_size(SubBin), Bin),
     <<Bin2/binary, SubBin/binary>>.
-
-e_mfield_RequestBeginBlock_header(Msg, Bin,
-				  TrUserData) ->
-    SubBin = e_msg_Header(Msg, <<>>, TrUserData),
-    Bin2 = e_varint(byte_size(SubBin), Bin),
-    <<Bin2/binary, SubBin/binary>>.
-
-e_field_RequestBeginBlock_absent_validators(Elems, Bin,
-					    TrUserData)
-    when Elems =/= [] ->
-    SubBin =
-	e_pfield_RequestBeginBlock_absent_validators(Elems,
-						     <<>>, TrUserData),
-    Bin2 = <<Bin/binary, 26>>,
-    Bin3 = e_varint(byte_size(SubBin), Bin2),
-    <<Bin3/binary, SubBin/binary>>;
-e_field_RequestBeginBlock_absent_validators([], Bin,
-					    _TrUserData) ->
-    Bin.
-
-e_pfield_RequestBeginBlock_absent_validators([Value
-					      | Rest],
-					     Bin, TrUserData) ->
-    Bin2 = e_type_int32(id(Value, TrUserData), Bin),
-    e_pfield_RequestBeginBlock_absent_validators(Rest, Bin2,
-						 TrUserData);
-e_pfield_RequestBeginBlock_absent_validators([], Bin,
-					     _TrUserData) ->
-    Bin.
-
-e_mfield_RequestBeginBlock_byzantine_validators(Msg,
-						Bin, TrUserData) ->
-    SubBin = e_msg_Evidence(Msg, <<>>, TrUserData),
-    Bin2 = e_varint(byte_size(SubBin), Bin),
-    <<Bin2/binary, SubBin/binary>>.
-
-e_field_RequestBeginBlock_byzantine_validators([Elem
-						| Rest],
-					       Bin, TrUserData) ->
-    Bin2 = <<Bin/binary, 34>>,
-    Bin3 =
-	e_mfield_RequestBeginBlock_byzantine_validators(id(Elem,
-							   TrUserData),
-							Bin2, TrUserData),
-    e_field_RequestBeginBlock_byzantine_validators(Rest,
-						   Bin3, TrUserData);
-e_field_RequestBeginBlock_byzantine_validators([], Bin,
-					       _TrUserData) ->
-    Bin.
 
 e_mfield_ConsensusParams_block_size(Msg, Bin,
 				    TrUserData) ->
@@ -1360,21 +1440,6 @@ e_mfield_ResponseEndBlock_consensus_param_updates(Msg,
     SubBin = e_msg_ConsensusParams(Msg, <<>>, TrUserData),
     Bin2 = e_varint(byte_size(SubBin), Bin),
     <<Bin2/binary, SubBin/binary>>.
-
-e_mfield_ResponseDeliverTx_tags(Msg, Bin, TrUserData) ->
-    SubBin = e_msg_KVPair(Msg, <<>>, TrUserData),
-    Bin2 = e_varint(byte_size(SubBin), Bin),
-    <<Bin2/binary, SubBin/binary>>.
-
-e_field_ResponseDeliverTx_tags([Elem | Rest], Bin,
-			       TrUserData) ->
-    Bin2 = <<Bin/binary, 34>>,
-    Bin3 = e_mfield_ResponseDeliverTx_tags(id(Elem,
-					      TrUserData),
-					   Bin2, TrUserData),
-    e_field_ResponseDeliverTx_tags(Rest, Bin3, TrUserData);
-e_field_ResponseDeliverTx_tags([], Bin, _TrUserData) ->
-    Bin.
 
 e_mfield_Response_exception(Msg, Bin, TrUserData) ->
     SubBin = e_msg_ResponseException(Msg, <<>>, TrUserData),
@@ -1429,6 +1494,55 @@ e_mfield_Response_commit(Msg, Bin, TrUserData) ->
     SubBin = e_msg_ResponseCommit(Msg, <<>>, TrUserData),
     Bin2 = e_varint(byte_size(SubBin), Bin),
     <<Bin2/binary, SubBin/binary>>.
+
+e_mfield_RequestBeginBlock_header(Msg, Bin,
+				  TrUserData) ->
+    SubBin = e_msg_Header(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_field_RequestBeginBlock_absent_validators(Elems, Bin,
+					    TrUserData)
+    when Elems =/= [] ->
+    SubBin =
+	e_pfield_RequestBeginBlock_absent_validators(Elems,
+						     <<>>, TrUserData),
+    Bin2 = <<Bin/binary, 26>>,
+    Bin3 = e_varint(byte_size(SubBin), Bin2),
+    <<Bin3/binary, SubBin/binary>>;
+e_field_RequestBeginBlock_absent_validators([], Bin,
+					    _TrUserData) ->
+    Bin.
+
+e_pfield_RequestBeginBlock_absent_validators([Value
+					      | Rest],
+					     Bin, TrUserData) ->
+    Bin2 = e_type_int32(id(Value, TrUserData), Bin),
+    e_pfield_RequestBeginBlock_absent_validators(Rest, Bin2,
+						 TrUserData);
+e_pfield_RequestBeginBlock_absent_validators([], Bin,
+					     _TrUserData) ->
+    Bin.
+
+e_mfield_RequestBeginBlock_byzantine_validators(Msg,
+						Bin, TrUserData) ->
+    SubBin = e_msg_Evidence(Msg, <<>>, TrUserData),
+    Bin2 = e_varint(byte_size(SubBin), Bin),
+    <<Bin2/binary, SubBin/binary>>.
+
+e_field_RequestBeginBlock_byzantine_validators([Elem
+						| Rest],
+					       Bin, TrUserData) ->
+    Bin2 = <<Bin/binary, 34>>,
+    Bin3 =
+	e_mfield_RequestBeginBlock_byzantine_validators(id(Elem,
+							   TrUserData),
+							Bin2, TrUserData),
+    e_field_RequestBeginBlock_byzantine_validators(Rest,
+						   Bin3, TrUserData);
+e_field_RequestBeginBlock_byzantine_validators([], Bin,
+					       _TrUserData) ->
+    Bin.
 
 e_mfield_RequestInitChain_validators(Msg, Bin,
 				     TrUserData) ->
@@ -1499,11 +1613,6 @@ e_mfield_Request_end_block(Msg, Bin, TrUserData) ->
 e_mfield_Request_commit(_Msg, Bin, _TrUserData) ->
     <<Bin/binary, 0>>.
 
-'e_enum_KVPair.Type'('STRING', Bin) ->
-    <<Bin/binary, 0>>;
-'e_enum_KVPair.Type'('INT', Bin) -> <<Bin/binary, 1>>;
-'e_enum_KVPair.Type'(V, Bin) -> e_varint(V, Bin).
-
 e_type_int32(Value, Bin)
     when 0 =< Value, Value =< 127 ->
     <<Bin/binary, Value>>;
@@ -1567,14 +1676,87 @@ decode_msg(Bin, MsgName) when is_binary(Bin) ->
 decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
     TrUserData = proplists:get_value(user_data, Opts),
     case MsgName of
-      'RequestSetOption' ->
-	  try d_msg_RequestSetOption(Bin, TrUserData) catch
+      'RequestDeliverTx' ->
+	  try d_msg_RequestDeliverTx(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'RequestSetOption',
+			{Bin, 'RequestDeliverTx',
 			 {Class, Reason, StackTrace}}}})
+	  end;
+      'KI64Pair' ->
+	  try d_msg_KI64Pair(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'KI64Pair', {Class, Reason, StackTrace}}}})
+	  end;
+      'KVPair' ->
+	  try d_msg_KVPair(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'KVPair', {Class, Reason, StackTrace}}}})
+	  end;
+      'ResponseDeliverTx' ->
+	  try d_msg_ResponseDeliverTx(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'ResponseDeliverTx',
+			 {Class, Reason, StackTrace}}}})
+	  end;
+      'ResponseFlush' ->
+	  try d_msg_ResponseFlush(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'ResponseFlush', {Class, Reason, StackTrace}}}})
+	  end;
+      'ResponseCommit' ->
+	  try d_msg_ResponseCommit(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'ResponseCommit', {Class, Reason, StackTrace}}}})
+	  end;
+      'RequestCheckTx' ->
+	  try d_msg_RequestCheckTx(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'RequestCheckTx', {Class, Reason, StackTrace}}}})
+	  end;
+      'Evidence' ->
+	  try d_msg_Evidence(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'Evidence', {Class, Reason, StackTrace}}}})
+	  end;
+      'ResponseInfo' ->
+	  try d_msg_ResponseInfo(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'ResponseInfo', {Class, Reason, StackTrace}}}})
+	  end;
+      'ResponseCheckTx' ->
+	  try d_msg_ResponseCheckTx(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'ResponseCheckTx', {Class, Reason, StackTrace}}}})
 	  end;
       'PartSetHeader' ->
 	  try d_msg_PartSetHeader(Bin, TrUserData) catch
@@ -1592,14 +1774,6 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 		       {decoding_failure,
 			{Bin, 'BlockID', {Class, Reason, StackTrace}}}})
 	  end;
-      'Evidence' ->
-	  try d_msg_Evidence(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'Evidence', {Class, Reason, StackTrace}}}})
-	  end;
       'Header' ->
 	  try d_msg_Header(Bin, TrUserData) catch
 	    Class:Reason ->
@@ -1608,14 +1782,13 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 		       {decoding_failure,
 			{Bin, 'Header', {Class, Reason, StackTrace}}}})
 	  end;
-      'RequestBeginBlock' ->
-	  try d_msg_RequestBeginBlock(Bin, TrUserData) catch
+      'RequestEndBlock' ->
+	  try d_msg_RequestEndBlock(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'RequestBeginBlock',
-			 {Class, Reason, StackTrace}}}})
+			{Bin, 'RequestEndBlock', {Class, Reason, StackTrace}}}})
 	  end;
       'ResponseBeginBlock' ->
 	  try d_msg_ResponseBeginBlock(Bin, TrUserData) catch
@@ -1626,30 +1799,6 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 			{Bin, 'ResponseBeginBlock',
 			 {Class, Reason, StackTrace}}}})
 	  end;
-      'RequestEcho' ->
-	  try d_msg_RequestEcho(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'RequestEcho', {Class, Reason, StackTrace}}}})
-	  end;
-      'RequestCheckTx' ->
-	  try d_msg_RequestCheckTx(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'RequestCheckTx', {Class, Reason, StackTrace}}}})
-	  end;
-      'ResponseInfo' ->
-	  try d_msg_ResponseInfo(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'ResponseInfo', {Class, Reason, StackTrace}}}})
-	  end;
       'ResponseEcho' ->
 	  try d_msg_ResponseEcho(Bin, TrUserData) catch
 	    Class:Reason ->
@@ -1657,39 +1806,6 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 		error({gpb_error,
 		       {decoding_failure,
 			{Bin, 'ResponseEcho', {Class, Reason, StackTrace}}}})
-	  end;
-      'ResponseCheckTx' ->
-	  try d_msg_ResponseCheckTx(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'ResponseCheckTx', {Class, Reason, StackTrace}}}})
-	  end;
-      'RequestCommit' ->
-	  try d_msg_RequestCommit(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'RequestCommit', {Class, Reason, StackTrace}}}})
-	  end;
-      'ResponseException' ->
-	  try d_msg_ResponseException(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'ResponseException',
-			 {Class, Reason, StackTrace}}}})
-	  end;
-      'ResponseCommit' ->
-	  try d_msg_ResponseCommit(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'ResponseCommit', {Class, Reason, StackTrace}}}})
 	  end;
       'BlockGossip' ->
 	  try d_msg_BlockGossip(Bin, TrUserData) catch
@@ -1740,23 +1856,6 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 			{Bin, 'ResponseEndBlock',
 			 {Class, Reason, StackTrace}}}})
 	  end;
-      'KVPair' ->
-	  try d_msg_KVPair(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'KVPair', {Class, Reason, StackTrace}}}})
-	  end;
-      'ResponseDeliverTx' ->
-	  try d_msg_ResponseDeliverTx(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'ResponseDeliverTx',
-			 {Class, Reason, StackTrace}}}})
-	  end;
       'ResponseQuery' ->
 	  try d_msg_ResponseQuery(Bin, TrUserData) catch
 	    Class:Reason ->
@@ -1783,13 +1882,14 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 			{Bin, 'ResponseSetOption',
 			 {Class, Reason, StackTrace}}}})
 	  end;
-      'ResponseFlush' ->
-	  try d_msg_ResponseFlush(Bin, TrUserData) catch
+      'ResponseException' ->
+	  try d_msg_ResponseException(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'ResponseFlush', {Class, Reason, StackTrace}}}})
+			{Bin, 'ResponseException',
+			 {Class, Reason, StackTrace}}}})
 	  end;
       'Response' ->
 	  try d_msg_Response(Bin, TrUserData) catch
@@ -1799,37 +1899,22 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 		       {decoding_failure,
 			{Bin, 'Response', {Class, Reason, StackTrace}}}})
 	  end;
-      'RequestQuery' ->
-	  try d_msg_RequestQuery(Bin, TrUserData) catch
+      'RequestBeginBlock' ->
+	  try d_msg_RequestBeginBlock(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'RequestQuery', {Class, Reason, StackTrace}}}})
+			{Bin, 'RequestBeginBlock',
+			 {Class, Reason, StackTrace}}}})
 	  end;
-      'RequestEndBlock' ->
-	  try d_msg_RequestEndBlock(Bin, TrUserData) catch
+      'RequestSetOption' ->
+	  try d_msg_RequestSetOption(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'RequestEndBlock', {Class, Reason, StackTrace}}}})
-	  end;
-      'RequestFlush' ->
-	  try d_msg_RequestFlush(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'RequestFlush', {Class, Reason, StackTrace}}}})
-	  end;
-      'RequestInitChain' ->
-	  try d_msg_RequestInitChain(Bin, TrUserData) catch
-	    Class:Reason ->
-		StackTrace = erlang:get_stacktrace(),
-		error({gpb_error,
-		       {decoding_failure,
-			{Bin, 'RequestInitChain',
+			{Bin, 'RequestSetOption',
 			 {Class, Reason, StackTrace}}}})
 	  end;
       'RequestInfo' ->
@@ -1840,14 +1925,46 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 		       {decoding_failure,
 			{Bin, 'RequestInfo', {Class, Reason, StackTrace}}}})
 	  end;
-      'RequestDeliverTx' ->
-	  try d_msg_RequestDeliverTx(Bin, TrUserData) catch
+      'RequestCommit' ->
+	  try d_msg_RequestCommit(Bin, TrUserData) catch
 	    Class:Reason ->
 		StackTrace = erlang:get_stacktrace(),
 		error({gpb_error,
 		       {decoding_failure,
-			{Bin, 'RequestDeliverTx',
+			{Bin, 'RequestCommit', {Class, Reason, StackTrace}}}})
+	  end;
+      'RequestQuery' ->
+	  try d_msg_RequestQuery(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'RequestQuery', {Class, Reason, StackTrace}}}})
+	  end;
+      'RequestInitChain' ->
+	  try d_msg_RequestInitChain(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'RequestInitChain',
 			 {Class, Reason, StackTrace}}}})
+	  end;
+      'RequestFlush' ->
+	  try d_msg_RequestFlush(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'RequestFlush', {Class, Reason, StackTrace}}}})
+	  end;
+      'RequestEcho' ->
+	  try d_msg_RequestEcho(Bin, TrUserData) catch
+	    Class:Reason ->
+		StackTrace = erlang:get_stacktrace(),
+		error({gpb_error,
+		       {decoding_failure,
+			{Bin, 'RequestEcho', {Class, Reason, StackTrace}}}})
 	  end;
       'Request' ->
 	  try d_msg_Request(Bin, TrUserData) catch
@@ -1861,138 +1978,1690 @@ decode_msg(Bin, MsgName, Opts) when is_binary(Bin) ->
 
 
 
-d_msg_RequestSetOption(Bin, TrUserData) ->
-    dfp_read_field_def_RequestSetOption(Bin, 0, 0,
-					id([], TrUserData), id([], TrUserData),
-					TrUserData).
+d_msg_RequestDeliverTx(Bin, TrUserData) ->
+    dfp_read_field_def_RequestDeliverTx(Bin, 0, 0,
+					id(<<>>, TrUserData), TrUserData).
 
-dfp_read_field_def_RequestSetOption(<<10, Rest/binary>>,
-				    Z1, Z2, F@_1, F@_2, TrUserData) ->
-    d_field_RequestSetOption_key(Rest, Z1, Z2, F@_1, F@_2,
-				 TrUserData);
-dfp_read_field_def_RequestSetOption(<<18, Rest/binary>>,
-				    Z1, Z2, F@_1, F@_2, TrUserData) ->
-    d_field_RequestSetOption_value(Rest, Z1, Z2, F@_1, F@_2,
-				   TrUserData);
-dfp_read_field_def_RequestSetOption(<<>>, 0, 0, F@_1,
-				    F@_2, _) ->
-    #'RequestSetOption'{key = F@_1, value = F@_2};
-dfp_read_field_def_RequestSetOption(Other, Z1, Z2, F@_1,
-				    F@_2, TrUserData) ->
-    dg_read_field_def_RequestSetOption(Other, Z1, Z2, F@_1,
-				       F@_2, TrUserData).
+dfp_read_field_def_RequestDeliverTx(<<10, Rest/binary>>,
+				    Z1, Z2, F@_1, TrUserData) ->
+    d_field_RequestDeliverTx_tx(Rest, Z1, Z2, F@_1,
+				TrUserData);
+dfp_read_field_def_RequestDeliverTx(<<>>, 0, 0, F@_1,
+				    _) ->
+    #'RequestDeliverTx'{tx = F@_1};
+dfp_read_field_def_RequestDeliverTx(Other, Z1, Z2, F@_1,
+				    TrUserData) ->
+    dg_read_field_def_RequestDeliverTx(Other, Z1, Z2, F@_1,
+				       TrUserData).
 
-dg_read_field_def_RequestSetOption(<<1:1, X:7,
+dg_read_field_def_RequestDeliverTx(<<1:1, X:7,
 				     Rest/binary>>,
-				   N, Acc, F@_1, F@_2, TrUserData)
+				   N, Acc, F@_1, TrUserData)
     when N < 32 - 7 ->
-    dg_read_field_def_RequestSetOption(Rest, N + 7,
-				       X bsl N + Acc, F@_1, F@_2, TrUserData);
-dg_read_field_def_RequestSetOption(<<0:1, X:7,
+    dg_read_field_def_RequestDeliverTx(Rest, N + 7,
+				       X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_RequestDeliverTx(<<0:1, X:7,
 				     Rest/binary>>,
-				   N, Acc, F@_1, F@_2, TrUserData) ->
+				   N, Acc, F@_1, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
       10 ->
-	  d_field_RequestSetOption_key(Rest, 0, 0, F@_1, F@_2,
-				       TrUserData);
-      18 ->
-	  d_field_RequestSetOption_value(Rest, 0, 0, F@_1, F@_2,
-					 TrUserData);
+	  d_field_RequestDeliverTx_tx(Rest, 0, 0, F@_1,
+				      TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
-		skip_varint_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
+		skip_varint_RequestDeliverTx(Rest, 0, 0, F@_1,
 					     TrUserData);
 	    1 ->
-		skip_64_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
-					 TrUserData);
+		skip_64_RequestDeliverTx(Rest, 0, 0, F@_1, TrUserData);
 	    2 ->
-		skip_length_delimited_RequestSetOption(Rest, 0, 0, F@_1,
-						       F@_2, TrUserData);
+		skip_length_delimited_RequestDeliverTx(Rest, 0, 0, F@_1,
+						       TrUserData);
 	    3 ->
-		skip_group_RequestSetOption(Rest, Key bsr 3, 0, F@_1,
-					    F@_2, TrUserData);
+		skip_group_RequestDeliverTx(Rest, Key bsr 3, 0, F@_1,
+					    TrUserData);
 	    5 ->
-		skip_32_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
-					 TrUserData)
+		skip_32_RequestDeliverTx(Rest, 0, 0, F@_1, TrUserData)
 	  end
     end;
-dg_read_field_def_RequestSetOption(<<>>, 0, 0, F@_1,
-				   F@_2, _) ->
-    #'RequestSetOption'{key = F@_1, value = F@_2}.
+dg_read_field_def_RequestDeliverTx(<<>>, 0, 0, F@_1,
+				   _) ->
+    #'RequestDeliverTx'{tx = F@_1}.
 
-d_field_RequestSetOption_key(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, TrUserData)
+d_field_RequestDeliverTx_tx(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    d_field_RequestSetOption_key(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, TrUserData);
-d_field_RequestSetOption_key(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, _, F@_2, TrUserData) ->
+    d_field_RequestDeliverTx_tx(Rest, N + 7, X bsl N + Acc,
+				F@_1, TrUserData);
+d_field_RequestDeliverTx_tx(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, _, TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
 			 end,
-    dfp_read_field_def_RequestSetOption(RestF, 0, 0,
-					NewFValue, F@_2, TrUserData).
+    dfp_read_field_def_RequestDeliverTx(RestF, 0, 0,
+					NewFValue, TrUserData).
 
-d_field_RequestSetOption_value(<<1:1, X:7,
+skip_varint_RequestDeliverTx(<<1:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, TrUserData) ->
+    skip_varint_RequestDeliverTx(Rest, Z1, Z2, F@_1,
+				 TrUserData);
+skip_varint_RequestDeliverTx(<<0:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
+					TrUserData).
+
+skip_length_delimited_RequestDeliverTx(<<1:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestDeliverTx(Rest, N + 7,
+					   X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_RequestDeliverTx(<<0:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestDeliverTx(Rest2, 0, 0, F@_1,
+					TrUserData).
+
+skip_group_RequestDeliverTx(Bin, FNum, Z2, F@_1,
+			    TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestDeliverTx(Rest, 0, Z2, F@_1,
+					TrUserData).
+
+skip_32_RequestDeliverTx(<<_:32, Rest/binary>>, Z1, Z2,
+			 F@_1, TrUserData) ->
+    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
+					TrUserData).
+
+skip_64_RequestDeliverTx(<<_:64, Rest/binary>>, Z1, Z2,
+			 F@_1, TrUserData) ->
+    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
+					TrUserData).
+
+d_msg_KI64Pair(Bin, TrUserData) ->
+    dfp_read_field_def_KI64Pair(Bin, 0, 0,
+				id(<<>>, TrUserData), id(0, TrUserData),
+				TrUserData).
+
+dfp_read_field_def_KI64Pair(<<10, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_KI64Pair_key(Rest, Z1, Z2, F@_1, F@_2,
+			 TrUserData);
+dfp_read_field_def_KI64Pair(<<16, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_KI64Pair_value(Rest, Z1, Z2, F@_1, F@_2,
+			   TrUserData);
+dfp_read_field_def_KI64Pair(<<>>, 0, 0, F@_1, F@_2,
+			    _) ->
+    #'KI64Pair'{key = F@_1, value = F@_2};
+dfp_read_field_def_KI64Pair(Other, Z1, Z2, F@_1, F@_2,
+			    TrUserData) ->
+    dg_read_field_def_KI64Pair(Other, Z1, Z2, F@_1, F@_2,
+			       TrUserData).
+
+dg_read_field_def_KI64Pair(<<1:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_KI64Pair(Rest, N + 7, X bsl N + Acc,
+			       F@_1, F@_2, TrUserData);
+dg_read_field_def_KI64Pair(<<0:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_KI64Pair_key(Rest, 0, 0, F@_1, F@_2,
+			       TrUserData);
+      16 ->
+	  d_field_KI64Pair_value(Rest, 0, 0, F@_1, F@_2,
+				 TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_KI64Pair(Rest, 0, 0, F@_1, F@_2,
+				     TrUserData);
+	    1 ->
+		skip_64_KI64Pair(Rest, 0, 0, F@_1, F@_2, TrUserData);
+	    2 ->
+		skip_length_delimited_KI64Pair(Rest, 0, 0, F@_1, F@_2,
+					       TrUserData);
+	    3 ->
+		skip_group_KI64Pair(Rest, Key bsr 3, 0, F@_1, F@_2,
+				    TrUserData);
+	    5 ->
+		skip_32_KI64Pair(Rest, 0, 0, F@_1, F@_2, TrUserData)
+	  end
+    end;
+dg_read_field_def_KI64Pair(<<>>, 0, 0, F@_1, F@_2, _) ->
+    #'KI64Pair'{key = F@_1, value = F@_2}.
+
+d_field_KI64Pair_key(<<1:1, X:7, Rest/binary>>, N, Acc,
+		     F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_KI64Pair_key(Rest, N + 7, X bsl N + Acc, F@_1,
+			 F@_2, TrUserData);
+d_field_KI64Pair_key(<<0:1, X:7, Rest/binary>>, N, Acc,
+		     _, F@_2, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_KI64Pair(RestF, 0, 0, NewFValue,
+				F@_2, TrUserData).
+
+d_field_KI64Pair_value(<<1:1, X:7, Rest/binary>>, N,
+		       Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_KI64Pair_value(Rest, N + 7, X bsl N + Acc, F@_1,
+			   F@_2, TrUserData);
+d_field_KI64Pair_value(<<0:1, X:7, Rest/binary>>, N,
+		       Acc, F@_1, _, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_KI64Pair(RestF, 0, 0, F@_1,
+				NewFValue, TrUserData).
+
+skip_varint_KI64Pair(<<1:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, TrUserData) ->
+    skip_varint_KI64Pair(Rest, Z1, Z2, F@_1, F@_2,
+			 TrUserData);
+skip_varint_KI64Pair(<<0:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_KI64Pair(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_length_delimited_KI64Pair(<<1:1, X:7,
 				 Rest/binary>>,
 			       N, Acc, F@_1, F@_2, TrUserData)
     when N < 57 ->
-    d_field_RequestSetOption_value(Rest, N + 7,
+    skip_length_delimited_KI64Pair(Rest, N + 7,
 				   X bsl N + Acc, F@_1, F@_2, TrUserData);
-d_field_RequestSetOption_value(<<0:1, X:7,
+skip_length_delimited_KI64Pair(<<0:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, _, TrUserData) ->
+			       N, Acc, F@_1, F@_2, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_KI64Pair(Rest2, 0, 0, F@_1, F@_2,
+				TrUserData).
+
+skip_group_KI64Pair(Bin, FNum, Z2, F@_1, F@_2,
+		    TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_KI64Pair(Rest, 0, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_32_KI64Pair(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_KI64Pair(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_64_KI64Pair(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_KI64Pair(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+d_msg_KVPair(Bin, TrUserData) ->
+    dfp_read_field_def_KVPair(Bin, 0, 0,
+			      id(<<>>, TrUserData), id(<<>>, TrUserData),
+			      TrUserData).
+
+dfp_read_field_def_KVPair(<<10, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, TrUserData) ->
+    d_field_KVPair_key(Rest, Z1, Z2, F@_1, F@_2,
+		       TrUserData);
+dfp_read_field_def_KVPair(<<18, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, TrUserData) ->
+    d_field_KVPair_value(Rest, Z1, Z2, F@_1, F@_2,
+			 TrUserData);
+dfp_read_field_def_KVPair(<<>>, 0, 0, F@_1, F@_2, _) ->
+    #'KVPair'{key = F@_1, value = F@_2};
+dfp_read_field_def_KVPair(Other, Z1, Z2, F@_1, F@_2,
+			  TrUserData) ->
+    dg_read_field_def_KVPair(Other, Z1, Z2, F@_1, F@_2,
+			     TrUserData).
+
+dg_read_field_def_KVPair(<<1:1, X:7, Rest/binary>>, N,
+			 Acc, F@_1, F@_2, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_KVPair(Rest, N + 7, X bsl N + Acc,
+			     F@_1, F@_2, TrUserData);
+dg_read_field_def_KVPair(<<0:1, X:7, Rest/binary>>, N,
+			 Acc, F@_1, F@_2, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_KVPair_key(Rest, 0, 0, F@_1, F@_2, TrUserData);
+      18 ->
+	  d_field_KVPair_value(Rest, 0, 0, F@_1, F@_2,
+			       TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_KVPair(Rest, 0, 0, F@_1, F@_2, TrUserData);
+	    1 -> skip_64_KVPair(Rest, 0, 0, F@_1, F@_2, TrUserData);
+	    2 ->
+		skip_length_delimited_KVPair(Rest, 0, 0, F@_1, F@_2,
+					     TrUserData);
+	    3 ->
+		skip_group_KVPair(Rest, Key bsr 3, 0, F@_1, F@_2,
+				  TrUserData);
+	    5 -> skip_32_KVPair(Rest, 0, 0, F@_1, F@_2, TrUserData)
+	  end
+    end;
+dg_read_field_def_KVPair(<<>>, 0, 0, F@_1, F@_2, _) ->
+    #'KVPair'{key = F@_1, value = F@_2}.
+
+d_field_KVPair_key(<<1:1, X:7, Rest/binary>>, N, Acc,
+		   F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_KVPair_key(Rest, N + 7, X bsl N + Acc, F@_1,
+		       F@_2, TrUserData);
+d_field_KVPair_key(<<0:1, X:7, Rest/binary>>, N, Acc, _,
+		   F@_2, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_KVPair(RestF, 0, 0, NewFValue, F@_2,
+			      TrUserData).
+
+d_field_KVPair_value(<<1:1, X:7, Rest/binary>>, N, Acc,
+		     F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_KVPair_value(Rest, N + 7, X bsl N + Acc, F@_1,
+			 F@_2, TrUserData);
+d_field_KVPair_value(<<0:1, X:7, Rest/binary>>, N, Acc,
+		     F@_1, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_KVPair(RestF, 0, 0, F@_1, NewFValue,
+			      TrUserData).
+
+skip_varint_KVPair(<<1:1, _:7, Rest/binary>>, Z1, Z2,
+		   F@_1, F@_2, TrUserData) ->
+    skip_varint_KVPair(Rest, Z1, Z2, F@_1, F@_2,
+		       TrUserData);
+skip_varint_KVPair(<<0:1, _:7, Rest/binary>>, Z1, Z2,
+		   F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
+			      TrUserData).
+
+skip_length_delimited_KVPair(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_KVPair(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, TrUserData);
+skip_length_delimited_KVPair(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_KVPair(Rest2, 0, 0, F@_1, F@_2,
+			      TrUserData).
+
+skip_group_KVPair(Bin, FNum, Z2, F@_1, F@_2,
+		  TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_KVPair(Rest, 0, Z2, F@_1, F@_2,
+			      TrUserData).
+
+skip_32_KVPair(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+	       F@_2, TrUserData) ->
+    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
+			      TrUserData).
+
+skip_64_KVPair(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+	       F@_2, TrUserData) ->
+    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
+			      TrUserData).
+
+d_msg_ResponseDeliverTx(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseDeliverTx(Bin, 0, 0,
+					 id(0, TrUserData),
+					 id(<<>>, TrUserData),
+					 id([], TrUserData), id([], TrUserData),
+					 id(0, TrUserData), id(0, TrUserData),
+					 id([], TrUserData),
+					 id(undefined, TrUserData), TrUserData).
+
+dfp_read_field_def_ResponseDeliverTx(<<8, Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_code(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				   TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<18,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_data(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				   TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<26,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_log(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				  TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<34,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_info(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				   TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<40,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_gas_wanted(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<48,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_gas_used(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<58,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_tags(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				   TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<66,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    d_field_ResponseDeliverTx_fee(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				  TrUserData);
+dfp_read_field_def_ResponseDeliverTx(<<>>, 0, 0, F@_1,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, R1, F@_8,
+				     TrUserData) ->
+    #'ResponseDeliverTx'{code = F@_1, data = F@_2,
+			 log = F@_3, info = F@_4, gas_wanted = F@_5,
+			 gas_used = F@_6, tags = lists_reverse(R1, TrUserData),
+			 fee = F@_8};
+dfp_read_field_def_ResponseDeliverTx(Other, Z1, Z2,
+				     F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_8, TrUserData) ->
+    dg_read_field_def_ResponseDeliverTx(Other, Z1, Z2, F@_1,
+					F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					F@_8, TrUserData).
+
+dg_read_field_def_ResponseDeliverTx(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				    F@_7, F@_8, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ResponseDeliverTx(Rest, N + 7,
+					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					F@_5, F@_6, F@_7, F@_8, TrUserData);
+dg_read_field_def_ResponseDeliverTx(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				    F@_7, F@_8, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      8 ->
+	  d_field_ResponseDeliverTx_code(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					 TrUserData);
+      18 ->
+	  d_field_ResponseDeliverTx_data(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					 TrUserData);
+      26 ->
+	  d_field_ResponseDeliverTx_log(Rest, 0, 0, F@_1, F@_2,
+					F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					TrUserData);
+      34 ->
+	  d_field_ResponseDeliverTx_info(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					 TrUserData);
+      40 ->
+	  d_field_ResponseDeliverTx_gas_wanted(Rest, 0, 0, F@_1,
+					       F@_2, F@_3, F@_4, F@_5, F@_6,
+					       F@_7, F@_8, TrUserData);
+      48 ->
+	  d_field_ResponseDeliverTx_gas_used(Rest, 0, 0, F@_1,
+					     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					     F@_8, TrUserData);
+      58 ->
+	  d_field_ResponseDeliverTx_tags(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					 TrUserData);
+      66 ->
+	  d_field_ResponseDeliverTx_fee(Rest, 0, 0, F@_1, F@_2,
+					F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2,
+					      F@_3, F@_4, F@_5, F@_6, F@_7,
+					      F@_8, TrUserData);
+	    1 ->
+		skip_64_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2, F@_3,
+					  F@_4, F@_5, F@_6, F@_7, F@_8,
+					  TrUserData);
+	    2 ->
+		skip_length_delimited_ResponseDeliverTx(Rest, 0, 0,
+							F@_1, F@_2, F@_3, F@_4,
+							F@_5, F@_6, F@_7, F@_8,
+							TrUserData);
+	    3 ->
+		skip_group_ResponseDeliverTx(Rest, Key bsr 3, 0, F@_1,
+					     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					     F@_8, TrUserData);
+	    5 ->
+		skip_32_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2, F@_3,
+					  F@_4, F@_5, F@_6, F@_7, F@_8,
+					  TrUserData)
+	  end
+    end;
+dg_read_field_def_ResponseDeliverTx(<<>>, 0, 0, F@_1,
+				    F@_2, F@_3, F@_4, F@_5, F@_6, R1, F@_8,
+				    TrUserData) ->
+    #'ResponseDeliverTx'{code = F@_1, data = F@_2,
+			 log = F@_3, info = F@_4, gas_wanted = F@_5,
+			 gas_used = F@_6, tags = lists_reverse(R1, TrUserData),
+			 fee = F@_8}.
+
+d_field_ResponseDeliverTx_code(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_code(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				   F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_code(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, _, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData) ->
+    {NewFValue, RestF} = {X bsl N + Acc, Rest},
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0,
+					 NewFValue, F@_2, F@_3, F@_4, F@_5,
+					 F@_6, F@_7, F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_data(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_data(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				   F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_data(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, _, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 NewFValue, F@_3, F@_4, F@_5, F@_6,
+					 F@_7, F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_log(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_log(Rest, N + 7,
+				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				  F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_log(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, _, F@_4, F@_5, F@_6, F@_7,
+			      F@_8, TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
 			   {unicode:characters_to_list(Utf8, unicode), Rest2}
 			 end,
-    dfp_read_field_def_RequestSetOption(RestF, 0, 0, F@_1,
-					NewFValue, TrUserData).
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, NewFValue, F@_4, F@_5, F@_6,
+					 F@_7, F@_8, TrUserData).
 
-skip_varint_RequestSetOption(<<1:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, F@_2, TrUserData) ->
-    skip_varint_RequestSetOption(Rest, Z1, Z2, F@_1, F@_2,
-				 TrUserData);
-skip_varint_RequestSetOption(<<0:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, F@_2, TrUserData) ->
-    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
-					F@_2, TrUserData).
-
-skip_length_delimited_RequestSetOption(<<1:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, F@_2, TrUserData)
+d_field_ResponseDeliverTx_info(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData)
     when N < 57 ->
-    skip_length_delimited_RequestSetOption(Rest, N + 7,
-					   X bsl N + Acc, F@_1, F@_2,
-					   TrUserData);
-skip_length_delimited_RequestSetOption(<<0:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, F@_2, TrUserData) ->
+    d_field_ResponseDeliverTx_info(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				   F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_info(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, _, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, F@_3, NewFValue, F@_5, F@_6,
+					 F@_7, F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_gas_wanted(<<1:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				     F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_gas_wanted(Rest, N + 7,
+					 X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					 F@_5, F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_gas_wanted(<<0:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, F@_2, F@_3, F@_4, _, F@_6,
+				     F@_7, F@_8, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, NewFValue, F@_6,
+					 F@_7, F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_gas_used(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_gas_used(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				       F@_5, F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_gas_used(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, _,
+				   F@_7, F@_8, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, NewFValue,
+					 F@_7, F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_tags(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_tags(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				   F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_tags(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, Prev,
+			       F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_KVPair(Bs, TrUserData), TrUserData), Rest2}
+			 end,
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6,
+					 cons(NewFValue, Prev, TrUserData),
+					 F@_8, TrUserData).
+
+d_field_ResponseDeliverTx_fee(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseDeliverTx_fee(Rest, N + 7,
+				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				  F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseDeliverTx_fee(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      Prev, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_KI64Pair(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 if Prev == undefined -> NewFValue;
+					    true ->
+						merge_msg_KI64Pair(Prev,
+								   NewFValue,
+								   TrUserData)
+					 end,
+					 TrUserData).
+
+skip_varint_ResponseDeliverTx(<<1:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      F@_8, TrUserData) ->
+    skip_varint_ResponseDeliverTx(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				  TrUserData);
+skip_varint_ResponseDeliverTx(<<0:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      F@_8, TrUserData) ->
+    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData).
+
+skip_length_delimited_ResponseDeliverTx(<<1:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+					F@_6, F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseDeliverTx(Rest, N + 7,
+					    X bsl N + Acc, F@_1, F@_2, F@_3,
+					    F@_4, F@_5, F@_6, F@_7, F@_8,
+					    TrUserData);
+skip_length_delimited_ResponseDeliverTx(<<0:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+					F@_6, F@_7, F@_8, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestSetOption(Rest2, 0, 0, F@_1,
-					F@_2, TrUserData).
+    dfp_read_field_def_ResponseDeliverTx(Rest2, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData).
 
-skip_group_RequestSetOption(Bin, FNum, Z2, F@_1, F@_2,
-			    TrUserData) ->
+skip_group_ResponseDeliverTx(Bin, FNum, Z2, F@_1, F@_2,
+			     F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestSetOption(Rest, 0, Z2, F@_1,
-					F@_2, TrUserData).
+    dfp_read_field_def_ResponseDeliverTx(Rest, 0, Z2, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData).
 
-skip_32_RequestSetOption(<<_:32, Rest/binary>>, Z1, Z2,
-			 F@_1, F@_2, TrUserData) ->
-    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
-					F@_2, TrUserData).
+skip_32_ResponseDeliverTx(<<_:32, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			  TrUserData) ->
+    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData).
 
-skip_64_RequestSetOption(<<_:64, Rest/binary>>, Z1, Z2,
-			 F@_1, F@_2, TrUserData) ->
-    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
-					F@_2, TrUserData).
+skip_64_ResponseDeliverTx(<<_:64, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			  TrUserData) ->
+    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_8, TrUserData).
+
+d_msg_ResponseFlush(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseFlush(Bin, 0, 0, TrUserData).
+
+dfp_read_field_def_ResponseFlush(<<>>, 0, 0, _) ->
+    #'ResponseFlush'{};
+dfp_read_field_def_ResponseFlush(Other, Z1, Z2,
+				 TrUserData) ->
+    dg_read_field_def_ResponseFlush(Other, Z1, Z2,
+				    TrUserData).
+
+dg_read_field_def_ResponseFlush(<<1:1, X:7,
+				  Rest/binary>>,
+				N, Acc, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ResponseFlush(Rest, N + 7,
+				    X bsl N + Acc, TrUserData);
+dg_read_field_def_ResponseFlush(<<0:1, X:7,
+				  Rest/binary>>,
+				N, Acc, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key band 7 of
+      0 -> skip_varint_ResponseFlush(Rest, 0, 0, TrUserData);
+      1 -> skip_64_ResponseFlush(Rest, 0, 0, TrUserData);
+      2 ->
+	  skip_length_delimited_ResponseFlush(Rest, 0, 0,
+					      TrUserData);
+      3 ->
+	  skip_group_ResponseFlush(Rest, Key bsr 3, 0,
+				   TrUserData);
+      5 -> skip_32_ResponseFlush(Rest, 0, 0, TrUserData)
+    end;
+dg_read_field_def_ResponseFlush(<<>>, 0, 0, _) ->
+    #'ResponseFlush'{}.
+
+skip_varint_ResponseFlush(<<1:1, _:7, Rest/binary>>, Z1,
+			  Z2, TrUserData) ->
+    skip_varint_ResponseFlush(Rest, Z1, Z2, TrUserData);
+skip_varint_ResponseFlush(<<0:1, _:7, Rest/binary>>, Z1,
+			  Z2, TrUserData) ->
+    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
+				     TrUserData).
+
+skip_length_delimited_ResponseFlush(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseFlush(Rest, N + 7,
+					X bsl N + Acc, TrUserData);
+skip_length_delimited_ResponseFlush(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_ResponseFlush(Rest2, 0, 0,
+				     TrUserData).
+
+skip_group_ResponseFlush(Bin, FNum, Z2, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_ResponseFlush(Rest, 0, Z2,
+				     TrUserData).
+
+skip_32_ResponseFlush(<<_:32, Rest/binary>>, Z1, Z2,
+		      TrUserData) ->
+    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
+				     TrUserData).
+
+skip_64_ResponseFlush(<<_:64, Rest/binary>>, Z1, Z2,
+		      TrUserData) ->
+    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
+				     TrUserData).
+
+d_msg_ResponseCommit(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseCommit(Bin, 0, 0,
+				      id(<<>>, TrUserData), TrUserData).
+
+dfp_read_field_def_ResponseCommit(<<18, Rest/binary>>,
+				  Z1, Z2, F@_1, TrUserData) ->
+    d_field_ResponseCommit_data(Rest, Z1, Z2, F@_1,
+				TrUserData);
+dfp_read_field_def_ResponseCommit(<<>>, 0, 0, F@_1,
+				  _) ->
+    #'ResponseCommit'{data = F@_1};
+dfp_read_field_def_ResponseCommit(Other, Z1, Z2, F@_1,
+				  TrUserData) ->
+    dg_read_field_def_ResponseCommit(Other, Z1, Z2, F@_1,
+				     TrUserData).
+
+dg_read_field_def_ResponseCommit(<<1:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ResponseCommit(Rest, N + 7,
+				     X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_ResponseCommit(<<0:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      18 ->
+	  d_field_ResponseCommit_data(Rest, 0, 0, F@_1,
+				      TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ResponseCommit(Rest, 0, 0, F@_1,
+					   TrUserData);
+	    1 ->
+		skip_64_ResponseCommit(Rest, 0, 0, F@_1, TrUserData);
+	    2 ->
+		skip_length_delimited_ResponseCommit(Rest, 0, 0, F@_1,
+						     TrUserData);
+	    3 ->
+		skip_group_ResponseCommit(Rest, Key bsr 3, 0, F@_1,
+					  TrUserData);
+	    5 ->
+		skip_32_ResponseCommit(Rest, 0, 0, F@_1, TrUserData)
+	  end
+    end;
+dg_read_field_def_ResponseCommit(<<>>, 0, 0, F@_1, _) ->
+    #'ResponseCommit'{data = F@_1}.
+
+d_field_ResponseCommit_data(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCommit_data(Rest, N + 7, X bsl N + Acc,
+				F@_1, TrUserData);
+d_field_ResponseCommit_data(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseCommit(RestF, 0, 0,
+				      NewFValue, TrUserData).
+
+skip_varint_ResponseCommit(<<1:1, _:7, Rest/binary>>,
+			   Z1, Z2, F@_1, TrUserData) ->
+    skip_varint_ResponseCommit(Rest, Z1, Z2, F@_1,
+			       TrUserData);
+skip_varint_ResponseCommit(<<0:1, _:7, Rest/binary>>,
+			   Z1, Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+skip_length_delimited_ResponseCommit(<<1:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseCommit(Rest, N + 7,
+					 X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_ResponseCommit(<<0:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_ResponseCommit(Rest2, 0, 0, F@_1,
+				      TrUserData).
+
+skip_group_ResponseCommit(Bin, FNum, Z2, F@_1,
+			  TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_ResponseCommit(Rest, 0, Z2, F@_1,
+				      TrUserData).
+
+skip_32_ResponseCommit(<<_:32, Rest/binary>>, Z1, Z2,
+		       F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+skip_64_ResponseCommit(<<_:64, Rest/binary>>, Z1, Z2,
+		       F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+d_msg_RequestCheckTx(Bin, TrUserData) ->
+    dfp_read_field_def_RequestCheckTx(Bin, 0, 0,
+				      id(<<>>, TrUserData), TrUserData).
+
+dfp_read_field_def_RequestCheckTx(<<10, Rest/binary>>,
+				  Z1, Z2, F@_1, TrUserData) ->
+    d_field_RequestCheckTx_tx(Rest, Z1, Z2, F@_1,
+			      TrUserData);
+dfp_read_field_def_RequestCheckTx(<<>>, 0, 0, F@_1,
+				  _) ->
+    #'RequestCheckTx'{tx = F@_1};
+dfp_read_field_def_RequestCheckTx(Other, Z1, Z2, F@_1,
+				  TrUserData) ->
+    dg_read_field_def_RequestCheckTx(Other, Z1, Z2, F@_1,
+				     TrUserData).
+
+dg_read_field_def_RequestCheckTx(<<1:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_RequestCheckTx(Rest, N + 7,
+				     X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_RequestCheckTx(<<0:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_RequestCheckTx_tx(Rest, 0, 0, F@_1, TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_RequestCheckTx(Rest, 0, 0, F@_1,
+					   TrUserData);
+	    1 ->
+		skip_64_RequestCheckTx(Rest, 0, 0, F@_1, TrUserData);
+	    2 ->
+		skip_length_delimited_RequestCheckTx(Rest, 0, 0, F@_1,
+						     TrUserData);
+	    3 ->
+		skip_group_RequestCheckTx(Rest, Key bsr 3, 0, F@_1,
+					  TrUserData);
+	    5 ->
+		skip_32_RequestCheckTx(Rest, 0, 0, F@_1, TrUserData)
+	  end
+    end;
+dg_read_field_def_RequestCheckTx(<<>>, 0, 0, F@_1, _) ->
+    #'RequestCheckTx'{tx = F@_1}.
+
+d_field_RequestCheckTx_tx(<<1:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, TrUserData)
+    when N < 57 ->
+    d_field_RequestCheckTx_tx(Rest, N + 7, X bsl N + Acc,
+			      F@_1, TrUserData);
+d_field_RequestCheckTx_tx(<<0:1, X:7, Rest/binary>>, N,
+			  Acc, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_RequestCheckTx(RestF, 0, 0,
+				      NewFValue, TrUserData).
+
+skip_varint_RequestCheckTx(<<1:1, _:7, Rest/binary>>,
+			   Z1, Z2, F@_1, TrUserData) ->
+    skip_varint_RequestCheckTx(Rest, Z1, Z2, F@_1,
+			       TrUserData);
+skip_varint_RequestCheckTx(<<0:1, _:7, Rest/binary>>,
+			   Z1, Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+skip_length_delimited_RequestCheckTx(<<1:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestCheckTx(Rest, N + 7,
+					 X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_RequestCheckTx(<<0:1, X:7,
+				       Rest/binary>>,
+				     N, Acc, F@_1, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestCheckTx(Rest2, 0, 0, F@_1,
+				      TrUserData).
+
+skip_group_RequestCheckTx(Bin, FNum, Z2, F@_1,
+			  TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestCheckTx(Rest, 0, Z2, F@_1,
+				      TrUserData).
+
+skip_32_RequestCheckTx(<<_:32, Rest/binary>>, Z1, Z2,
+		       F@_1, TrUserData) ->
+    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+skip_64_RequestCheckTx(<<_:64, Rest/binary>>, Z1, Z2,
+		       F@_1, TrUserData) ->
+    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
+				      TrUserData).
+
+d_msg_Evidence(Bin, TrUserData) ->
+    dfp_read_field_def_Evidence(Bin, 0, 0,
+				id(<<>>, TrUserData), id(0, TrUserData),
+				TrUserData).
+
+dfp_read_field_def_Evidence(<<10, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_Evidence_pub_key(Rest, Z1, Z2, F@_1, F@_2,
+			     TrUserData);
+dfp_read_field_def_Evidence(<<16, Rest/binary>>, Z1, Z2,
+			    F@_1, F@_2, TrUserData) ->
+    d_field_Evidence_height(Rest, Z1, Z2, F@_1, F@_2,
+			    TrUserData);
+dfp_read_field_def_Evidence(<<>>, 0, 0, F@_1, F@_2,
+			    _) ->
+    #'Evidence'{pub_key = F@_1, height = F@_2};
+dfp_read_field_def_Evidence(Other, Z1, Z2, F@_1, F@_2,
+			    TrUserData) ->
+    dg_read_field_def_Evidence(Other, Z1, Z2, F@_1, F@_2,
+			       TrUserData).
+
+dg_read_field_def_Evidence(<<1:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_Evidence(Rest, N + 7, X bsl N + Acc,
+			       F@_1, F@_2, TrUserData);
+dg_read_field_def_Evidence(<<0:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_Evidence_pub_key(Rest, 0, 0, F@_1, F@_2,
+				   TrUserData);
+      16 ->
+	  d_field_Evidence_height(Rest, 0, 0, F@_1, F@_2,
+				  TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_Evidence(Rest, 0, 0, F@_1, F@_2,
+				     TrUserData);
+	    1 ->
+		skip_64_Evidence(Rest, 0, 0, F@_1, F@_2, TrUserData);
+	    2 ->
+		skip_length_delimited_Evidence(Rest, 0, 0, F@_1, F@_2,
+					       TrUserData);
+	    3 ->
+		skip_group_Evidence(Rest, Key bsr 3, 0, F@_1, F@_2,
+				    TrUserData);
+	    5 ->
+		skip_32_Evidence(Rest, 0, 0, F@_1, F@_2, TrUserData)
+	  end
+    end;
+dg_read_field_def_Evidence(<<>>, 0, 0, F@_1, F@_2, _) ->
+    #'Evidence'{pub_key = F@_1, height = F@_2}.
+
+d_field_Evidence_pub_key(<<1:1, X:7, Rest/binary>>, N,
+			 Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_Evidence_pub_key(Rest, N + 7, X bsl N + Acc,
+			     F@_1, F@_2, TrUserData);
+d_field_Evidence_pub_key(<<0:1, X:7, Rest/binary>>, N,
+			 Acc, _, F@_2, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_Evidence(RestF, 0, 0, NewFValue,
+				F@_2, TrUserData).
+
+d_field_Evidence_height(<<1:1, X:7, Rest/binary>>, N,
+			Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_Evidence_height(Rest, N + 7, X bsl N + Acc,
+			    F@_1, F@_2, TrUserData);
+d_field_Evidence_height(<<0:1, X:7, Rest/binary>>, N,
+			Acc, F@_1, _, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_Evidence(RestF, 0, 0, F@_1,
+				NewFValue, TrUserData).
+
+skip_varint_Evidence(<<1:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, TrUserData) ->
+    skip_varint_Evidence(Rest, Z1, Z2, F@_1, F@_2,
+			 TrUserData);
+skip_varint_Evidence(<<0:1, _:7, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_length_delimited_Evidence(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_Evidence(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, TrUserData);
+skip_length_delimited_Evidence(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_Evidence(Rest2, 0, 0, F@_1, F@_2,
+				TrUserData).
+
+skip_group_Evidence(Bin, FNum, Z2, F@_1, F@_2,
+		    TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_Evidence(Rest, 0, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_32_Evidence(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+skip_64_Evidence(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+		 F@_2, TrUserData) ->
+    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
+				TrUserData).
+
+d_msg_ResponseInfo(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseInfo(Bin, 0, 0,
+				    id([], TrUserData), id([], TrUserData),
+				    id(0, TrUserData), id(<<>>, TrUserData),
+				    TrUserData).
+
+dfp_read_field_def_ResponseInfo(<<10, Rest/binary>>, Z1,
+				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_ResponseInfo_data(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, F@_4, TrUserData);
+dfp_read_field_def_ResponseInfo(<<18, Rest/binary>>, Z1,
+				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_ResponseInfo_version(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, TrUserData);
+dfp_read_field_def_ResponseInfo(<<24, Rest/binary>>, Z1,
+				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_ResponseInfo_last_block_height(Rest, Z1, Z2,
+					   F@_1, F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_ResponseInfo(<<34, Rest/binary>>, Z1,
+				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    d_field_ResponseInfo_last_block_app_hash(Rest, Z1, Z2,
+					     F@_1, F@_2, F@_3, F@_4,
+					     TrUserData);
+dfp_read_field_def_ResponseInfo(<<>>, 0, 0, F@_1, F@_2,
+				F@_3, F@_4, _) ->
+    #'ResponseInfo'{data = F@_1, version = F@_2,
+		    last_block_height = F@_3, last_block_app_hash = F@_4};
+dfp_read_field_def_ResponseInfo(Other, Z1, Z2, F@_1,
+				F@_2, F@_3, F@_4, TrUserData) ->
+    dg_read_field_def_ResponseInfo(Other, Z1, Z2, F@_1,
+				   F@_2, F@_3, F@_4, TrUserData).
+
+dg_read_field_def_ResponseInfo(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ResponseInfo(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				   TrUserData);
+dg_read_field_def_ResponseInfo(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_ResponseInfo_data(Rest, 0, 0, F@_1, F@_2, F@_3,
+				    F@_4, TrUserData);
+      18 ->
+	  d_field_ResponseInfo_version(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, TrUserData);
+      24 ->
+	  d_field_ResponseInfo_last_block_height(Rest, 0, 0, F@_1,
+						 F@_2, F@_3, F@_4, TrUserData);
+      34 ->
+	  d_field_ResponseInfo_last_block_app_hash(Rest, 0, 0,
+						   F@_1, F@_2, F@_3, F@_4,
+						   TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3,
+					 F@_4, TrUserData);
+	    1 ->
+		skip_64_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData);
+	    2 ->
+		skip_length_delimited_ResponseInfo(Rest, 0, 0, F@_1,
+						   F@_2, F@_3, F@_4,
+						   TrUserData);
+	    3 ->
+		skip_group_ResponseInfo(Rest, Key bsr 3, 0, F@_1, F@_2,
+					F@_3, F@_4, TrUserData);
+	    5 ->
+		skip_32_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData)
+	  end
+    end;
+dg_read_field_def_ResponseInfo(<<>>, 0, 0, F@_1, F@_2,
+			       F@_3, F@_4, _) ->
+    #'ResponseInfo'{data = F@_1, version = F@_2,
+		    last_block_height = F@_3, last_block_app_hash = F@_4}.
+
+d_field_ResponseInfo_data(<<1:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_ResponseInfo_data(Rest, N + 7, X bsl N + Acc,
+			      F@_1, F@_2, F@_3, F@_4, TrUserData);
+d_field_ResponseInfo_data(<<0:1, X:7, Rest/binary>>, N,
+			  Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseInfo(RestF, 0, 0, NewFValue,
+				    F@_2, F@_3, F@_4, TrUserData).
+
+d_field_ResponseInfo_version(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_ResponseInfo_version(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, F@_3, F@_4, TrUserData);
+d_field_ResponseInfo_version(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1,
+				    NewFValue, F@_3, F@_4, TrUserData).
+
+d_field_ResponseInfo_last_block_height(<<1:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData)
+    when N < 57 ->
+    d_field_ResponseInfo_last_block_height(Rest, N + 7,
+					   X bsl N + Acc, F@_1, F@_2, F@_3,
+					   F@_4, TrUserData);
+d_field_ResponseInfo_last_block_height(<<0:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, _, F@_4,
+				       TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1, F@_2,
+				    NewFValue, F@_4, TrUserData).
+
+d_field_ResponseInfo_last_block_app_hash(<<1:1, X:7,
+					   Rest/binary>>,
+					 N, Acc, F@_1, F@_2, F@_3, F@_4,
+					 TrUserData)
+    when N < 57 ->
+    d_field_ResponseInfo_last_block_app_hash(Rest, N + 7,
+					     X bsl N + Acc, F@_1, F@_2, F@_3,
+					     F@_4, TrUserData);
+d_field_ResponseInfo_last_block_app_hash(<<0:1, X:7,
+					   Rest/binary>>,
+					 N, Acc, F@_1, F@_2, F@_3, _,
+					 TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1, F@_2,
+				    F@_3, NewFValue, TrUserData).
+
+skip_varint_ResponseInfo(<<1:1, _:7, Rest/binary>>, Z1,
+			 Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    skip_varint_ResponseInfo(Rest, Z1, Z2, F@_1, F@_2, F@_3,
+			     F@_4, TrUserData);
+skip_varint_ResponseInfo(<<0:1, _:7, Rest/binary>>, Z1,
+			 Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
+				    F@_2, F@_3, F@_4, TrUserData).
+
+skip_length_delimited_ResponseInfo(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseInfo(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				       TrUserData);
+skip_length_delimited_ResponseInfo(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4,
+				   TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_ResponseInfo(Rest2, 0, 0, F@_1, F@_2,
+				    F@_3, F@_4, TrUserData).
+
+skip_group_ResponseInfo(Bin, FNum, Z2, F@_1, F@_2, F@_3,
+			F@_4, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_ResponseInfo(Rest, 0, Z2, F@_1, F@_2,
+				    F@_3, F@_4, TrUserData).
+
+skip_32_ResponseInfo(<<_:32, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
+				    F@_2, F@_3, F@_4, TrUserData).
+
+skip_64_ResponseInfo(<<_:64, Rest/binary>>, Z1, Z2,
+		     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
+				    F@_2, F@_3, F@_4, TrUserData).
+
+d_msg_ResponseCheckTx(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseCheckTx(Bin, 0, 0,
+				       id(0, TrUserData), id(<<>>, TrUserData),
+				       id([], TrUserData), id([], TrUserData),
+				       id(0, TrUserData), id(0, TrUserData),
+				       id([], TrUserData),
+				       id(undefined, TrUserData), TrUserData).
+
+dfp_read_field_def_ResponseCheckTx(<<8, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_code(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<18, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_data(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<26, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_log(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<34, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_info(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<40, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_gas_wanted(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<48, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_gas_used(Rest, Z1, Z2, F@_1,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				     TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<58, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_tags(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<66, Rest/binary>>,
+				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    d_field_ResponseCheckTx_fee(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseCheckTx(<<>>, 0, 0, F@_1,
+				   F@_2, F@_3, F@_4, F@_5, F@_6, R1, F@_8,
+				   TrUserData) ->
+    #'ResponseCheckTx'{code = F@_1, data = F@_2, log = F@_3,
+		       info = F@_4, gas_wanted = F@_5, gas_used = F@_6,
+		       tags = lists_reverse(R1, TrUserData), fee = F@_8};
+dfp_read_field_def_ResponseCheckTx(Other, Z1, Z2, F@_1,
+				   F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				   TrUserData) ->
+    dg_read_field_def_ResponseCheckTx(Other, Z1, Z2, F@_1,
+				      F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData).
+
+dg_read_field_def_ResponseCheckTx(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				  F@_7, F@_8, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_ResponseCheckTx(Rest, N + 7,
+				      X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				      F@_5, F@_6, F@_7, F@_8, TrUserData);
+dg_read_field_def_ResponseCheckTx(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				  F@_7, F@_8, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      8 ->
+	  d_field_ResponseCheckTx_code(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+      18 ->
+	  d_field_ResponseCheckTx_data(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+      26 ->
+	  d_field_ResponseCheckTx_log(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData);
+      34 ->
+	  d_field_ResponseCheckTx_info(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+      40 ->
+	  d_field_ResponseCheckTx_gas_wanted(Rest, 0, 0, F@_1,
+					     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					     F@_8, TrUserData);
+      48 ->
+	  d_field_ResponseCheckTx_gas_used(Rest, 0, 0, F@_1, F@_2,
+					   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					   TrUserData);
+      58 ->
+	  d_field_ResponseCheckTx_tags(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
+      66 ->
+	  d_field_ResponseCheckTx_fee(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2,
+					    F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+					    TrUserData);
+	    1 ->
+		skip_64_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2, F@_3,
+					F@_4, F@_5, F@_6, F@_7, F@_8,
+					TrUserData);
+	    2 ->
+		skip_length_delimited_ResponseCheckTx(Rest, 0, 0, F@_1,
+						      F@_2, F@_3, F@_4, F@_5,
+						      F@_6, F@_7, F@_8,
+						      TrUserData);
+	    3 ->
+		skip_group_ResponseCheckTx(Rest, Key bsr 3, 0, F@_1,
+					   F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+					   F@_8, TrUserData);
+	    5 ->
+		skip_32_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2, F@_3,
+					F@_4, F@_5, F@_6, F@_7, F@_8,
+					TrUserData)
+	  end
+    end;
+dg_read_field_def_ResponseCheckTx(<<>>, 0, 0, F@_1,
+				  F@_2, F@_3, F@_4, F@_5, F@_6, R1, F@_8,
+				  TrUserData) ->
+    #'ResponseCheckTx'{code = F@_1, data = F@_2, log = F@_3,
+		       info = F@_4, gas_wanted = F@_5, gas_used = F@_6,
+		       tags = lists_reverse(R1, TrUserData), fee = F@_8}.
+
+d_field_ResponseCheckTx_code(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_code(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+d_field_ResponseCheckTx_code(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, _, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData) ->
+    {NewFValue, RestF} = {X bsl N + Acc, Rest},
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0,
+				       NewFValue, F@_2, F@_3, F@_4, F@_5, F@_6,
+				       F@_7, F@_8, TrUserData).
+
+d_field_ResponseCheckTx_data(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_data(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+d_field_ResponseCheckTx_data(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, _, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       NewFValue, F@_3, F@_4, F@_5, F@_6, F@_7,
+				       F@_8, TrUserData).
+
+d_field_ResponseCheckTx_log(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_log(Rest, N + 7, X bsl N + Acc,
+				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				TrUserData);
+d_field_ResponseCheckTx_log(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, _, F@_4, F@_5, F@_6, F@_7, F@_8,
+			    TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, NewFValue, F@_4, F@_5, F@_6, F@_7,
+				       F@_8, TrUserData).
+
+d_field_ResponseCheckTx_info(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_info(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+d_field_ResponseCheckTx_info(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, _, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, F@_3, NewFValue, F@_5, F@_6, F@_7,
+				       F@_8, TrUserData).
+
+d_field_ResponseCheckTx_gas_wanted(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				   F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_gas_wanted(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				       F@_5, F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseCheckTx_gas_wanted(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, F@_3, F@_4, _, F@_6,
+				   F@_7, F@_8, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, F@_3, F@_4, NewFValue, F@_6, F@_7,
+				       F@_8, TrUserData).
+
+d_field_ResponseCheckTx_gas_used(<<1:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				 F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_gas_used(Rest, N + 7,
+				     X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				     F@_5, F@_6, F@_7, F@_8, TrUserData);
+d_field_ResponseCheckTx_gas_used(<<0:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, _, F@_7,
+				 F@_8, TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, NewFValue, F@_7,
+				       F@_8, TrUserData).
+
+d_field_ResponseCheckTx_tags(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_tags(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
+d_field_ResponseCheckTx_tags(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, Prev,
+			     F@_8, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_KVPair(Bs, TrUserData), TrUserData), Rest2}
+			 end,
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6,
+				       cons(NewFValue, Prev, TrUserData), F@_8,
+				       TrUserData).
+
+d_field_ResponseCheckTx_fee(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseCheckTx_fee(Rest, N + 7, X bsl N + Acc,
+				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				TrUserData);
+d_field_ResponseCheckTx_fee(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    Prev, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_KI64Pair(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				       if Prev == undefined -> NewFValue;
+					  true ->
+					      merge_msg_KI64Pair(Prev,
+								 NewFValue,
+								 TrUserData)
+				       end,
+				       TrUserData).
+
+skip_varint_ResponseCheckTx(<<1:1, _:7, Rest/binary>>,
+			    Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData) ->
+    skip_varint_ResponseCheckTx(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+skip_varint_ResponseCheckTx(<<0:1, _:7, Rest/binary>>,
+			    Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData) ->
+    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData).
+
+skip_length_delimited_ResponseCheckTx(<<1:1, X:7,
+					Rest/binary>>,
+				      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				      F@_6, F@_7, F@_8, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseCheckTx(Rest, N + 7,
+					  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					  F@_5, F@_6, F@_7, F@_8, TrUserData);
+skip_length_delimited_ResponseCheckTx(<<0:1, X:7,
+					Rest/binary>>,
+				      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
+				      F@_6, F@_7, F@_8, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_ResponseCheckTx(Rest2, 0, 0, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData).
+
+skip_group_ResponseCheckTx(Bin, FNum, Z2, F@_1, F@_2,
+			   F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_ResponseCheckTx(Rest, 0, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData).
+
+skip_32_ResponseCheckTx(<<_:32, Rest/binary>>, Z1, Z2,
+			F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			TrUserData) ->
+    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData).
+
+skip_64_ResponseCheckTx(<<_:64, Rest/binary>>, Z1, Z2,
+			F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			TrUserData) ->
+    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
+				       F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData).
 
 d_msg_PartSetHeader(Bin, TrUserData) ->
     dfp_read_field_def_PartSetHeader(Bin, 0, 0,
@@ -2250,132 +3919,6 @@ skip_64_BlockID(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
 		F@_2, TrUserData) ->
     dfp_read_field_def_BlockID(Rest, Z1, Z2, F@_1, F@_2,
 			       TrUserData).
-
-d_msg_Evidence(Bin, TrUserData) ->
-    dfp_read_field_def_Evidence(Bin, 0, 0,
-				id(<<>>, TrUserData), id(0, TrUserData),
-				TrUserData).
-
-dfp_read_field_def_Evidence(<<10, Rest/binary>>, Z1, Z2,
-			    F@_1, F@_2, TrUserData) ->
-    d_field_Evidence_pub_key(Rest, Z1, Z2, F@_1, F@_2,
-			     TrUserData);
-dfp_read_field_def_Evidence(<<16, Rest/binary>>, Z1, Z2,
-			    F@_1, F@_2, TrUserData) ->
-    d_field_Evidence_height(Rest, Z1, Z2, F@_1, F@_2,
-			    TrUserData);
-dfp_read_field_def_Evidence(<<>>, 0, 0, F@_1, F@_2,
-			    _) ->
-    #'Evidence'{pub_key = F@_1, height = F@_2};
-dfp_read_field_def_Evidence(Other, Z1, Z2, F@_1, F@_2,
-			    TrUserData) ->
-    dg_read_field_def_Evidence(Other, Z1, Z2, F@_1, F@_2,
-			       TrUserData).
-
-dg_read_field_def_Evidence(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_Evidence(Rest, N + 7, X bsl N + Acc,
-			       F@_1, F@_2, TrUserData);
-dg_read_field_def_Evidence(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_Evidence_pub_key(Rest, 0, 0, F@_1, F@_2,
-				   TrUserData);
-      16 ->
-	  d_field_Evidence_height(Rest, 0, 0, F@_1, F@_2,
-				  TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_Evidence(Rest, 0, 0, F@_1, F@_2,
-				     TrUserData);
-	    1 ->
-		skip_64_Evidence(Rest, 0, 0, F@_1, F@_2, TrUserData);
-	    2 ->
-		skip_length_delimited_Evidence(Rest, 0, 0, F@_1, F@_2,
-					       TrUserData);
-	    3 ->
-		skip_group_Evidence(Rest, Key bsr 3, 0, F@_1, F@_2,
-				    TrUserData);
-	    5 ->
-		skip_32_Evidence(Rest, 0, 0, F@_1, F@_2, TrUserData)
-	  end
-    end;
-dg_read_field_def_Evidence(<<>>, 0, 0, F@_1, F@_2, _) ->
-    #'Evidence'{pub_key = F@_1, height = F@_2}.
-
-d_field_Evidence_pub_key(<<1:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, TrUserData)
-    when N < 57 ->
-    d_field_Evidence_pub_key(Rest, N + 7, X bsl N + Acc,
-			     F@_1, F@_2, TrUserData);
-d_field_Evidence_pub_key(<<0:1, X:7, Rest/binary>>, N,
-			 Acc, _, F@_2, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_Evidence(RestF, 0, 0, NewFValue,
-				F@_2, TrUserData).
-
-d_field_Evidence_height(<<1:1, X:7, Rest/binary>>, N,
-			Acc, F@_1, F@_2, TrUserData)
-    when N < 57 ->
-    d_field_Evidence_height(Rest, N + 7, X bsl N + Acc,
-			    F@_1, F@_2, TrUserData);
-d_field_Evidence_height(<<0:1, X:7, Rest/binary>>, N,
-			Acc, F@_1, _, TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_Evidence(RestF, 0, 0, F@_1,
-				NewFValue, TrUserData).
-
-skip_varint_Evidence(<<1:1, _:7, Rest/binary>>, Z1, Z2,
-		     F@_1, F@_2, TrUserData) ->
-    skip_varint_Evidence(Rest, Z1, Z2, F@_1, F@_2,
-			 TrUserData);
-skip_varint_Evidence(<<0:1, _:7, Rest/binary>>, Z1, Z2,
-		     F@_1, F@_2, TrUserData) ->
-    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
-				TrUserData).
-
-skip_length_delimited_Evidence(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_Evidence(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, TrUserData);
-skip_length_delimited_Evidence(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_Evidence(Rest2, 0, 0, F@_1, F@_2,
-				TrUserData).
-
-skip_group_Evidence(Bin, FNum, Z2, F@_1, F@_2,
-		    TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_Evidence(Rest, 0, Z2, F@_1, F@_2,
-				TrUserData).
-
-skip_32_Evidence(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-		 F@_2, TrUserData) ->
-    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
-				TrUserData).
-
-skip_64_Evidence(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-		 F@_2, TrUserData) ->
-    dfp_read_field_def_Evidence(Rest, Z1, Z2, F@_1, F@_2,
-				TrUserData).
 
 d_msg_Header(Bin, TrUserData) ->
     dfp_read_field_def_Header(Bin, 0, 0, id([], TrUserData),
@@ -2751,287 +4294,113 @@ skip_64_Header(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
 			      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, F@_9,
 			      TrUserData).
 
-d_msg_RequestBeginBlock(Bin, TrUserData) ->
-    dfp_read_field_def_RequestBeginBlock(Bin, 0, 0,
-					 id(<<>>, TrUserData),
-					 id(undefined, TrUserData),
-					 id([], TrUserData), id([], TrUserData),
-					 TrUserData).
+d_msg_RequestEndBlock(Bin, TrUserData) ->
+    dfp_read_field_def_RequestEndBlock(Bin, 0, 0,
+				       id(0, TrUserData), TrUserData).
 
-dfp_read_field_def_RequestBeginBlock(<<10,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_RequestBeginBlock_hash(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, F@_4, TrUserData);
-dfp_read_field_def_RequestBeginBlock(<<18,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_RequestBeginBlock_header(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, TrUserData);
-dfp_read_field_def_RequestBeginBlock(<<26,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_pfield_RequestBeginBlock_absent_validators(Rest, Z1,
-						 Z2, F@_1, F@_2, F@_3, F@_4,
-						 TrUserData);
-dfp_read_field_def_RequestBeginBlock(<<24,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_RequestBeginBlock_absent_validators(Rest, Z1,
-						Z2, F@_1, F@_2, F@_3, F@_4,
-						TrUserData);
-dfp_read_field_def_RequestBeginBlock(<<34,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_RequestBeginBlock_byzantine_validators(Rest, Z1,
-						   Z2, F@_1, F@_2, F@_3, F@_4,
-						   TrUserData);
-dfp_read_field_def_RequestBeginBlock(<<>>, 0, 0, F@_1,
-				     F@_2, R1, R2, TrUserData) ->
-    #'RequestBeginBlock'{hash = F@_1, header = F@_2,
-			 absent_validators = lists_reverse(R1, TrUserData),
-			 byzantine_validators = lists_reverse(R2, TrUserData)};
-dfp_read_field_def_RequestBeginBlock(Other, Z1, Z2,
-				     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dg_read_field_def_RequestBeginBlock(Other, Z1, Z2, F@_1,
-					F@_2, F@_3, F@_4, TrUserData).
+dfp_read_field_def_RequestEndBlock(<<8, Rest/binary>>,
+				   Z1, Z2, F@_1, TrUserData) ->
+    d_field_RequestEndBlock_height(Rest, Z1, Z2, F@_1,
+				   TrUserData);
+dfp_read_field_def_RequestEndBlock(<<>>, 0, 0, F@_1,
+				   _) ->
+    #'RequestEndBlock'{height = F@_1};
+dfp_read_field_def_RequestEndBlock(Other, Z1, Z2, F@_1,
+				   TrUserData) ->
+    dg_read_field_def_RequestEndBlock(Other, Z1, Z2, F@_1,
+				      TrUserData).
 
-dg_read_field_def_RequestBeginBlock(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+dg_read_field_def_RequestEndBlock(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData)
     when N < 32 - 7 ->
-    dg_read_field_def_RequestBeginBlock(Rest, N + 7,
-					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData);
-dg_read_field_def_RequestBeginBlock(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4,
-				    TrUserData) ->
+    dg_read_field_def_RequestEndBlock(Rest, N + 7,
+				      X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_RequestEndBlock(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
-      10 ->
-	  d_field_RequestBeginBlock_hash(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, F@_4, TrUserData);
-      18 ->
-	  d_field_RequestBeginBlock_header(Rest, 0, 0, F@_1, F@_2,
-					   F@_3, F@_4, TrUserData);
-      26 ->
-	  d_pfield_RequestBeginBlock_absent_validators(Rest, 0, 0,
-						       F@_1, F@_2, F@_3, F@_4,
-						       TrUserData);
-      24 ->
-	  d_field_RequestBeginBlock_absent_validators(Rest, 0, 0,
-						      F@_1, F@_2, F@_3, F@_4,
-						      TrUserData);
-      34 ->
-	  d_field_RequestBeginBlock_byzantine_validators(Rest, 0,
-							 0, F@_1, F@_2, F@_3,
-							 F@_4, TrUserData);
+      8 ->
+	  d_field_RequestEndBlock_height(Rest, 0, 0, F@_1,
+					 TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
-		skip_varint_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2,
-					      F@_3, F@_4, TrUserData);
+		skip_varint_RequestEndBlock(Rest, 0, 0, F@_1,
+					    TrUserData);
 	    1 ->
-		skip_64_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, TrUserData);
+		skip_64_RequestEndBlock(Rest, 0, 0, F@_1, TrUserData);
 	    2 ->
-		skip_length_delimited_RequestBeginBlock(Rest, 0, 0,
-							F@_1, F@_2, F@_3, F@_4,
-							TrUserData);
+		skip_length_delimited_RequestEndBlock(Rest, 0, 0, F@_1,
+						      TrUserData);
 	    3 ->
-		skip_group_RequestBeginBlock(Rest, Key bsr 3, 0, F@_1,
-					     F@_2, F@_3, F@_4, TrUserData);
+		skip_group_RequestEndBlock(Rest, Key bsr 3, 0, F@_1,
+					   TrUserData);
 	    5 ->
-		skip_32_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, TrUserData)
+		skip_32_RequestEndBlock(Rest, 0, 0, F@_1, TrUserData)
 	  end
     end;
-dg_read_field_def_RequestBeginBlock(<<>>, 0, 0, F@_1,
-				    F@_2, R1, R2, TrUserData) ->
-    #'RequestBeginBlock'{hash = F@_1, header = F@_2,
-			 absent_validators = lists_reverse(R1, TrUserData),
-			 byzantine_validators = lists_reverse(R2, TrUserData)}.
+dg_read_field_def_RequestEndBlock(<<>>, 0, 0, F@_1,
+				  _) ->
+    #'RequestEndBlock'{height = F@_1}.
 
-d_field_RequestBeginBlock_hash(<<1:1, X:7,
+d_field_RequestEndBlock_height(<<1:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+			       N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    d_field_RequestBeginBlock_hash(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-d_field_RequestBeginBlock_hash(<<0:1, X:7,
+    d_field_RequestEndBlock_height(Rest, N + 7,
+				   X bsl N + Acc, F@_1, TrUserData);
+d_field_RequestEndBlock_height(<<0:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0,
-					 NewFValue, F@_2, F@_3, F@_4,
-					 TrUserData).
-
-d_field_RequestBeginBlock_header(<<1:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_RequestBeginBlock_header(Rest, N + 7,
-				     X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData);
-d_field_RequestBeginBlock_header(<<0:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, Prev, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(d_msg_Header(Bs, TrUserData), TrUserData), Rest2}
-			 end,
-    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
-					 if Prev == undefined -> NewFValue;
-					    true ->
-						merge_msg_Header(Prev,
-								 NewFValue,
-								 TrUserData)
-					 end,
-					 F@_3, F@_4, TrUserData).
-
-d_field_RequestBeginBlock_absent_validators(<<1:1, X:7,
-					      Rest/binary>>,
-					    N, Acc, F@_1, F@_2, F@_3, F@_4,
-					    TrUserData)
-    when N < 57 ->
-    d_field_RequestBeginBlock_absent_validators(Rest, N + 7,
-						X bsl N + Acc, F@_1, F@_2, F@_3,
-						F@_4, TrUserData);
-d_field_RequestBeginBlock_absent_validators(<<0:1, X:7,
-					      Rest/binary>>,
-					    N, Acc, F@_1, F@_2, Prev, F@_4,
-					    TrUserData) ->
+			       N, Acc, _, TrUserData) ->
     {NewFValue, RestF} = {begin
-			    <<Res:32/signed-native>> = <<(X bsl N +
-							    Acc):32/unsigned-native>>,
+			    <<Res:64/signed-native>> = <<(X bsl N +
+							    Acc):64/unsigned-native>>,
 			    Res
 			  end,
 			  Rest},
-    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
-					 F@_2,
-					 cons(NewFValue, Prev, TrUserData),
-					 F@_4, TrUserData).
+    dfp_read_field_def_RequestEndBlock(RestF, 0, 0,
+				       NewFValue, TrUserData).
 
-d_pfield_RequestBeginBlock_absent_validators(<<1:1, X:7,
-					       Rest/binary>>,
-					     N, Acc, F@_1, F@_2, F@_3, F@_4,
-					     TrUserData)
+skip_varint_RequestEndBlock(<<1:1, _:7, Rest/binary>>,
+			    Z1, Z2, F@_1, TrUserData) ->
+    skip_varint_RequestEndBlock(Rest, Z1, Z2, F@_1,
+				TrUserData);
+skip_varint_RequestEndBlock(<<0:1, _:7, Rest/binary>>,
+			    Z1, Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
+				       TrUserData).
+
+skip_length_delimited_RequestEndBlock(<<1:1, X:7,
+					Rest/binary>>,
+				      N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    d_pfield_RequestBeginBlock_absent_validators(Rest,
-						 N + 7, X bsl N + Acc, F@_1,
-						 F@_2, F@_3, F@_4, TrUserData);
-d_pfield_RequestBeginBlock_absent_validators(<<0:1, X:7,
-					       Rest/binary>>,
-					     N, Acc, F@_1, F@_2, E, F@_4,
-					     TrUserData) ->
-    Len = X bsl N + Acc,
-    <<PackedBytes:Len/binary, Rest2/binary>> = Rest,
-    NewSeq =
-	d_packed_field_RequestBeginBlock_absent_validators(PackedBytes,
-							   0, 0, E),
-    dfp_read_field_def_RequestBeginBlock(Rest2, 0, 0, F@_1,
-					 F@_2, NewSeq, F@_4, TrUserData).
-
-d_packed_field_RequestBeginBlock_absent_validators(<<1:1,
-						     X:7, Rest/binary>>,
-						   N, Acc, AccSeq)
-    when N < 57 ->
-    d_packed_field_RequestBeginBlock_absent_validators(Rest,
-						       N + 7, X bsl N + Acc,
-						       AccSeq);
-d_packed_field_RequestBeginBlock_absent_validators(<<0:1,
-						     X:7, Rest/binary>>,
-						   N, Acc, AccSeq) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:32/signed-native>> = <<(X bsl N +
-							    Acc):32/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    d_packed_field_RequestBeginBlock_absent_validators(RestF,
-						       0, 0,
-						       [NewFValue | AccSeq]);
-d_packed_field_RequestBeginBlock_absent_validators(<<>>,
-						   0, 0, AccSeq) ->
-    AccSeq.
-
-d_field_RequestBeginBlock_byzantine_validators(<<1:1,
-						 X:7, Rest/binary>>,
-					       N, Acc, F@_1, F@_2, F@_3, F@_4,
-					       TrUserData)
-    when N < 57 ->
-    d_field_RequestBeginBlock_byzantine_validators(Rest,
-						   N + 7, X bsl N + Acc, F@_1,
-						   F@_2, F@_3, F@_4,
-						   TrUserData);
-d_field_RequestBeginBlock_byzantine_validators(<<0:1,
-						 X:7, Rest/binary>>,
-					       N, Acc, F@_1, F@_2, F@_3, Prev,
-					       TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(d_msg_Evidence(Bs, TrUserData), TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
-					 F@_2, F@_3,
-					 cons(NewFValue, Prev, TrUserData),
-					 TrUserData).
-
-skip_varint_RequestBeginBlock(<<1:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    skip_varint_RequestBeginBlock(Rest, Z1, Z2, F@_1, F@_2,
-				  F@_3, F@_4, TrUserData);
-skip_varint_RequestBeginBlock(<<0:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
-skip_length_delimited_RequestBeginBlock(<<1:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestBeginBlock(Rest, N + 7,
-					    X bsl N + Acc, F@_1, F@_2, F@_3,
-					    F@_4, TrUserData);
-skip_length_delimited_RequestBeginBlock(<<0:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData) ->
+    skip_length_delimited_RequestEndBlock(Rest, N + 7,
+					  X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_RequestEndBlock(<<0:1, X:7,
+					Rest/binary>>,
+				      N, Acc, F@_1, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestBeginBlock(Rest2, 0, 0, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
+    dfp_read_field_def_RequestEndBlock(Rest2, 0, 0, F@_1,
+				       TrUserData).
 
-skip_group_RequestBeginBlock(Bin, FNum, Z2, F@_1, F@_2,
-			     F@_3, F@_4, TrUserData) ->
+skip_group_RequestEndBlock(Bin, FNum, Z2, F@_1,
+			   TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestBeginBlock(Rest, 0, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
+    dfp_read_field_def_RequestEndBlock(Rest, 0, Z2, F@_1,
+				       TrUserData).
 
-skip_32_RequestBeginBlock(<<_:32, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
+skip_32_RequestEndBlock(<<_:32, Rest/binary>>, Z1, Z2,
+			F@_1, TrUserData) ->
+    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
+				       TrUserData).
 
-skip_64_RequestBeginBlock(<<_:64, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
+skip_64_RequestEndBlock(<<_:64, Rest/binary>>, Z1, Z2,
+			F@_1, TrUserData) ->
+    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
+				       TrUserData).
 
 d_msg_ResponseBeginBlock(Bin, TrUserData) ->
     dfp_read_field_def_ResponseBeginBlock(Bin, 0, 0,
@@ -3109,400 +4478,6 @@ skip_64_ResponseBeginBlock(<<_:64, Rest/binary>>, Z1,
 			   Z2, TrUserData) ->
     dfp_read_field_def_ResponseBeginBlock(Rest, Z1, Z2,
 					  TrUserData).
-
-d_msg_RequestEcho(Bin, TrUserData) ->
-    dfp_read_field_def_RequestEcho(Bin, 0, 0,
-				   id([], TrUserData), TrUserData).
-
-dfp_read_field_def_RequestEcho(<<10, Rest/binary>>, Z1,
-			       Z2, F@_1, TrUserData) ->
-    d_field_RequestEcho_message(Rest, Z1, Z2, F@_1,
-				TrUserData);
-dfp_read_field_def_RequestEcho(<<>>, 0, 0, F@_1, _) ->
-    #'RequestEcho'{message = F@_1};
-dfp_read_field_def_RequestEcho(Other, Z1, Z2, F@_1,
-			       TrUserData) ->
-    dg_read_field_def_RequestEcho(Other, Z1, Z2, F@_1,
-				  TrUserData).
-
-dg_read_field_def_RequestEcho(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_RequestEcho(Rest, N + 7,
-				  X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestEcho(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_RequestEcho_message(Rest, 0, 0, F@_1,
-				      TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_RequestEcho(Rest, 0, 0, F@_1, TrUserData);
-	    1 -> skip_64_RequestEcho(Rest, 0, 0, F@_1, TrUserData);
-	    2 ->
-		skip_length_delimited_RequestEcho(Rest, 0, 0, F@_1,
-						  TrUserData);
-	    3 ->
-		skip_group_RequestEcho(Rest, Key bsr 3, 0, F@_1,
-				       TrUserData);
-	    5 -> skip_32_RequestEcho(Rest, 0, 0, F@_1, TrUserData)
-	  end
-    end;
-dg_read_field_def_RequestEcho(<<>>, 0, 0, F@_1, _) ->
-    #'RequestEcho'{message = F@_1}.
-
-d_field_RequestEcho_message(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_RequestEcho_message(Rest, N + 7, X bsl N + Acc,
-				F@_1, TrUserData);
-d_field_RequestEcho_message(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_RequestEcho(RestF, 0, 0, NewFValue,
-				   TrUserData).
-
-skip_varint_RequestEcho(<<1:1, _:7, Rest/binary>>, Z1,
-			Z2, F@_1, TrUserData) ->
-    skip_varint_RequestEcho(Rest, Z1, Z2, F@_1, TrUserData);
-skip_varint_RequestEcho(<<0:1, _:7, Rest/binary>>, Z1,
-			Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
-				   TrUserData).
-
-skip_length_delimited_RequestEcho(<<1:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestEcho(Rest, N + 7,
-				      X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestEcho(<<0:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestEcho(Rest2, 0, 0, F@_1,
-				   TrUserData).
-
-skip_group_RequestEcho(Bin, FNum, Z2, F@_1,
-		       TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestEcho(Rest, 0, Z2, F@_1,
-				   TrUserData).
-
-skip_32_RequestEcho(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-		    TrUserData) ->
-    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
-				   TrUserData).
-
-skip_64_RequestEcho(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-		    TrUserData) ->
-    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
-				   TrUserData).
-
-d_msg_RequestCheckTx(Bin, TrUserData) ->
-    dfp_read_field_def_RequestCheckTx(Bin, 0, 0,
-				      id(<<>>, TrUserData), TrUserData).
-
-dfp_read_field_def_RequestCheckTx(<<10, Rest/binary>>,
-				  Z1, Z2, F@_1, TrUserData) ->
-    d_field_RequestCheckTx_tx(Rest, Z1, Z2, F@_1,
-			      TrUserData);
-dfp_read_field_def_RequestCheckTx(<<>>, 0, 0, F@_1,
-				  _) ->
-    #'RequestCheckTx'{tx = F@_1};
-dfp_read_field_def_RequestCheckTx(Other, Z1, Z2, F@_1,
-				  TrUserData) ->
-    dg_read_field_def_RequestCheckTx(Other, Z1, Z2, F@_1,
-				     TrUserData).
-
-dg_read_field_def_RequestCheckTx(<<1:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_RequestCheckTx(Rest, N + 7,
-				     X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestCheckTx(<<0:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_RequestCheckTx_tx(Rest, 0, 0, F@_1, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_RequestCheckTx(Rest, 0, 0, F@_1,
-					   TrUserData);
-	    1 ->
-		skip_64_RequestCheckTx(Rest, 0, 0, F@_1, TrUserData);
-	    2 ->
-		skip_length_delimited_RequestCheckTx(Rest, 0, 0, F@_1,
-						     TrUserData);
-	    3 ->
-		skip_group_RequestCheckTx(Rest, Key bsr 3, 0, F@_1,
-					  TrUserData);
-	    5 ->
-		skip_32_RequestCheckTx(Rest, 0, 0, F@_1, TrUserData)
-	  end
-    end;
-dg_read_field_def_RequestCheckTx(<<>>, 0, 0, F@_1, _) ->
-    #'RequestCheckTx'{tx = F@_1}.
-
-d_field_RequestCheckTx_tx(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_RequestCheckTx_tx(Rest, N + 7, X bsl N + Acc,
-			      F@_1, TrUserData);
-d_field_RequestCheckTx_tx(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_RequestCheckTx(RestF, 0, 0,
-				      NewFValue, TrUserData).
-
-skip_varint_RequestCheckTx(<<1:1, _:7, Rest/binary>>,
-			   Z1, Z2, F@_1, TrUserData) ->
-    skip_varint_RequestCheckTx(Rest, Z1, Z2, F@_1,
-			       TrUserData);
-skip_varint_RequestCheckTx(<<0:1, _:7, Rest/binary>>,
-			   Z1, Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
-				      TrUserData).
-
-skip_length_delimited_RequestCheckTx(<<1:1, X:7,
-				       Rest/binary>>,
-				     N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestCheckTx(Rest, N + 7,
-					 X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestCheckTx(<<0:1, X:7,
-				       Rest/binary>>,
-				     N, Acc, F@_1, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestCheckTx(Rest2, 0, 0, F@_1,
-				      TrUserData).
-
-skip_group_RequestCheckTx(Bin, FNum, Z2, F@_1,
-			  TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestCheckTx(Rest, 0, Z2, F@_1,
-				      TrUserData).
-
-skip_32_RequestCheckTx(<<_:32, Rest/binary>>, Z1, Z2,
-		       F@_1, TrUserData) ->
-    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
-				      TrUserData).
-
-skip_64_RequestCheckTx(<<_:64, Rest/binary>>, Z1, Z2,
-		       F@_1, TrUserData) ->
-    dfp_read_field_def_RequestCheckTx(Rest, Z1, Z2, F@_1,
-				      TrUserData).
-
-d_msg_ResponseInfo(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseInfo(Bin, 0, 0,
-				    id([], TrUserData), id([], TrUserData),
-				    id(0, TrUserData), id(<<>>, TrUserData),
-				    TrUserData).
-
-dfp_read_field_def_ResponseInfo(<<10, Rest/binary>>, Z1,
-				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_ResponseInfo_data(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseInfo(<<18, Rest/binary>>, Z1,
-				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_ResponseInfo_version(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseInfo(<<24, Rest/binary>>, Z1,
-				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_ResponseInfo_last_block_height(Rest, Z1, Z2,
-					   F@_1, F@_2, F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseInfo(<<34, Rest/binary>>, Z1,
-				Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_ResponseInfo_last_block_app_hash(Rest, Z1, Z2,
-					     F@_1, F@_2, F@_3, F@_4,
-					     TrUserData);
-dfp_read_field_def_ResponseInfo(<<>>, 0, 0, F@_1, F@_2,
-				F@_3, F@_4, _) ->
-    #'ResponseInfo'{data = F@_1, version = F@_2,
-		    last_block_height = F@_3, last_block_app_hash = F@_4};
-dfp_read_field_def_ResponseInfo(Other, Z1, Z2, F@_1,
-				F@_2, F@_3, F@_4, TrUserData) ->
-    dg_read_field_def_ResponseInfo(Other, Z1, Z2, F@_1,
-				   F@_2, F@_3, F@_4, TrUserData).
-
-dg_read_field_def_ResponseInfo(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_ResponseInfo(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-dg_read_field_def_ResponseInfo(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_ResponseInfo_data(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    F@_4, TrUserData);
-      18 ->
-	  d_field_ResponseInfo_version(Rest, 0, 0, F@_1, F@_2,
-				       F@_3, F@_4, TrUserData);
-      24 ->
-	  d_field_ResponseInfo_last_block_height(Rest, 0, 0, F@_1,
-						 F@_2, F@_3, F@_4, TrUserData);
-      34 ->
-	  d_field_ResponseInfo_last_block_app_hash(Rest, 0, 0,
-						   F@_1, F@_2, F@_3, F@_4,
-						   TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3,
-					 F@_4, TrUserData);
-	    1 ->
-		skip_64_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData);
-	    2 ->
-		skip_length_delimited_ResponseInfo(Rest, 0, 0, F@_1,
-						   F@_2, F@_3, F@_4,
-						   TrUserData);
-	    3 ->
-		skip_group_ResponseInfo(Rest, Key bsr 3, 0, F@_1, F@_2,
-					F@_3, F@_4, TrUserData);
-	    5 ->
-		skip_32_ResponseInfo(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData)
-	  end
-    end;
-dg_read_field_def_ResponseInfo(<<>>, 0, 0, F@_1, F@_2,
-			       F@_3, F@_4, _) ->
-    #'ResponseInfo'{data = F@_1, version = F@_2,
-		    last_block_height = F@_3, last_block_app_hash = F@_4}.
-
-d_field_ResponseInfo_data(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseInfo_data(Rest, N + 7, X bsl N + Acc,
-			      F@_1, F@_2, F@_3, F@_4, TrUserData);
-d_field_ResponseInfo_data(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseInfo(RestF, 0, 0, NewFValue,
-				    F@_2, F@_3, F@_4, TrUserData).
-
-d_field_ResponseInfo_version(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseInfo_version(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, F@_4, TrUserData);
-d_field_ResponseInfo_version(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1,
-				    NewFValue, F@_3, F@_4, TrUserData).
-
-d_field_ResponseInfo_last_block_height(<<1:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, F@_2, F@_3, F@_4,
-				       TrUserData)
-    when N < 57 ->
-    d_field_ResponseInfo_last_block_height(Rest, N + 7,
-					   X bsl N + Acc, F@_1, F@_2, F@_3,
-					   F@_4, TrUserData);
-d_field_ResponseInfo_last_block_height(<<0:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, F@_2, _, F@_4,
-				       TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1, F@_2,
-				    NewFValue, F@_4, TrUserData).
-
-d_field_ResponseInfo_last_block_app_hash(<<1:1, X:7,
-					   Rest/binary>>,
-					 N, Acc, F@_1, F@_2, F@_3, F@_4,
-					 TrUserData)
-    when N < 57 ->
-    d_field_ResponseInfo_last_block_app_hash(Rest, N + 7,
-					     X bsl N + Acc, F@_1, F@_2, F@_3,
-					     F@_4, TrUserData);
-d_field_ResponseInfo_last_block_app_hash(<<0:1, X:7,
-					   Rest/binary>>,
-					 N, Acc, F@_1, F@_2, F@_3, _,
-					 TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseInfo(RestF, 0, 0, F@_1, F@_2,
-				    F@_3, NewFValue, TrUserData).
-
-skip_varint_ResponseInfo(<<1:1, _:7, Rest/binary>>, Z1,
-			 Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    skip_varint_ResponseInfo(Rest, Z1, Z2, F@_1, F@_2, F@_3,
-			     F@_4, TrUserData);
-skip_varint_ResponseInfo(<<0:1, _:7, Rest/binary>>, Z1,
-			 Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, TrUserData).
-
-skip_length_delimited_ResponseInfo(<<1:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_ResponseInfo(Rest, N + 7,
-				       X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				       TrUserData);
-skip_length_delimited_ResponseInfo(<<0:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseInfo(Rest2, 0, 0, F@_1, F@_2,
-				    F@_3, F@_4, TrUserData).
-
-skip_group_ResponseInfo(Bin, FNum, Z2, F@_1, F@_2, F@_3,
-			F@_4, TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseInfo(Rest, 0, Z2, F@_1, F@_2,
-				    F@_3, F@_4, TrUserData).
-
-skip_32_ResponseInfo(<<_:32, Rest/binary>>, Z1, Z2,
-		     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, TrUserData).
-
-skip_64_ResponseInfo(<<_:64, Rest/binary>>, Z1, Z2,
-		     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseInfo(Rest, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, TrUserData).
 
 d_msg_ResponseEcho(Bin, TrUserData) ->
     dfp_read_field_def_ResponseEcho(Bin, 0, 0,
@@ -3603,545 +4578,6 @@ skip_64_ResponseEcho(<<_:64, Rest/binary>>, Z1, Z2,
 		     F@_1, TrUserData) ->
     dfp_read_field_def_ResponseEcho(Rest, Z1, Z2, F@_1,
 				    TrUserData).
-
-d_msg_ResponseCheckTx(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseCheckTx(Bin, 0, 0,
-				       id(0, TrUserData), id(<<>>, TrUserData),
-				       id([], TrUserData), id(0, TrUserData),
-				       id(0, TrUserData), TrUserData).
-
-dfp_read_field_def_ResponseCheckTx(<<8, Rest/binary>>,
-				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData) ->
-    d_field_ResponseCheckTx_code(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, F@_4, F@_5, TrUserData);
-dfp_read_field_def_ResponseCheckTx(<<18, Rest/binary>>,
-				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData) ->
-    d_field_ResponseCheckTx_data(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, F@_4, F@_5, TrUserData);
-dfp_read_field_def_ResponseCheckTx(<<26, Rest/binary>>,
-				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData) ->
-    d_field_ResponseCheckTx_log(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, TrUserData);
-dfp_read_field_def_ResponseCheckTx(<<32, Rest/binary>>,
-				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData) ->
-    d_field_ResponseCheckTx_gas(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, TrUserData);
-dfp_read_field_def_ResponseCheckTx(<<40, Rest/binary>>,
-				   Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5,
-				   TrUserData) ->
-    d_field_ResponseCheckTx_fee(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, TrUserData);
-dfp_read_field_def_ResponseCheckTx(<<>>, 0, 0, F@_1,
-				   F@_2, F@_3, F@_4, F@_5, _) ->
-    #'ResponseCheckTx'{code = F@_1, data = F@_2, log = F@_3,
-		       gas = F@_4, fee = F@_5};
-dfp_read_field_def_ResponseCheckTx(Other, Z1, Z2, F@_1,
-				   F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    dg_read_field_def_ResponseCheckTx(Other, Z1, Z2, F@_1,
-				      F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-dg_read_field_def_ResponseCheckTx(<<1:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				  TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_ResponseCheckTx(Rest, N + 7,
-				      X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				      F@_5, TrUserData);
-dg_read_field_def_ResponseCheckTx(<<0:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				  TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      8 ->
-	  d_field_ResponseCheckTx_code(Rest, 0, 0, F@_1, F@_2,
-				       F@_3, F@_4, F@_5, TrUserData);
-      18 ->
-	  d_field_ResponseCheckTx_data(Rest, 0, 0, F@_1, F@_2,
-				       F@_3, F@_4, F@_5, TrUserData);
-      26 ->
-	  d_field_ResponseCheckTx_log(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, TrUserData);
-      32 ->
-	  d_field_ResponseCheckTx_gas(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, TrUserData);
-      40 ->
-	  d_field_ResponseCheckTx_fee(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2,
-					    F@_3, F@_4, F@_5, TrUserData);
-	    1 ->
-		skip_64_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2, F@_3,
-					F@_4, F@_5, TrUserData);
-	    2 ->
-		skip_length_delimited_ResponseCheckTx(Rest, 0, 0, F@_1,
-						      F@_2, F@_3, F@_4, F@_5,
-						      TrUserData);
-	    3 ->
-		skip_group_ResponseCheckTx(Rest, Key bsr 3, 0, F@_1,
-					   F@_2, F@_3, F@_4, F@_5, TrUserData);
-	    5 ->
-		skip_32_ResponseCheckTx(Rest, 0, 0, F@_1, F@_2, F@_3,
-					F@_4, F@_5, TrUserData)
-	  end
-    end;
-dg_read_field_def_ResponseCheckTx(<<>>, 0, 0, F@_1,
-				  F@_2, F@_3, F@_4, F@_5, _) ->
-    #'ResponseCheckTx'{code = F@_1, data = F@_2, log = F@_3,
-		       gas = F@_4, fee = F@_5}.
-
-d_field_ResponseCheckTx_code(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCheckTx_code(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
-d_field_ResponseCheckTx_code(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, _, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    {NewFValue, RestF} = {X bsl N + Acc, Rest},
-    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0,
-				       NewFValue, F@_2, F@_3, F@_4, F@_5,
-				       TrUserData).
-
-d_field_ResponseCheckTx_data(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCheckTx_data(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
-d_field_ResponseCheckTx_data(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, _, F@_3, F@_4, F@_5, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
-				       NewFValue, F@_3, F@_4, F@_5, TrUserData).
-
-d_field_ResponseCheckTx_log(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCheckTx_log(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
-d_field_ResponseCheckTx_log(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, _, F@_4, F@_5, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
-				       F@_2, NewFValue, F@_4, F@_5, TrUserData).
-
-d_field_ResponseCheckTx_gas(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCheckTx_gas(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
-d_field_ResponseCheckTx_gas(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, _, F@_5, TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
-				       F@_2, F@_3, NewFValue, F@_5, TrUserData).
-
-d_field_ResponseCheckTx_fee(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCheckTx_fee(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData);
-d_field_ResponseCheckTx_fee(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, _, TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_ResponseCheckTx(RestF, 0, 0, F@_1,
-				       F@_2, F@_3, F@_4, NewFValue, TrUserData).
-
-skip_varint_ResponseCheckTx(<<1:1, _:7, Rest/binary>>,
-			    Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    skip_varint_ResponseCheckTx(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, TrUserData);
-skip_varint_ResponseCheckTx(<<0:1, _:7, Rest/binary>>,
-			    Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-skip_length_delimited_ResponseCheckTx(<<1:1, X:7,
-					Rest/binary>>,
-				      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				      TrUserData)
-    when N < 57 ->
-    skip_length_delimited_ResponseCheckTx(Rest, N + 7,
-					  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-					  F@_5, TrUserData);
-skip_length_delimited_ResponseCheckTx(<<0:1, X:7,
-					Rest/binary>>,
-				      N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				      TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseCheckTx(Rest2, 0, 0, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-skip_group_ResponseCheckTx(Bin, FNum, Z2, F@_1, F@_2,
-			   F@_3, F@_4, F@_5, TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseCheckTx(Rest, 0, Z2, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-skip_32_ResponseCheckTx(<<_:32, Rest/binary>>, Z1, Z2,
-			F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-skip_64_ResponseCheckTx(<<_:64, Rest/binary>>, Z1, Z2,
-			F@_1, F@_2, F@_3, F@_4, F@_5, TrUserData) ->
-    dfp_read_field_def_ResponseCheckTx(Rest, Z1, Z2, F@_1,
-				       F@_2, F@_3, F@_4, F@_5, TrUserData).
-
-d_msg_RequestCommit(Bin, TrUserData) ->
-    dfp_read_field_def_RequestCommit(Bin, 0, 0, TrUserData).
-
-dfp_read_field_def_RequestCommit(<<>>, 0, 0, _) ->
-    #'RequestCommit'{};
-dfp_read_field_def_RequestCommit(Other, Z1, Z2,
-				 TrUserData) ->
-    dg_read_field_def_RequestCommit(Other, Z1, Z2,
-				    TrUserData).
-
-dg_read_field_def_RequestCommit(<<1:1, X:7,
-				  Rest/binary>>,
-				N, Acc, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_RequestCommit(Rest, N + 7,
-				    X bsl N + Acc, TrUserData);
-dg_read_field_def_RequestCommit(<<0:1, X:7,
-				  Rest/binary>>,
-				N, Acc, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key band 7 of
-      0 -> skip_varint_RequestCommit(Rest, 0, 0, TrUserData);
-      1 -> skip_64_RequestCommit(Rest, 0, 0, TrUserData);
-      2 ->
-	  skip_length_delimited_RequestCommit(Rest, 0, 0,
-					      TrUserData);
-      3 ->
-	  skip_group_RequestCommit(Rest, Key bsr 3, 0,
-				   TrUserData);
-      5 -> skip_32_RequestCommit(Rest, 0, 0, TrUserData)
-    end;
-dg_read_field_def_RequestCommit(<<>>, 0, 0, _) ->
-    #'RequestCommit'{}.
-
-skip_varint_RequestCommit(<<1:1, _:7, Rest/binary>>, Z1,
-			  Z2, TrUserData) ->
-    skip_varint_RequestCommit(Rest, Z1, Z2, TrUserData);
-skip_varint_RequestCommit(<<0:1, _:7, Rest/binary>>, Z1,
-			  Z2, TrUserData) ->
-    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
-				     TrUserData).
-
-skip_length_delimited_RequestCommit(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestCommit(Rest, N + 7,
-					X bsl N + Acc, TrUserData);
-skip_length_delimited_RequestCommit(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestCommit(Rest2, 0, 0,
-				     TrUserData).
-
-skip_group_RequestCommit(Bin, FNum, Z2, TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestCommit(Rest, 0, Z2,
-				     TrUserData).
-
-skip_32_RequestCommit(<<_:32, Rest/binary>>, Z1, Z2,
-		      TrUserData) ->
-    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
-				     TrUserData).
-
-skip_64_RequestCommit(<<_:64, Rest/binary>>, Z1, Z2,
-		      TrUserData) ->
-    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
-				     TrUserData).
-
-d_msg_ResponseException(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseException(Bin, 0, 0,
-					 id([], TrUserData), TrUserData).
-
-dfp_read_field_def_ResponseException(<<10,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, TrUserData) ->
-    d_field_ResponseException_error(Rest, Z1, Z2, F@_1,
-				    TrUserData);
-dfp_read_field_def_ResponseException(<<>>, 0, 0, F@_1,
-				     _) ->
-    #'ResponseException'{error = F@_1};
-dfp_read_field_def_ResponseException(Other, Z1, Z2,
-				     F@_1, TrUserData) ->
-    dg_read_field_def_ResponseException(Other, Z1, Z2, F@_1,
-					TrUserData).
-
-dg_read_field_def_ResponseException(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_ResponseException(Rest, N + 7,
-					X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_ResponseException(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_ResponseException_error(Rest, 0, 0, F@_1,
-					  TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_ResponseException(Rest, 0, 0, F@_1,
-					      TrUserData);
-	    1 ->
-		skip_64_ResponseException(Rest, 0, 0, F@_1, TrUserData);
-	    2 ->
-		skip_length_delimited_ResponseException(Rest, 0, 0,
-							F@_1, TrUserData);
-	    3 ->
-		skip_group_ResponseException(Rest, Key bsr 3, 0, F@_1,
-					     TrUserData);
-	    5 ->
-		skip_32_ResponseException(Rest, 0, 0, F@_1, TrUserData)
-	  end
-    end;
-dg_read_field_def_ResponseException(<<>>, 0, 0, F@_1,
-				    _) ->
-    #'ResponseException'{error = F@_1}.
-
-d_field_ResponseException_error(<<1:1, X:7,
-				  Rest/binary>>,
-				N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_ResponseException_error(Rest, N + 7,
-				    X bsl N + Acc, F@_1, TrUserData);
-d_field_ResponseException_error(<<0:1, X:7,
-				  Rest/binary>>,
-				N, Acc, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseException(RestF, 0, 0,
-					 NewFValue, TrUserData).
-
-skip_varint_ResponseException(<<1:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, TrUserData) ->
-    skip_varint_ResponseException(Rest, Z1, Z2, F@_1,
-				  TrUserData);
-skip_varint_ResponseException(<<0:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
-					 TrUserData).
-
-skip_length_delimited_ResponseException(<<1:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_ResponseException(Rest, N + 7,
-					    X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_ResponseException(<<0:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseException(Rest2, 0, 0, F@_1,
-					 TrUserData).
-
-skip_group_ResponseException(Bin, FNum, Z2, F@_1,
-			     TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseException(Rest, 0, Z2, F@_1,
-					 TrUserData).
-
-skip_32_ResponseException(<<_:32, Rest/binary>>, Z1, Z2,
-			  F@_1, TrUserData) ->
-    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
-					 TrUserData).
-
-skip_64_ResponseException(<<_:64, Rest/binary>>, Z1, Z2,
-			  F@_1, TrUserData) ->
-    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
-					 TrUserData).
-
-d_msg_ResponseCommit(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseCommit(Bin, 0, 0,
-				      id(0, TrUserData), id(<<>>, TrUserData),
-				      id([], TrUserData), TrUserData).
-
-dfp_read_field_def_ResponseCommit(<<8, Rest/binary>>,
-				  Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_ResponseCommit_code(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, TrUserData);
-dfp_read_field_def_ResponseCommit(<<18, Rest/binary>>,
-				  Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_ResponseCommit_data(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, TrUserData);
-dfp_read_field_def_ResponseCommit(<<26, Rest/binary>>,
-				  Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    d_field_ResponseCommit_log(Rest, Z1, Z2, F@_1, F@_2,
-			       F@_3, TrUserData);
-dfp_read_field_def_ResponseCommit(<<>>, 0, 0, F@_1,
-				  F@_2, F@_3, _) ->
-    #'ResponseCommit'{code = F@_1, data = F@_2, log = F@_3};
-dfp_read_field_def_ResponseCommit(Other, Z1, Z2, F@_1,
-				  F@_2, F@_3, TrUserData) ->
-    dg_read_field_def_ResponseCommit(Other, Z1, Z2, F@_1,
-				     F@_2, F@_3, TrUserData).
-
-dg_read_field_def_ResponseCommit(<<1:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_ResponseCommit(Rest, N + 7,
-				     X bsl N + Acc, F@_1, F@_2, F@_3,
-				     TrUserData);
-dg_read_field_def_ResponseCommit(<<0:1, X:7,
-				   Rest/binary>>,
-				 N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      8 ->
-	  d_field_ResponseCommit_code(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, TrUserData);
-      18 ->
-	  d_field_ResponseCommit_data(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, TrUserData);
-      26 ->
-	  d_field_ResponseCommit_log(Rest, 0, 0, F@_1, F@_2, F@_3,
-				     TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_ResponseCommit(Rest, 0, 0, F@_1, F@_2, F@_3,
-					   TrUserData);
-	    1 ->
-		skip_64_ResponseCommit(Rest, 0, 0, F@_1, F@_2, F@_3,
-				       TrUserData);
-	    2 ->
-		skip_length_delimited_ResponseCommit(Rest, 0, 0, F@_1,
-						     F@_2, F@_3, TrUserData);
-	    3 ->
-		skip_group_ResponseCommit(Rest, Key bsr 3, 0, F@_1,
-					  F@_2, F@_3, TrUserData);
-	    5 ->
-		skip_32_ResponseCommit(Rest, 0, 0, F@_1, F@_2, F@_3,
-				       TrUserData)
-	  end
-    end;
-dg_read_field_def_ResponseCommit(<<>>, 0, 0, F@_1, F@_2,
-				 F@_3, _) ->
-    #'ResponseCommit'{code = F@_1, data = F@_2, log = F@_3}.
-
-d_field_ResponseCommit_code(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCommit_code(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, TrUserData);
-d_field_ResponseCommit_code(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, _, F@_2, F@_3, TrUserData) ->
-    {NewFValue, RestF} = {X bsl N + Acc, Rest},
-    dfp_read_field_def_ResponseCommit(RestF, 0, 0,
-				      NewFValue, F@_2, F@_3, TrUserData).
-
-d_field_ResponseCommit_data(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCommit_data(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, TrUserData);
-d_field_ResponseCommit_data(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, _, F@_3, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseCommit(RestF, 0, 0, F@_1,
-				      NewFValue, F@_3, TrUserData).
-
-d_field_ResponseCommit_log(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    d_field_ResponseCommit_log(Rest, N + 7, X bsl N + Acc,
-			       F@_1, F@_2, F@_3, TrUserData);
-d_field_ResponseCommit_log(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseCommit(RestF, 0, 0, F@_1,
-				      F@_2, NewFValue, TrUserData).
-
-skip_varint_ResponseCommit(<<1:1, _:7, Rest/binary>>,
-			   Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    skip_varint_ResponseCommit(Rest, Z1, Z2, F@_1, F@_2,
-			       F@_3, TrUserData);
-skip_varint_ResponseCommit(<<0:1, _:7, Rest/binary>>,
-			   Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
-				      F@_2, F@_3, TrUserData).
-
-skip_length_delimited_ResponseCommit(<<1:1, X:7,
-				       Rest/binary>>,
-				     N, Acc, F@_1, F@_2, F@_3, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_ResponseCommit(Rest, N + 7,
-					 X bsl N + Acc, F@_1, F@_2, F@_3,
-					 TrUserData);
-skip_length_delimited_ResponseCommit(<<0:1, X:7,
-				       Rest/binary>>,
-				     N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseCommit(Rest2, 0, 0, F@_1,
-				      F@_2, F@_3, TrUserData).
-
-skip_group_ResponseCommit(Bin, FNum, Z2, F@_1, F@_2,
-			  F@_3, TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseCommit(Rest, 0, Z2, F@_1,
-				      F@_2, F@_3, TrUserData).
-
-skip_32_ResponseCommit(<<_:32, Rest/binary>>, Z1, Z2,
-		       F@_1, F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
-				      F@_2, F@_3, TrUserData).
-
-skip_64_ResponseCommit(<<_:64, Rest/binary>>, Z1, Z2,
-		       F@_1, F@_2, F@_3, TrUserData) ->
-    dfp_read_field_def_ResponseCommit(Rest, Z1, Z2, F@_1,
-				      F@_2, F@_3, TrUserData).
 
 d_msg_BlockGossip(Bin, TrUserData) ->
     dfp_read_field_def_BlockGossip(Bin, 0, 0,
@@ -4986,522 +5422,200 @@ skip_64_ResponseEndBlock(<<_:64, Rest/binary>>, Z1, Z2,
     dfp_read_field_def_ResponseEndBlock(Rest, Z1, Z2, F@_1,
 					F@_2, TrUserData).
 
-d_msg_KVPair(Bin, TrUserData) ->
-    dfp_read_field_def_KVPair(Bin, 0, 0, id([], TrUserData),
-			      id('STRING', TrUserData), id([], TrUserData),
-			      id(0, TrUserData), TrUserData).
-
-dfp_read_field_def_KVPair(<<10, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_KVPair_key(Rest, Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-		       TrUserData);
-dfp_read_field_def_KVPair(<<16, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_KVPair_value_type(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, TrUserData);
-dfp_read_field_def_KVPair(<<26, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_KVPair_value_string(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, TrUserData);
-dfp_read_field_def_KVPair(<<32, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    d_field_KVPair_value_int(Rest, Z1, Z2, F@_1, F@_2, F@_3,
-			     F@_4, TrUserData);
-dfp_read_field_def_KVPair(<<>>, 0, 0, F@_1, F@_2, F@_3,
-			  F@_4, _) ->
-    #'KVPair'{key = F@_1, value_type = F@_2,
-	      value_string = F@_3, value_int = F@_4};
-dfp_read_field_def_KVPair(Other, Z1, Z2, F@_1, F@_2,
-			  F@_3, F@_4, TrUserData) ->
-    dg_read_field_def_KVPair(Other, Z1, Z2, F@_1, F@_2,
-			     F@_3, F@_4, TrUserData).
-
-dg_read_field_def_KVPair(<<1:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_KVPair(Rest, N + 7, X bsl N + Acc,
-			     F@_1, F@_2, F@_3, F@_4, TrUserData);
-dg_read_field_def_KVPair(<<0:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_KVPair_key(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-			     TrUserData);
-      16 ->
-	  d_field_KVPair_value_type(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    F@_4, TrUserData);
-      26 ->
-	  d_field_KVPair_value_string(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, TrUserData);
-      32 ->
-	  d_field_KVPair_value_int(Rest, 0, 0, F@_1, F@_2, F@_3,
-				   F@_4, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_KVPair(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-	    1 ->
-		skip_64_KVPair(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-			       TrUserData);
-	    2 ->
-		skip_length_delimited_KVPair(Rest, 0, 0, F@_1, F@_2,
-					     F@_3, F@_4, TrUserData);
-	    3 ->
-		skip_group_KVPair(Rest, Key bsr 3, 0, F@_1, F@_2, F@_3,
-				  F@_4, TrUserData);
-	    5 ->
-		skip_32_KVPair(Rest, 0, 0, F@_1, F@_2, F@_3, F@_4,
-			       TrUserData)
-	  end
-    end;
-dg_read_field_def_KVPair(<<>>, 0, 0, F@_1, F@_2, F@_3,
-			 F@_4, _) ->
-    #'KVPair'{key = F@_1, value_type = F@_2,
-	      value_string = F@_3, value_int = F@_4}.
-
-d_field_KVPair_key(<<1:1, X:7, Rest/binary>>, N, Acc,
-		   F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_KVPair_key(Rest, N + 7, X bsl N + Acc, F@_1,
-		       F@_2, F@_3, F@_4, TrUserData);
-d_field_KVPair_key(<<0:1, X:7, Rest/binary>>, N, Acc, _,
-		   F@_2, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_KVPair(RestF, 0, 0, NewFValue, F@_2,
-			      F@_3, F@_4, TrUserData).
-
-d_field_KVPair_value_type(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_KVPair_value_type(Rest, N + 7, X bsl N + Acc,
-			      F@_1, F@_2, F@_3, F@_4, TrUserData);
-d_field_KVPair_value_type(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = {'d_enum_KVPair.Type'(begin
-						 <<Res:32/signed-native>> = <<(X
-										 bsl
-										 N
-										 +
-										 Acc):32/unsigned-native>>,
-						 Res
-					       end),
-			  Rest},
-    dfp_read_field_def_KVPair(RestF, 0, 0, F@_1, NewFValue,
-			      F@_3, F@_4, TrUserData).
-
-d_field_KVPair_value_string(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_KVPair_value_string(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, TrUserData);
-d_field_KVPair_value_string(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, _, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_KVPair(RestF, 0, 0, F@_1, F@_2,
-			      NewFValue, F@_4, TrUserData).
-
-d_field_KVPair_value_int(<<1:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_KVPair_value_int(Rest, N + 7, X bsl N + Acc,
-			     F@_1, F@_2, F@_3, F@_4, TrUserData);
-d_field_KVPair_value_int(<<0:1, X:7, Rest/binary>>, N,
-			 Acc, F@_1, F@_2, F@_3, _, TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_KVPair(RestF, 0, 0, F@_1, F@_2, F@_3,
-			      NewFValue, TrUserData).
-
-skip_varint_KVPair(<<1:1, _:7, Rest/binary>>, Z1, Z2,
-		   F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    skip_varint_KVPair(Rest, Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-		       TrUserData);
-skip_varint_KVPair(<<0:1, _:7, Rest/binary>>, Z1, Z2,
-		   F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, TrUserData).
-
-skip_length_delimited_KVPair(<<1:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_KVPair(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, F@_4, TrUserData);
-skip_length_delimited_KVPair(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_KVPair(Rest2, 0, 0, F@_1, F@_2, F@_3,
-			      F@_4, TrUserData).
-
-skip_group_KVPair(Bin, FNum, Z2, F@_1, F@_2, F@_3, F@_4,
-		  TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_KVPair(Rest, 0, Z2, F@_1, F@_2, F@_3,
-			      F@_4, TrUserData).
-
-skip_32_KVPair(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
-	       F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, TrUserData).
-
-skip_64_KVPair(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
-	       F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_KVPair(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, TrUserData).
-
-d_msg_ResponseDeliverTx(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseDeliverTx(Bin, 0, 0,
-					 id(0, TrUserData),
-					 id(<<>>, TrUserData),
-					 id([], TrUserData), id([], TrUserData),
-					 TrUserData).
-
-dfp_read_field_def_ResponseDeliverTx(<<8, Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_ResponseDeliverTx_code(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseDeliverTx(<<18,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_ResponseDeliverTx_data(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseDeliverTx(<<26,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_ResponseDeliverTx_log(Rest, Z1, Z2, F@_1, F@_2,
-				  F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseDeliverTx(<<34,
-				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
-				     TrUserData) ->
-    d_field_ResponseDeliverTx_tags(Rest, Z1, Z2, F@_1, F@_2,
-				   F@_3, F@_4, TrUserData);
-dfp_read_field_def_ResponseDeliverTx(<<>>, 0, 0, F@_1,
-				     F@_2, F@_3, R1, TrUserData) ->
-    #'ResponseDeliverTx'{code = F@_1, data = F@_2,
-			 log = F@_3, tags = lists_reverse(R1, TrUserData)};
-dfp_read_field_def_ResponseDeliverTx(Other, Z1, Z2,
-				     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dg_read_field_def_ResponseDeliverTx(Other, Z1, Z2, F@_1,
-					F@_2, F@_3, F@_4, TrUserData).
-
-dg_read_field_def_ResponseDeliverTx(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_ResponseDeliverTx(Rest, N + 7,
-					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData);
-dg_read_field_def_ResponseDeliverTx(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, F@_3, F@_4,
-				    TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      8 ->
-	  d_field_ResponseDeliverTx_code(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, F@_4, TrUserData);
-      18 ->
-	  d_field_ResponseDeliverTx_data(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, F@_4, TrUserData);
-      26 ->
-	  d_field_ResponseDeliverTx_log(Rest, 0, 0, F@_1, F@_2,
-					F@_3, F@_4, TrUserData);
-      34 ->
-	  d_field_ResponseDeliverTx_tags(Rest, 0, 0, F@_1, F@_2,
-					 F@_3, F@_4, TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2,
-					      F@_3, F@_4, TrUserData);
-	    1 ->
-		skip_64_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, TrUserData);
-	    2 ->
-		skip_length_delimited_ResponseDeliverTx(Rest, 0, 0,
-							F@_1, F@_2, F@_3, F@_4,
-							TrUserData);
-	    3 ->
-		skip_group_ResponseDeliverTx(Rest, Key bsr 3, 0, F@_1,
-					     F@_2, F@_3, F@_4, TrUserData);
-	    5 ->
-		skip_32_ResponseDeliverTx(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, TrUserData)
-	  end
-    end;
-dg_read_field_def_ResponseDeliverTx(<<>>, 0, 0, F@_1,
-				    F@_2, F@_3, R1, TrUserData) ->
-    #'ResponseDeliverTx'{code = F@_1, data = F@_2,
-			 log = F@_3, tags = lists_reverse(R1, TrUserData)}.
-
-d_field_ResponseDeliverTx_code(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseDeliverTx_code(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-d_field_ResponseDeliverTx_code(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = {X bsl N + Acc, Rest},
-    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0,
-					 NewFValue, F@_2, F@_3, F@_4,
-					 TrUserData).
-
-d_field_ResponseDeliverTx_data(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseDeliverTx_data(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-d_field_ResponseDeliverTx_data(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, _, F@_3, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
-					 NewFValue, F@_3, F@_4, TrUserData).
-
-d_field_ResponseDeliverTx_log(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseDeliverTx_log(Rest, N + 7,
-				  X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				  TrUserData);
-d_field_ResponseDeliverTx_log(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, _, F@_4, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
-					 F@_2, NewFValue, F@_4, TrUserData).
-
-d_field_ResponseDeliverTx_tags(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
-    when N < 57 ->
-    d_field_ResponseDeliverTx_tags(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-				   TrUserData);
-d_field_ResponseDeliverTx_tags(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, F@_3, Prev, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(d_msg_KVPair(Bs, TrUserData), TrUserData), Rest2}
-			 end,
-    dfp_read_field_def_ResponseDeliverTx(RestF, 0, 0, F@_1,
-					 F@_2, F@_3,
-					 cons(NewFValue, Prev, TrUserData),
-					 TrUserData).
-
-skip_varint_ResponseDeliverTx(<<1:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    skip_varint_ResponseDeliverTx(Rest, Z1, Z2, F@_1, F@_2,
-				  F@_3, F@_4, TrUserData);
-skip_varint_ResponseDeliverTx(<<0:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
-skip_length_delimited_ResponseDeliverTx(<<1:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData)
-    when N < 57 ->
-    skip_length_delimited_ResponseDeliverTx(Rest, N + 7,
-					    X bsl N + Acc, F@_1, F@_2, F@_3,
-					    F@_4, TrUserData);
-skip_length_delimited_ResponseDeliverTx(<<0:1, X:7,
-					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, F@_3, F@_4,
-					TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseDeliverTx(Rest2, 0, 0, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
-skip_group_ResponseDeliverTx(Bin, FNum, Z2, F@_1, F@_2,
-			     F@_3, F@_4, TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseDeliverTx(Rest, 0, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
-skip_32_ResponseDeliverTx(<<_:32, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
-skip_64_ResponseDeliverTx(<<_:64, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
-    dfp_read_field_def_ResponseDeliverTx(Rest, Z1, Z2, F@_1,
-					 F@_2, F@_3, F@_4, TrUserData).
-
 d_msg_ResponseQuery(Bin, TrUserData) ->
     dfp_read_field_def_ResponseQuery(Bin, 0, 0,
-				     id(0, TrUserData), id(0, TrUserData),
+				     id(0, TrUserData), id([], TrUserData),
+				     id([], TrUserData), id(0, TrUserData),
 				     id(<<>>, TrUserData), id(<<>>, TrUserData),
 				     id(<<>>, TrUserData), id(0, TrUserData),
-				     id([], TrUserData), TrUserData).
+				     TrUserData).
 
 dfp_read_field_def_ResponseQuery(<<8, Rest/binary>>, Z1,
 				 Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-				 TrUserData) ->
+				 F@_8, TrUserData) ->
     d_field_ResponseQuery_code(Rest, Z1, Z2, F@_1, F@_2,
-			       F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
-dfp_read_field_def_ResponseQuery(<<16, Rest/binary>>,
-				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_index(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+			       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
 dfp_read_field_def_ResponseQuery(<<26, Rest/binary>>,
 				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_key(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_log(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
 dfp_read_field_def_ResponseQuery(<<34, Rest/binary>>,
 				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_value(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
-dfp_read_field_def_ResponseQuery(<<42, Rest/binary>>,
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_info(Rest, Z1, Z2, F@_1, F@_2,
+			       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseQuery(<<40, Rest/binary>>,
 				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_proof(Rest, Z1, Z2, F@_1, F@_2,
-				F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
-dfp_read_field_def_ResponseQuery(<<48, Rest/binary>>,
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_index(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseQuery(<<50, Rest/binary>>,
 				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_height(Rest, Z1, Z2, F@_1, F@_2,
-				 F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_key(Rest, Z1, Z2, F@_1, F@_2,
+			      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
 dfp_read_field_def_ResponseQuery(<<58, Rest/binary>>,
 				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				 F@_7, TrUserData) ->
-    d_field_ResponseQuery_log(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_value(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseQuery(<<66, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_proof(Rest, Z1, Z2, F@_1, F@_2,
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+dfp_read_field_def_ResponseQuery(<<72, Rest/binary>>,
+				 Z1, Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
+				 F@_7, F@_8, TrUserData) ->
+    d_field_ResponseQuery_height(Rest, Z1, Z2, F@_1, F@_2,
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				 TrUserData);
 dfp_read_field_def_ResponseQuery(<<>>, 0, 0, F@_1, F@_2,
-				 F@_3, F@_4, F@_5, F@_6, F@_7, _) ->
-    #'ResponseQuery'{code = F@_1, index = F@_2, key = F@_3,
-		     value = F@_4, proof = F@_5, height = F@_6, log = F@_7};
+				 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, _) ->
+    #'ResponseQuery'{code = F@_1, log = F@_2, info = F@_3,
+		     index = F@_4, key = F@_5, value = F@_6, proof = F@_7,
+		     height = F@_8};
 dfp_read_field_def_ResponseQuery(Other, Z1, Z2, F@_1,
-				 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				 F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				 TrUserData) ->
     dg_read_field_def_ResponseQuery(Other, Z1, Z2, F@_1,
-				    F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				    F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				    TrUserData).
 
 dg_read_field_def_ResponseQuery(<<1:1, X:7,
 				  Rest/binary>>,
 				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				F@_7, TrUserData)
+				F@_7, F@_8, TrUserData)
     when N < 32 - 7 ->
     dg_read_field_def_ResponseQuery(Rest, N + 7,
 				    X bsl N + Acc, F@_1, F@_2, F@_3, F@_4, F@_5,
-				    F@_6, F@_7, TrUserData);
+				    F@_6, F@_7, F@_8, TrUserData);
 dg_read_field_def_ResponseQuery(<<0:1, X:7,
 				  Rest/binary>>,
 				N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				F@_7, TrUserData) ->
+				F@_7, F@_8, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
       8 ->
 	  d_field_ResponseQuery_code(Rest, 0, 0, F@_1, F@_2, F@_3,
-				     F@_4, F@_5, F@_6, F@_7, TrUserData);
-      16 ->
-	  d_field_ResponseQuery_index(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+				     F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
       26 ->
-	  d_field_ResponseQuery_key(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    F@_4, F@_5, F@_6, F@_7, TrUserData);
-      34 ->
-	  d_field_ResponseQuery_value(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
-      42 ->
-	  d_field_ResponseQuery_proof(Rest, 0, 0, F@_1, F@_2,
-				      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
-      48 ->
-	  d_field_ResponseQuery_height(Rest, 0, 0, F@_1, F@_2,
-				       F@_3, F@_4, F@_5, F@_6, F@_7,
-				       TrUserData);
-      58 ->
 	  d_field_ResponseQuery_log(Rest, 0, 0, F@_1, F@_2, F@_3,
-				    F@_4, F@_5, F@_6, F@_7, TrUserData);
+				    F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+      34 ->
+	  d_field_ResponseQuery_info(Rest, 0, 0, F@_1, F@_2, F@_3,
+				     F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+      40 ->
+	  d_field_ResponseQuery_index(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData);
+      50 ->
+	  d_field_ResponseQuery_key(Rest, 0, 0, F@_1, F@_2, F@_3,
+				    F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
+      58 ->
+	  d_field_ResponseQuery_value(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData);
+      66 ->
+	  d_field_ResponseQuery_proof(Rest, 0, 0, F@_1, F@_2,
+				      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				      TrUserData);
+      72 ->
+	  d_field_ResponseQuery_height(Rest, 0, 0, F@_1, F@_2,
+				       F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				       TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
 		skip_varint_ResponseQuery(Rest, 0, 0, F@_1, F@_2, F@_3,
-					  F@_4, F@_5, F@_6, F@_7, TrUserData);
+					  F@_4, F@_5, F@_6, F@_7, F@_8,
+					  TrUserData);
 	    1 ->
 		skip_64_ResponseQuery(Rest, 0, 0, F@_1, F@_2, F@_3,
-				      F@_4, F@_5, F@_6, F@_7, TrUserData);
+				      F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
 	    2 ->
 		skip_length_delimited_ResponseQuery(Rest, 0, 0, F@_1,
 						    F@_2, F@_3, F@_4, F@_5,
-						    F@_6, F@_7, TrUserData);
+						    F@_6, F@_7, F@_8,
+						    TrUserData);
 	    3 ->
 		skip_group_ResponseQuery(Rest, Key bsr 3, 0, F@_1, F@_2,
-					 F@_3, F@_4, F@_5, F@_6, F@_7,
+					 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 					 TrUserData);
 	    5 ->
 		skip_32_ResponseQuery(Rest, 0, 0, F@_1, F@_2, F@_3,
-				      F@_4, F@_5, F@_6, F@_7, TrUserData)
+				      F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData)
 	  end
     end;
 dg_read_field_def_ResponseQuery(<<>>, 0, 0, F@_1, F@_2,
-				F@_3, F@_4, F@_5, F@_6, F@_7, _) ->
-    #'ResponseQuery'{code = F@_1, index = F@_2, key = F@_3,
-		     value = F@_4, proof = F@_5, height = F@_6, log = F@_7}.
+				F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, _) ->
+    #'ResponseQuery'{code = F@_1, log = F@_2, info = F@_3,
+		     index = F@_4, key = F@_5, value = F@_6, proof = F@_7,
+		     height = F@_8}.
 
 d_field_ResponseQuery_code(<<1:1, X:7, Rest/binary>>, N,
-			   Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			   Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			   TrUserData)
     when N < 57 ->
     d_field_ResponseQuery_code(Rest, N + 7, X bsl N + Acc,
-			       F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			       F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			       TrUserData);
 d_field_ResponseQuery_code(<<0:1, X:7, Rest/binary>>, N,
-			   Acc, _, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			   Acc, _, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			   TrUserData) ->
     {NewFValue, RestF} = {X bsl N + Acc, Rest},
     dfp_read_field_def_ResponseQuery(RestF, 0, 0, NewFValue,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
+
+d_field_ResponseQuery_log(<<1:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			  TrUserData)
+    when N < 57 ->
+    d_field_ResponseQuery_log(Rest, N + 7, X bsl N + Acc,
+			      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			      TrUserData);
+d_field_ResponseQuery_log(<<0:1, X:7, Rest/binary>>, N,
+			  Acc, F@_1, _, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			  TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
+				     NewFValue, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_8, TrUserData).
+
+d_field_ResponseQuery_info(<<1:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			   TrUserData)
+    when N < 57 ->
+    d_field_ResponseQuery_info(Rest, N + 7, X bsl N + Acc,
+			       F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+			       TrUserData);
+d_field_ResponseQuery_info(<<0:1, X:7, Rest/binary>>, N,
+			   Acc, F@_1, F@_2, _, F@_4, F@_5, F@_6, F@_7, F@_8,
+			   TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
+				     F@_2, NewFValue, F@_4, F@_5, F@_6, F@_7,
+				     F@_8, TrUserData).
 
 d_field_ResponseQuery_index(<<1:1, X:7, Rest/binary>>,
 			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			    TrUserData)
+			    F@_8, TrUserData)
     when N < 57 ->
     d_field_ResponseQuery_index(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				TrUserData);
 d_field_ResponseQuery_index(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, _, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    N, Acc, F@_1, F@_2, F@_3, _, F@_5, F@_6, F@_7, F@_8,
 			    TrUserData) ->
     {NewFValue, RestF} = {begin
 			    <<Res:64/signed-native>> = <<(X bsl N +
@@ -5510,57 +5624,19 @@ d_field_ResponseQuery_index(<<0:1, X:7, Rest/binary>>,
 			  end,
 			  Rest},
     dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
-				     NewFValue, F@_3, F@_4, F@_5, F@_6, F@_7,
-				     TrUserData).
+				     F@_2, F@_3, NewFValue, F@_5, F@_6, F@_7,
+				     F@_8, TrUserData).
 
 d_field_ResponseQuery_key(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			  Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			  TrUserData)
     when N < 57 ->
     d_field_ResponseQuery_key(Rest, N + 7, X bsl N + Acc,
-			      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			      TrUserData);
 d_field_ResponseQuery_key(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, _, F@_4, F@_5, F@_6, F@_7,
+			  Acc, F@_1, F@_2, F@_3, F@_4, _, F@_6, F@_7, F@_8,
 			  TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
-				     F@_2, NewFValue, F@_4, F@_5, F@_6, F@_7,
-				     TrUserData).
-
-d_field_ResponseQuery_value(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			    TrUserData)
-    when N < 57 ->
-    d_field_ResponseQuery_value(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-				TrUserData);
-d_field_ResponseQuery_value(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, _, F@_5, F@_6, F@_7,
-			    TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
-				     F@_2, F@_3, NewFValue, F@_5, F@_6, F@_7,
-				     TrUserData).
-
-d_field_ResponseQuery_proof(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			    TrUserData)
-    when N < 57 ->
-    d_field_ResponseQuery_proof(Rest, N + 7, X bsl N + Acc,
-				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-				TrUserData);
-d_field_ResponseQuery_proof(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, F@_2, F@_3, F@_4, _, F@_6, F@_7,
-			    TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
@@ -5568,18 +5644,56 @@ d_field_ResponseQuery_proof(<<0:1, X:7, Rest/binary>>,
 			 end,
     dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
 				     F@_2, F@_3, F@_4, NewFValue, F@_6, F@_7,
-				     TrUserData).
+				     F@_8, TrUserData).
+
+d_field_ResponseQuery_value(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseQuery_value(Rest, N + 7, X bsl N + Acc,
+				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				TrUserData);
+d_field_ResponseQuery_value(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, _, F@_7, F@_8,
+			    TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
+				     F@_2, F@_3, F@_4, F@_5, NewFValue, F@_7,
+				     F@_8, TrUserData).
+
+d_field_ResponseQuery_proof(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			    F@_8, TrUserData)
+    when N < 57 ->
+    d_field_ResponseQuery_proof(Rest, N + 7, X bsl N + Acc,
+				F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+				TrUserData);
+d_field_ResponseQuery_proof(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, _, F@_8,
+			    TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, NewFValue,
+				     F@_8, TrUserData).
 
 d_field_ResponseQuery_height(<<1:1, X:7, Rest/binary>>,
 			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			     TrUserData)
+			     F@_8, TrUserData)
     when N < 57 ->
     d_field_ResponseQuery_height(Rest, N + 7, X bsl N + Acc,
-				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				 F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				 TrUserData);
 d_field_ResponseQuery_height(<<0:1, X:7, Rest/binary>>,
-			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, _, F@_7,
-			     TrUserData) ->
+			     N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			     _, TrUserData) ->
     {NewFValue, RestF} = {begin
 			    <<Res:64/signed-native>> = <<(X bsl N +
 							    Acc):64/unsigned-native>>,
@@ -5587,75 +5701,58 @@ d_field_ResponseQuery_height(<<0:1, X:7, Rest/binary>>,
 			  end,
 			  Rest},
     dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, NewFValue, F@_7,
-				     TrUserData).
-
-d_field_ResponseQuery_log(<<1:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			  TrUserData)
-    when N < 57 ->
-    d_field_ResponseQuery_log(Rest, N + 7, X bsl N + Acc,
-			      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
-			      TrUserData);
-d_field_ResponseQuery_log(<<0:1, X:7, Rest/binary>>, N,
-			  Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, _,
-			  TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
-			   {unicode:characters_to_list(Utf8, unicode), Rest2}
-			 end,
-    dfp_read_field_def_ResponseQuery(RestF, 0, 0, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, NewFValue,
-				     TrUserData).
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     NewFValue, TrUserData).
 
 skip_varint_ResponseQuery(<<1:1, _:7, Rest/binary>>, Z1,
-			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			  TrUserData) ->
     skip_varint_ResponseQuery(Rest, Z1, Z2, F@_1, F@_2,
-			      F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData);
+			      F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData);
 skip_varint_ResponseQuery(<<0:1, _:7, Rest/binary>>, Z1,
-			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+			  Z2, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 			  TrUserData) ->
     dfp_read_field_def_ResponseQuery(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
 
 skip_length_delimited_ResponseQuery(<<1:1, X:7,
 				      Rest/binary>>,
 				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				    F@_7, TrUserData)
+				    F@_7, F@_8, TrUserData)
     when N < 57 ->
     skip_length_delimited_ResponseQuery(Rest, N + 7,
 					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
-					F@_5, F@_6, F@_7, TrUserData);
+					F@_5, F@_6, F@_7, F@_8, TrUserData);
 skip_length_delimited_ResponseQuery(<<0:1, X:7,
 				      Rest/binary>>,
 				    N, Acc, F@_1, F@_2, F@_3, F@_4, F@_5, F@_6,
-				    F@_7, TrUserData) ->
+				    F@_7, F@_8, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
     dfp_read_field_def_ResponseQuery(Rest2, 0, 0, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
 
 skip_group_ResponseQuery(Bin, FNum, Z2, F@_1, F@_2,
-			 F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData) ->
+			 F@_3, F@_4, F@_5, F@_6, F@_7, F@_8, TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
     dfp_read_field_def_ResponseQuery(Rest, 0, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
 
 skip_32_ResponseQuery(<<_:32, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData) ->
+		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+		      TrUserData) ->
     dfp_read_field_def_ResponseQuery(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
 
 skip_64_ResponseQuery(<<_:64, Rest/binary>>, Z1, Z2,
-		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, TrUserData) ->
+		      F@_1, F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
+		      TrUserData) ->
     dfp_read_field_def_ResponseQuery(Rest, Z1, Z2, F@_1,
-				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7,
+				     F@_2, F@_3, F@_4, F@_5, F@_6, F@_7, F@_8,
 				     TrUserData).
 
 d_msg_ResponseInitChain(Bin, TrUserData) ->
@@ -5735,203 +5832,269 @@ skip_64_ResponseInitChain(<<_:64, Rest/binary>>, Z1, Z2,
 d_msg_ResponseSetOption(Bin, TrUserData) ->
     dfp_read_field_def_ResponseSetOption(Bin, 0, 0,
 					 id(0, TrUserData), id([], TrUserData),
-					 TrUserData).
+					 id([], TrUserData), TrUserData).
 
 dfp_read_field_def_ResponseSetOption(<<8, Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, TrUserData) ->
+				     Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
     d_field_ResponseSetOption_code(Rest, Z1, Z2, F@_1, F@_2,
-				   TrUserData);
-dfp_read_field_def_ResponseSetOption(<<18,
+				   F@_3, TrUserData);
+dfp_read_field_def_ResponseSetOption(<<26,
 				       Rest/binary>>,
-				     Z1, Z2, F@_1, F@_2, TrUserData) ->
+				     Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
     d_field_ResponseSetOption_log(Rest, Z1, Z2, F@_1, F@_2,
-				  TrUserData);
+				  F@_3, TrUserData);
+dfp_read_field_def_ResponseSetOption(<<34,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
+    d_field_ResponseSetOption_info(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, TrUserData);
 dfp_read_field_def_ResponseSetOption(<<>>, 0, 0, F@_1,
-				     F@_2, _) ->
-    #'ResponseSetOption'{code = F@_1, log = F@_2};
+				     F@_2, F@_3, _) ->
+    #'ResponseSetOption'{code = F@_1, log = F@_2,
+			 info = F@_3};
 dfp_read_field_def_ResponseSetOption(Other, Z1, Z2,
-				     F@_1, F@_2, TrUserData) ->
+				     F@_1, F@_2, F@_3, TrUserData) ->
     dg_read_field_def_ResponseSetOption(Other, Z1, Z2, F@_1,
-					F@_2, TrUserData).
+					F@_2, F@_3, TrUserData).
 
 dg_read_field_def_ResponseSetOption(<<1:1, X:7,
 				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, TrUserData)
+				    N, Acc, F@_1, F@_2, F@_3, TrUserData)
     when N < 32 - 7 ->
     dg_read_field_def_ResponseSetOption(Rest, N + 7,
-					X bsl N + Acc, F@_1, F@_2, TrUserData);
+					X bsl N + Acc, F@_1, F@_2, F@_3,
+					TrUserData);
 dg_read_field_def_ResponseSetOption(<<0:1, X:7,
 				      Rest/binary>>,
-				    N, Acc, F@_1, F@_2, TrUserData) ->
+				    N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
       8 ->
 	  d_field_ResponseSetOption_code(Rest, 0, 0, F@_1, F@_2,
-					 TrUserData);
-      18 ->
+					 F@_3, TrUserData);
+      26 ->
 	  d_field_ResponseSetOption_log(Rest, 0, 0, F@_1, F@_2,
-					TrUserData);
+					F@_3, TrUserData);
+      34 ->
+	  d_field_ResponseSetOption_info(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
 		skip_varint_ResponseSetOption(Rest, 0, 0, F@_1, F@_2,
-					      TrUserData);
+					      F@_3, TrUserData);
 	    1 ->
-		skip_64_ResponseSetOption(Rest, 0, 0, F@_1, F@_2,
+		skip_64_ResponseSetOption(Rest, 0, 0, F@_1, F@_2, F@_3,
 					  TrUserData);
 	    2 ->
 		skip_length_delimited_ResponseSetOption(Rest, 0, 0,
-							F@_1, F@_2, TrUserData);
+							F@_1, F@_2, F@_3,
+							TrUserData);
 	    3 ->
 		skip_group_ResponseSetOption(Rest, Key bsr 3, 0, F@_1,
-					     F@_2, TrUserData);
+					     F@_2, F@_3, TrUserData);
 	    5 ->
-		skip_32_ResponseSetOption(Rest, 0, 0, F@_1, F@_2,
+		skip_32_ResponseSetOption(Rest, 0, 0, F@_1, F@_2, F@_3,
 					  TrUserData)
 	  end
     end;
 dg_read_field_def_ResponseSetOption(<<>>, 0, 0, F@_1,
-				    F@_2, _) ->
-    #'ResponseSetOption'{code = F@_1, log = F@_2}.
+				    F@_2, F@_3, _) ->
+    #'ResponseSetOption'{code = F@_1, log = F@_2,
+			 info = F@_3}.
 
 d_field_ResponseSetOption_code(<<1:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, F@_1, F@_2, TrUserData)
+			       N, Acc, F@_1, F@_2, F@_3, TrUserData)
     when N < 57 ->
     d_field_ResponseSetOption_code(Rest, N + 7,
-				   X bsl N + Acc, F@_1, F@_2, TrUserData);
+				   X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
 d_field_ResponseSetOption_code(<<0:1, X:7,
 				 Rest/binary>>,
-			       N, Acc, _, F@_2, TrUserData) ->
+			       N, Acc, _, F@_2, F@_3, TrUserData) ->
     {NewFValue, RestF} = {X bsl N + Acc, Rest},
     dfp_read_field_def_ResponseSetOption(RestF, 0, 0,
-					 NewFValue, F@_2, TrUserData).
+					 NewFValue, F@_2, F@_3, TrUserData).
 
 d_field_ResponseSetOption_log(<<1:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, F@_2, TrUserData)
+			      N, Acc, F@_1, F@_2, F@_3, TrUserData)
     when N < 57 ->
     d_field_ResponseSetOption_log(Rest, N + 7,
-				  X bsl N + Acc, F@_1, F@_2, TrUserData);
+				  X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
 d_field_ResponseSetOption_log(<<0:1, X:7, Rest/binary>>,
-			      N, Acc, F@_1, _, TrUserData) ->
+			      N, Acc, F@_1, _, F@_3, TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
 			   {unicode:characters_to_list(Utf8, unicode), Rest2}
 			 end,
     dfp_read_field_def_ResponseSetOption(RestF, 0, 0, F@_1,
-					 NewFValue, TrUserData).
+					 NewFValue, F@_3, TrUserData).
+
+d_field_ResponseSetOption_info(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, TrUserData)
+    when N < 57 ->
+    d_field_ResponseSetOption_info(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, TrUserData);
+d_field_ResponseSetOption_info(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseSetOption(RestF, 0, 0, F@_1,
+					 F@_2, NewFValue, TrUserData).
 
 skip_varint_ResponseSetOption(<<1:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, TrUserData) ->
+			      Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
     skip_varint_ResponseSetOption(Rest, Z1, Z2, F@_1, F@_2,
-				  TrUserData);
+				  F@_3, TrUserData);
 skip_varint_ResponseSetOption(<<0:1, _:7, Rest/binary>>,
-			      Z1, Z2, F@_1, F@_2, TrUserData) ->
+			      Z1, Z2, F@_1, F@_2, F@_3, TrUserData) ->
     dfp_read_field_def_ResponseSetOption(Rest, Z1, Z2, F@_1,
-					 F@_2, TrUserData).
+					 F@_2, F@_3, TrUserData).
 
 skip_length_delimited_ResponseSetOption(<<1:1, X:7,
 					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, TrUserData)
+					N, Acc, F@_1, F@_2, F@_3, TrUserData)
     when N < 57 ->
     skip_length_delimited_ResponseSetOption(Rest, N + 7,
-					    X bsl N + Acc, F@_1, F@_2,
+					    X bsl N + Acc, F@_1, F@_2, F@_3,
 					    TrUserData);
 skip_length_delimited_ResponseSetOption(<<0:1, X:7,
 					  Rest/binary>>,
-					N, Acc, F@_1, F@_2, TrUserData) ->
+					N, Acc, F@_1, F@_2, F@_3, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
     dfp_read_field_def_ResponseSetOption(Rest2, 0, 0, F@_1,
-					 F@_2, TrUserData).
+					 F@_2, F@_3, TrUserData).
 
 skip_group_ResponseSetOption(Bin, FNum, Z2, F@_1, F@_2,
-			     TrUserData) ->
+			     F@_3, TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
     dfp_read_field_def_ResponseSetOption(Rest, 0, Z2, F@_1,
-					 F@_2, TrUserData).
+					 F@_2, F@_3, TrUserData).
 
 skip_32_ResponseSetOption(<<_:32, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, TrUserData) ->
+			  F@_1, F@_2, F@_3, TrUserData) ->
     dfp_read_field_def_ResponseSetOption(Rest, Z1, Z2, F@_1,
-					 F@_2, TrUserData).
+					 F@_2, F@_3, TrUserData).
 
 skip_64_ResponseSetOption(<<_:64, Rest/binary>>, Z1, Z2,
-			  F@_1, F@_2, TrUserData) ->
+			  F@_1, F@_2, F@_3, TrUserData) ->
     dfp_read_field_def_ResponseSetOption(Rest, Z1, Z2, F@_1,
-					 F@_2, TrUserData).
+					 F@_2, F@_3, TrUserData).
 
-d_msg_ResponseFlush(Bin, TrUserData) ->
-    dfp_read_field_def_ResponseFlush(Bin, 0, 0, TrUserData).
+d_msg_ResponseException(Bin, TrUserData) ->
+    dfp_read_field_def_ResponseException(Bin, 0, 0,
+					 id([], TrUserData), TrUserData).
 
-dfp_read_field_def_ResponseFlush(<<>>, 0, 0, _) ->
-    #'ResponseFlush'{};
-dfp_read_field_def_ResponseFlush(Other, Z1, Z2,
-				 TrUserData) ->
-    dg_read_field_def_ResponseFlush(Other, Z1, Z2,
-				    TrUserData).
+dfp_read_field_def_ResponseException(<<10,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, TrUserData) ->
+    d_field_ResponseException_error(Rest, Z1, Z2, F@_1,
+				    TrUserData);
+dfp_read_field_def_ResponseException(<<>>, 0, 0, F@_1,
+				     _) ->
+    #'ResponseException'{error = F@_1};
+dfp_read_field_def_ResponseException(Other, Z1, Z2,
+				     F@_1, TrUserData) ->
+    dg_read_field_def_ResponseException(Other, Z1, Z2, F@_1,
+					TrUserData).
 
-dg_read_field_def_ResponseFlush(<<1:1, X:7,
-				  Rest/binary>>,
-				N, Acc, TrUserData)
+dg_read_field_def_ResponseException(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, TrUserData)
     when N < 32 - 7 ->
-    dg_read_field_def_ResponseFlush(Rest, N + 7,
-				    X bsl N + Acc, TrUserData);
-dg_read_field_def_ResponseFlush(<<0:1, X:7,
-				  Rest/binary>>,
-				N, Acc, TrUserData) ->
+    dg_read_field_def_ResponseException(Rest, N + 7,
+					X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_ResponseException(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, TrUserData) ->
     Key = X bsl N + Acc,
-    case Key band 7 of
-      0 -> skip_varint_ResponseFlush(Rest, 0, 0, TrUserData);
-      1 -> skip_64_ResponseFlush(Rest, 0, 0, TrUserData);
-      2 ->
-	  skip_length_delimited_ResponseFlush(Rest, 0, 0,
+    case Key of
+      10 ->
+	  d_field_ResponseException_error(Rest, 0, 0, F@_1,
+					  TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_ResponseException(Rest, 0, 0, F@_1,
 					      TrUserData);
-      3 ->
-	  skip_group_ResponseFlush(Rest, Key bsr 3, 0,
-				   TrUserData);
-      5 -> skip_32_ResponseFlush(Rest, 0, 0, TrUserData)
+	    1 ->
+		skip_64_ResponseException(Rest, 0, 0, F@_1, TrUserData);
+	    2 ->
+		skip_length_delimited_ResponseException(Rest, 0, 0,
+							F@_1, TrUserData);
+	    3 ->
+		skip_group_ResponseException(Rest, Key bsr 3, 0, F@_1,
+					     TrUserData);
+	    5 ->
+		skip_32_ResponseException(Rest, 0, 0, F@_1, TrUserData)
+	  end
     end;
-dg_read_field_def_ResponseFlush(<<>>, 0, 0, _) ->
-    #'ResponseFlush'{}.
+dg_read_field_def_ResponseException(<<>>, 0, 0, F@_1,
+				    _) ->
+    #'ResponseException'{error = F@_1}.
 
-skip_varint_ResponseFlush(<<1:1, _:7, Rest/binary>>, Z1,
-			  Z2, TrUserData) ->
-    skip_varint_ResponseFlush(Rest, Z1, Z2, TrUserData);
-skip_varint_ResponseFlush(<<0:1, _:7, Rest/binary>>, Z1,
-			  Z2, TrUserData) ->
-    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
-				     TrUserData).
-
-skip_length_delimited_ResponseFlush(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, TrUserData)
+d_field_ResponseException_error(<<1:1, X:7,
+				  Rest/binary>>,
+				N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    skip_length_delimited_ResponseFlush(Rest, N + 7,
-					X bsl N + Acc, TrUserData);
-skip_length_delimited_ResponseFlush(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, TrUserData) ->
+    d_field_ResponseException_error(Rest, N + 7,
+				    X bsl N + Acc, F@_1, TrUserData);
+d_field_ResponseException_error(<<0:1, X:7,
+				  Rest/binary>>,
+				N, Acc, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_ResponseException(RestF, 0, 0,
+					 NewFValue, TrUserData).
+
+skip_varint_ResponseException(<<1:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, TrUserData) ->
+    skip_varint_ResponseException(Rest, Z1, Z2, F@_1,
+				  TrUserData);
+skip_varint_ResponseException(<<0:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
+					 TrUserData).
+
+skip_length_delimited_ResponseException(<<1:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_ResponseException(Rest, N + 7,
+					    X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_ResponseException(<<0:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_ResponseFlush(Rest2, 0, 0,
-				     TrUserData).
+    dfp_read_field_def_ResponseException(Rest2, 0, 0, F@_1,
+					 TrUserData).
 
-skip_group_ResponseFlush(Bin, FNum, Z2, TrUserData) ->
+skip_group_ResponseException(Bin, FNum, Z2, F@_1,
+			     TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_ResponseFlush(Rest, 0, Z2,
-				     TrUserData).
+    dfp_read_field_def_ResponseException(Rest, 0, Z2, F@_1,
+					 TrUserData).
 
-skip_32_ResponseFlush(<<_:32, Rest/binary>>, Z1, Z2,
-		      TrUserData) ->
-    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
-				     TrUserData).
+skip_32_ResponseException(<<_:32, Rest/binary>>, Z1, Z2,
+			  F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
+					 TrUserData).
 
-skip_64_ResponseFlush(<<_:64, Rest/binary>>, Z1, Z2,
-		      TrUserData) ->
-    dfp_read_field_def_ResponseFlush(Rest, Z1, Z2,
-				     TrUserData).
+skip_64_ResponseException(<<_:64, Rest/binary>>, Z1, Z2,
+			  F@_1, TrUserData) ->
+    dfp_read_field_def_ResponseException(Rest, Z1, Z2, F@_1,
+					 TrUserData).
 
 d_msg_Response(Bin, TrUserData) ->
     dfp_read_field_def_Response(Bin, 0, 0,
@@ -6385,6 +6548,589 @@ skip_64_Response(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
     dfp_read_field_def_Response(Rest, Z1, Z2, F@_1,
 				TrUserData).
 
+d_msg_RequestBeginBlock(Bin, TrUserData) ->
+    dfp_read_field_def_RequestBeginBlock(Bin, 0, 0,
+					 id(<<>>, TrUserData),
+					 id(undefined, TrUserData),
+					 id([], TrUserData), id([], TrUserData),
+					 TrUserData).
+
+dfp_read_field_def_RequestBeginBlock(<<10,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData) ->
+    d_field_RequestBeginBlock_hash(Rest, Z1, Z2, F@_1, F@_2,
+				   F@_3, F@_4, TrUserData);
+dfp_read_field_def_RequestBeginBlock(<<18,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData) ->
+    d_field_RequestBeginBlock_header(Rest, Z1, Z2, F@_1,
+				     F@_2, F@_3, F@_4, TrUserData);
+dfp_read_field_def_RequestBeginBlock(<<26,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData) ->
+    d_pfield_RequestBeginBlock_absent_validators(Rest, Z1,
+						 Z2, F@_1, F@_2, F@_3, F@_4,
+						 TrUserData);
+dfp_read_field_def_RequestBeginBlock(<<24,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData) ->
+    d_field_RequestBeginBlock_absent_validators(Rest, Z1,
+						Z2, F@_1, F@_2, F@_3, F@_4,
+						TrUserData);
+dfp_read_field_def_RequestBeginBlock(<<34,
+				       Rest/binary>>,
+				     Z1, Z2, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData) ->
+    d_field_RequestBeginBlock_byzantine_validators(Rest, Z1,
+						   Z2, F@_1, F@_2, F@_3, F@_4,
+						   TrUserData);
+dfp_read_field_def_RequestBeginBlock(<<>>, 0, 0, F@_1,
+				     F@_2, R1, R2, TrUserData) ->
+    #'RequestBeginBlock'{hash = F@_1, header = F@_2,
+			 absent_validators = lists_reverse(R1, TrUserData),
+			 byzantine_validators = lists_reverse(R2, TrUserData)};
+dfp_read_field_def_RequestBeginBlock(Other, Z1, Z2,
+				     F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dg_read_field_def_RequestBeginBlock(Other, Z1, Z2, F@_1,
+					F@_2, F@_3, F@_4, TrUserData).
+
+dg_read_field_def_RequestBeginBlock(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_RequestBeginBlock(Rest, N + 7,
+					X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+					TrUserData);
+dg_read_field_def_RequestBeginBlock(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, F@_3, F@_4,
+				    TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_RequestBeginBlock_hash(Rest, 0, 0, F@_1, F@_2,
+					 F@_3, F@_4, TrUserData);
+      18 ->
+	  d_field_RequestBeginBlock_header(Rest, 0, 0, F@_1, F@_2,
+					   F@_3, F@_4, TrUserData);
+      26 ->
+	  d_pfield_RequestBeginBlock_absent_validators(Rest, 0, 0,
+						       F@_1, F@_2, F@_3, F@_4,
+						       TrUserData);
+      24 ->
+	  d_field_RequestBeginBlock_absent_validators(Rest, 0, 0,
+						      F@_1, F@_2, F@_3, F@_4,
+						      TrUserData);
+      34 ->
+	  d_field_RequestBeginBlock_byzantine_validators(Rest, 0,
+							 0, F@_1, F@_2, F@_3,
+							 F@_4, TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2,
+					      F@_3, F@_4, TrUserData);
+	    1 ->
+		skip_64_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2, F@_3,
+					  F@_4, TrUserData);
+	    2 ->
+		skip_length_delimited_RequestBeginBlock(Rest, 0, 0,
+							F@_1, F@_2, F@_3, F@_4,
+							TrUserData);
+	    3 ->
+		skip_group_RequestBeginBlock(Rest, Key bsr 3, 0, F@_1,
+					     F@_2, F@_3, F@_4, TrUserData);
+	    5 ->
+		skip_32_RequestBeginBlock(Rest, 0, 0, F@_1, F@_2, F@_3,
+					  F@_4, TrUserData)
+	  end
+    end;
+dg_read_field_def_RequestBeginBlock(<<>>, 0, 0, F@_1,
+				    F@_2, R1, R2, TrUserData) ->
+    #'RequestBeginBlock'{hash = F@_1, header = F@_2,
+			 absent_validators = lists_reverse(R1, TrUserData),
+			 byzantine_validators = lists_reverse(R2, TrUserData)}.
+
+d_field_RequestBeginBlock_hash(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_RequestBeginBlock_hash(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				   TrUserData);
+d_field_RequestBeginBlock_hash(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, _, F@_2, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0,
+					 NewFValue, F@_2, F@_3, F@_4,
+					 TrUserData).
+
+d_field_RequestBeginBlock_header(<<1:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, F@_2, F@_3, F@_4, TrUserData)
+    when N < 57 ->
+    d_field_RequestBeginBlock_header(Rest, N + 7,
+				     X bsl N + Acc, F@_1, F@_2, F@_3, F@_4,
+				     TrUserData);
+d_field_RequestBeginBlock_header(<<0:1, X:7,
+				   Rest/binary>>,
+				 N, Acc, F@_1, Prev, F@_3, F@_4, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_Header(Bs, TrUserData), TrUserData), Rest2}
+			 end,
+    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
+					 if Prev == undefined -> NewFValue;
+					    true ->
+						merge_msg_Header(Prev,
+								 NewFValue,
+								 TrUserData)
+					 end,
+					 F@_3, F@_4, TrUserData).
+
+d_field_RequestBeginBlock_absent_validators(<<1:1, X:7,
+					      Rest/binary>>,
+					    N, Acc, F@_1, F@_2, F@_3, F@_4,
+					    TrUserData)
+    when N < 57 ->
+    d_field_RequestBeginBlock_absent_validators(Rest, N + 7,
+						X bsl N + Acc, F@_1, F@_2, F@_3,
+						F@_4, TrUserData);
+d_field_RequestBeginBlock_absent_validators(<<0:1, X:7,
+					      Rest/binary>>,
+					    N, Acc, F@_1, F@_2, Prev, F@_4,
+					    TrUserData) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:32/signed-native>> = <<(X bsl N +
+							    Acc):32/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
+					 F@_2,
+					 cons(NewFValue, Prev, TrUserData),
+					 F@_4, TrUserData).
+
+d_pfield_RequestBeginBlock_absent_validators(<<1:1, X:7,
+					       Rest/binary>>,
+					     N, Acc, F@_1, F@_2, F@_3, F@_4,
+					     TrUserData)
+    when N < 57 ->
+    d_pfield_RequestBeginBlock_absent_validators(Rest,
+						 N + 7, X bsl N + Acc, F@_1,
+						 F@_2, F@_3, F@_4, TrUserData);
+d_pfield_RequestBeginBlock_absent_validators(<<0:1, X:7,
+					       Rest/binary>>,
+					     N, Acc, F@_1, F@_2, E, F@_4,
+					     TrUserData) ->
+    Len = X bsl N + Acc,
+    <<PackedBytes:Len/binary, Rest2/binary>> = Rest,
+    NewSeq =
+	d_packed_field_RequestBeginBlock_absent_validators(PackedBytes,
+							   0, 0, E),
+    dfp_read_field_def_RequestBeginBlock(Rest2, 0, 0, F@_1,
+					 F@_2, NewSeq, F@_4, TrUserData).
+
+d_packed_field_RequestBeginBlock_absent_validators(<<1:1,
+						     X:7, Rest/binary>>,
+						   N, Acc, AccSeq)
+    when N < 57 ->
+    d_packed_field_RequestBeginBlock_absent_validators(Rest,
+						       N + 7, X bsl N + Acc,
+						       AccSeq);
+d_packed_field_RequestBeginBlock_absent_validators(<<0:1,
+						     X:7, Rest/binary>>,
+						   N, Acc, AccSeq) ->
+    {NewFValue, RestF} = {begin
+			    <<Res:32/signed-native>> = <<(X bsl N +
+							    Acc):32/unsigned-native>>,
+			    Res
+			  end,
+			  Rest},
+    d_packed_field_RequestBeginBlock_absent_validators(RestF,
+						       0, 0,
+						       [NewFValue | AccSeq]);
+d_packed_field_RequestBeginBlock_absent_validators(<<>>,
+						   0, 0, AccSeq) ->
+    AccSeq.
+
+d_field_RequestBeginBlock_byzantine_validators(<<1:1,
+						 X:7, Rest/binary>>,
+					       N, Acc, F@_1, F@_2, F@_3, F@_4,
+					       TrUserData)
+    when N < 57 ->
+    d_field_RequestBeginBlock_byzantine_validators(Rest,
+						   N + 7, X bsl N + Acc, F@_1,
+						   F@_2, F@_3, F@_4,
+						   TrUserData);
+d_field_RequestBeginBlock_byzantine_validators(<<0:1,
+						 X:7, Rest/binary>>,
+					       N, Acc, F@_1, F@_2, F@_3, Prev,
+					       TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_Evidence(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_RequestBeginBlock(RestF, 0, 0, F@_1,
+					 F@_2, F@_3,
+					 cons(NewFValue, Prev, TrUserData),
+					 TrUserData).
+
+skip_varint_RequestBeginBlock(<<1:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    skip_varint_RequestBeginBlock(Rest, Z1, Z2, F@_1, F@_2,
+				  F@_3, F@_4, TrUserData);
+skip_varint_RequestBeginBlock(<<0:1, _:7, Rest/binary>>,
+			      Z1, Z2, F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData).
+
+skip_length_delimited_RequestBeginBlock(<<1:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, F@_2, F@_3, F@_4,
+					TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestBeginBlock(Rest, N + 7,
+					    X bsl N + Acc, F@_1, F@_2, F@_3,
+					    F@_4, TrUserData);
+skip_length_delimited_RequestBeginBlock(<<0:1, X:7,
+					  Rest/binary>>,
+					N, Acc, F@_1, F@_2, F@_3, F@_4,
+					TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestBeginBlock(Rest2, 0, 0, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData).
+
+skip_group_RequestBeginBlock(Bin, FNum, Z2, F@_1, F@_2,
+			     F@_3, F@_4, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestBeginBlock(Rest, 0, Z2, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData).
+
+skip_32_RequestBeginBlock(<<_:32, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData).
+
+skip_64_RequestBeginBlock(<<_:64, Rest/binary>>, Z1, Z2,
+			  F@_1, F@_2, F@_3, F@_4, TrUserData) ->
+    dfp_read_field_def_RequestBeginBlock(Rest, Z1, Z2, F@_1,
+					 F@_2, F@_3, F@_4, TrUserData).
+
+d_msg_RequestSetOption(Bin, TrUserData) ->
+    dfp_read_field_def_RequestSetOption(Bin, 0, 0,
+					id([], TrUserData), id([], TrUserData),
+					TrUserData).
+
+dfp_read_field_def_RequestSetOption(<<10, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, TrUserData) ->
+    d_field_RequestSetOption_key(Rest, Z1, Z2, F@_1, F@_2,
+				 TrUserData);
+dfp_read_field_def_RequestSetOption(<<18, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, TrUserData) ->
+    d_field_RequestSetOption_value(Rest, Z1, Z2, F@_1, F@_2,
+				   TrUserData);
+dfp_read_field_def_RequestSetOption(<<>>, 0, 0, F@_1,
+				    F@_2, _) ->
+    #'RequestSetOption'{key = F@_1, value = F@_2};
+dfp_read_field_def_RequestSetOption(Other, Z1, Z2, F@_1,
+				    F@_2, TrUserData) ->
+    dg_read_field_def_RequestSetOption(Other, Z1, Z2, F@_1,
+				       F@_2, TrUserData).
+
+dg_read_field_def_RequestSetOption(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_RequestSetOption(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, TrUserData);
+dg_read_field_def_RequestSetOption(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_RequestSetOption_key(Rest, 0, 0, F@_1, F@_2,
+				       TrUserData);
+      18 ->
+	  d_field_RequestSetOption_value(Rest, 0, 0, F@_1, F@_2,
+					 TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
+					     TrUserData);
+	    1 ->
+		skip_64_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
+					 TrUserData);
+	    2 ->
+		skip_length_delimited_RequestSetOption(Rest, 0, 0, F@_1,
+						       F@_2, TrUserData);
+	    3 ->
+		skip_group_RequestSetOption(Rest, Key bsr 3, 0, F@_1,
+					    F@_2, TrUserData);
+	    5 ->
+		skip_32_RequestSetOption(Rest, 0, 0, F@_1, F@_2,
+					 TrUserData)
+	  end
+    end;
+dg_read_field_def_RequestSetOption(<<>>, 0, 0, F@_1,
+				   F@_2, _) ->
+    #'RequestSetOption'{key = F@_1, value = F@_2}.
+
+d_field_RequestSetOption_key(<<1:1, X:7, Rest/binary>>,
+			     N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_RequestSetOption_key(Rest, N + 7, X bsl N + Acc,
+				 F@_1, F@_2, TrUserData);
+d_field_RequestSetOption_key(<<0:1, X:7, Rest/binary>>,
+			     N, Acc, _, F@_2, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_RequestSetOption(RestF, 0, 0,
+					NewFValue, F@_2, TrUserData).
+
+d_field_RequestSetOption_value(<<1:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    d_field_RequestSetOption_value(Rest, N + 7,
+				   X bsl N + Acc, F@_1, F@_2, TrUserData);
+d_field_RequestSetOption_value(<<0:1, X:7,
+				 Rest/binary>>,
+			       N, Acc, F@_1, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_RequestSetOption(RestF, 0, 0, F@_1,
+					NewFValue, TrUserData).
+
+skip_varint_RequestSetOption(<<1:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, TrUserData) ->
+    skip_varint_RequestSetOption(Rest, Z1, Z2, F@_1, F@_2,
+				 TrUserData);
+skip_varint_RequestSetOption(<<0:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
+
+skip_length_delimited_RequestSetOption(<<1:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestSetOption(Rest, N + 7,
+					   X bsl N + Acc, F@_1, F@_2,
+					   TrUserData);
+skip_length_delimited_RequestSetOption(<<0:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestSetOption(Rest2, 0, 0, F@_1,
+					F@_2, TrUserData).
+
+skip_group_RequestSetOption(Bin, FNum, Z2, F@_1, F@_2,
+			    TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestSetOption(Rest, 0, Z2, F@_1,
+					F@_2, TrUserData).
+
+skip_32_RequestSetOption(<<_:32, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
+
+skip_64_RequestSetOption(<<_:64, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestSetOption(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
+
+d_msg_RequestInfo(Bin, TrUserData) ->
+    dfp_read_field_def_RequestInfo(Bin, 0, 0,
+				   id([], TrUserData), TrUserData).
+
+dfp_read_field_def_RequestInfo(<<10, Rest/binary>>, Z1,
+			       Z2, F@_1, TrUserData) ->
+    d_field_RequestInfo_version(Rest, Z1, Z2, F@_1,
+				TrUserData);
+dfp_read_field_def_RequestInfo(<<>>, 0, 0, F@_1, _) ->
+    #'RequestInfo'{version = F@_1};
+dfp_read_field_def_RequestInfo(Other, Z1, Z2, F@_1,
+			       TrUserData) ->
+    dg_read_field_def_RequestInfo(Other, Z1, Z2, F@_1,
+				  TrUserData).
+
+dg_read_field_def_RequestInfo(<<1:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_RequestInfo(Rest, N + 7,
+				  X bsl N + Acc, F@_1, TrUserData);
+dg_read_field_def_RequestInfo(<<0:1, X:7, Rest/binary>>,
+			      N, Acc, F@_1, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key of
+      10 ->
+	  d_field_RequestInfo_version(Rest, 0, 0, F@_1,
+				      TrUserData);
+      _ ->
+	  case Key band 7 of
+	    0 ->
+		skip_varint_RequestInfo(Rest, 0, 0, F@_1, TrUserData);
+	    1 -> skip_64_RequestInfo(Rest, 0, 0, F@_1, TrUserData);
+	    2 ->
+		skip_length_delimited_RequestInfo(Rest, 0, 0, F@_1,
+						  TrUserData);
+	    3 ->
+		skip_group_RequestInfo(Rest, Key bsr 3, 0, F@_1,
+				       TrUserData);
+	    5 -> skip_32_RequestInfo(Rest, 0, 0, F@_1, TrUserData)
+	  end
+    end;
+dg_read_field_def_RequestInfo(<<>>, 0, 0, F@_1, _) ->
+    #'RequestInfo'{version = F@_1}.
+
+d_field_RequestInfo_version(<<1:1, X:7, Rest/binary>>,
+			    N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    d_field_RequestInfo_version(Rest, N + 7, X bsl N + Acc,
+				F@_1, TrUserData);
+d_field_RequestInfo_version(<<0:1, X:7, Rest/binary>>,
+			    N, Acc, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
+			   {unicode:characters_to_list(Utf8, unicode), Rest2}
+			 end,
+    dfp_read_field_def_RequestInfo(RestF, 0, 0, NewFValue,
+				   TrUserData).
+
+skip_varint_RequestInfo(<<1:1, _:7, Rest/binary>>, Z1,
+			Z2, F@_1, TrUserData) ->
+    skip_varint_RequestInfo(Rest, Z1, Z2, F@_1, TrUserData);
+skip_varint_RequestInfo(<<0:1, _:7, Rest/binary>>, Z1,
+			Z2, F@_1, TrUserData) ->
+    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+				   TrUserData).
+
+skip_length_delimited_RequestInfo(<<1:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestInfo(Rest, N + 7,
+				      X bsl N + Acc, F@_1, TrUserData);
+skip_length_delimited_RequestInfo(<<0:1, X:7,
+				    Rest/binary>>,
+				  N, Acc, F@_1, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestInfo(Rest2, 0, 0, F@_1,
+				   TrUserData).
+
+skip_group_RequestInfo(Bin, FNum, Z2, F@_1,
+		       TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestInfo(Rest, 0, Z2, F@_1,
+				   TrUserData).
+
+skip_32_RequestInfo(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+		    TrUserData) ->
+    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+				   TrUserData).
+
+skip_64_RequestInfo(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+		    TrUserData) ->
+    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+				   TrUserData).
+
+d_msg_RequestCommit(Bin, TrUserData) ->
+    dfp_read_field_def_RequestCommit(Bin, 0, 0, TrUserData).
+
+dfp_read_field_def_RequestCommit(<<>>, 0, 0, _) ->
+    #'RequestCommit'{};
+dfp_read_field_def_RequestCommit(Other, Z1, Z2,
+				 TrUserData) ->
+    dg_read_field_def_RequestCommit(Other, Z1, Z2,
+				    TrUserData).
+
+dg_read_field_def_RequestCommit(<<1:1, X:7,
+				  Rest/binary>>,
+				N, Acc, TrUserData)
+    when N < 32 - 7 ->
+    dg_read_field_def_RequestCommit(Rest, N + 7,
+				    X bsl N + Acc, TrUserData);
+dg_read_field_def_RequestCommit(<<0:1, X:7,
+				  Rest/binary>>,
+				N, Acc, TrUserData) ->
+    Key = X bsl N + Acc,
+    case Key band 7 of
+      0 -> skip_varint_RequestCommit(Rest, 0, 0, TrUserData);
+      1 -> skip_64_RequestCommit(Rest, 0, 0, TrUserData);
+      2 ->
+	  skip_length_delimited_RequestCommit(Rest, 0, 0,
+					      TrUserData);
+      3 ->
+	  skip_group_RequestCommit(Rest, Key bsr 3, 0,
+				   TrUserData);
+      5 -> skip_32_RequestCommit(Rest, 0, 0, TrUserData)
+    end;
+dg_read_field_def_RequestCommit(<<>>, 0, 0, _) ->
+    #'RequestCommit'{}.
+
+skip_varint_RequestCommit(<<1:1, _:7, Rest/binary>>, Z1,
+			  Z2, TrUserData) ->
+    skip_varint_RequestCommit(Rest, Z1, Z2, TrUserData);
+skip_varint_RequestCommit(<<0:1, _:7, Rest/binary>>, Z1,
+			  Z2, TrUserData) ->
+    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
+				     TrUserData).
+
+skip_length_delimited_RequestCommit(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestCommit(Rest, N + 7,
+					X bsl N + Acc, TrUserData);
+skip_length_delimited_RequestCommit(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, TrUserData) ->
+    Length = X bsl N + Acc,
+    <<_:Length/binary, Rest2/binary>> = Rest,
+    dfp_read_field_def_RequestCommit(Rest2, 0, 0,
+				     TrUserData).
+
+skip_group_RequestCommit(Bin, FNum, Z2, TrUserData) ->
+    {_, Rest} = read_group(Bin, FNum),
+    dfp_read_field_def_RequestCommit(Rest, 0, Z2,
+				     TrUserData).
+
+skip_32_RequestCommit(<<_:32, Rest/binary>>, Z1, Z2,
+		      TrUserData) ->
+    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
+				     TrUserData).
+
+skip_64_RequestCommit(<<_:64, Rest/binary>>, Z1, Z2,
+		      TrUserData) ->
+    dfp_read_field_def_RequestCommit(Rest, Z1, Z2,
+				     TrUserData).
+
 d_msg_RequestQuery(Bin, TrUserData) ->
     dfp_read_field_def_RequestQuery(Bin, 0, 0,
 				    id(<<>>, TrUserData), id([], TrUserData),
@@ -6563,113 +7309,147 @@ skip_64_RequestQuery(<<_:64, Rest/binary>>, Z1, Z2,
     dfp_read_field_def_RequestQuery(Rest, Z1, Z2, F@_1,
 				    F@_2, F@_3, F@_4, TrUserData).
 
-d_msg_RequestEndBlock(Bin, TrUserData) ->
-    dfp_read_field_def_RequestEndBlock(Bin, 0, 0,
-				       id(0, TrUserData), TrUserData).
+d_msg_RequestInitChain(Bin, TrUserData) ->
+    dfp_read_field_def_RequestInitChain(Bin, 0, 0,
+					id([], TrUserData),
+					id(<<>>, TrUserData), TrUserData).
 
-dfp_read_field_def_RequestEndBlock(<<8, Rest/binary>>,
-				   Z1, Z2, F@_1, TrUserData) ->
-    d_field_RequestEndBlock_height(Rest, Z1, Z2, F@_1,
-				   TrUserData);
-dfp_read_field_def_RequestEndBlock(<<>>, 0, 0, F@_1,
-				   _) ->
-    #'RequestEndBlock'{height = F@_1};
-dfp_read_field_def_RequestEndBlock(Other, Z1, Z2, F@_1,
-				   TrUserData) ->
-    dg_read_field_def_RequestEndBlock(Other, Z1, Z2, F@_1,
-				      TrUserData).
+dfp_read_field_def_RequestInitChain(<<10, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, TrUserData) ->
+    d_field_RequestInitChain_validators(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData);
+dfp_read_field_def_RequestInitChain(<<18, Rest/binary>>,
+				    Z1, Z2, F@_1, F@_2, TrUserData) ->
+    d_field_RequestInitChain_app_state_bytes(Rest, Z1, Z2,
+					     F@_1, F@_2, TrUserData);
+dfp_read_field_def_RequestInitChain(<<>>, 0, 0, R1,
+				    F@_2, TrUserData) ->
+    #'RequestInitChain'{validators =
+			    lists_reverse(R1, TrUserData),
+			app_state_bytes = F@_2};
+dfp_read_field_def_RequestInitChain(Other, Z1, Z2, F@_1,
+				    F@_2, TrUserData) ->
+    dg_read_field_def_RequestInitChain(Other, Z1, Z2, F@_1,
+				       F@_2, TrUserData).
 
-dg_read_field_def_RequestEndBlock(<<1:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, TrUserData)
+dg_read_field_def_RequestInitChain(<<1:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, TrUserData)
     when N < 32 - 7 ->
-    dg_read_field_def_RequestEndBlock(Rest, N + 7,
-				      X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestEndBlock(<<0:1, X:7,
-				    Rest/binary>>,
-				  N, Acc, F@_1, TrUserData) ->
+    dg_read_field_def_RequestInitChain(Rest, N + 7,
+				       X bsl N + Acc, F@_1, F@_2, TrUserData);
+dg_read_field_def_RequestInitChain(<<0:1, X:7,
+				     Rest/binary>>,
+				   N, Acc, F@_1, F@_2, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
-      8 ->
-	  d_field_RequestEndBlock_height(Rest, 0, 0, F@_1,
-					 TrUserData);
+      10 ->
+	  d_field_RequestInitChain_validators(Rest, 0, 0, F@_1,
+					      F@_2, TrUserData);
+      18 ->
+	  d_field_RequestInitChain_app_state_bytes(Rest, 0, 0,
+						   F@_1, F@_2, TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
-		skip_varint_RequestEndBlock(Rest, 0, 0, F@_1,
-					    TrUserData);
+		skip_varint_RequestInitChain(Rest, 0, 0, F@_1, F@_2,
+					     TrUserData);
 	    1 ->
-		skip_64_RequestEndBlock(Rest, 0, 0, F@_1, TrUserData);
+		skip_64_RequestInitChain(Rest, 0, 0, F@_1, F@_2,
+					 TrUserData);
 	    2 ->
-		skip_length_delimited_RequestEndBlock(Rest, 0, 0, F@_1,
-						      TrUserData);
+		skip_length_delimited_RequestInitChain(Rest, 0, 0, F@_1,
+						       F@_2, TrUserData);
 	    3 ->
-		skip_group_RequestEndBlock(Rest, Key bsr 3, 0, F@_1,
-					   TrUserData);
+		skip_group_RequestInitChain(Rest, Key bsr 3, 0, F@_1,
+					    F@_2, TrUserData);
 	    5 ->
-		skip_32_RequestEndBlock(Rest, 0, 0, F@_1, TrUserData)
+		skip_32_RequestInitChain(Rest, 0, 0, F@_1, F@_2,
+					 TrUserData)
 	  end
     end;
-dg_read_field_def_RequestEndBlock(<<>>, 0, 0, F@_1,
-				  _) ->
-    #'RequestEndBlock'{height = F@_1}.
+dg_read_field_def_RequestInitChain(<<>>, 0, 0, R1, F@_2,
+				   TrUserData) ->
+    #'RequestInitChain'{validators =
+			    lists_reverse(R1, TrUserData),
+			app_state_bytes = F@_2}.
 
-d_field_RequestEndBlock_height(<<1:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, F@_1, TrUserData)
+d_field_RequestInitChain_validators(<<1:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, F@_1, F@_2, TrUserData)
     when N < 57 ->
-    d_field_RequestEndBlock_height(Rest, N + 7,
-				   X bsl N + Acc, F@_1, TrUserData);
-d_field_RequestEndBlock_height(<<0:1, X:7,
-				 Rest/binary>>,
-			       N, Acc, _, TrUserData) ->
-    {NewFValue, RestF} = {begin
-			    <<Res:64/signed-native>> = <<(X bsl N +
-							    Acc):64/unsigned-native>>,
-			    Res
-			  end,
-			  Rest},
-    dfp_read_field_def_RequestEndBlock(RestF, 0, 0,
-				       NewFValue, TrUserData).
+    d_field_RequestInitChain_validators(Rest, N + 7,
+					X bsl N + Acc, F@_1, F@_2, TrUserData);
+d_field_RequestInitChain_validators(<<0:1, X:7,
+				      Rest/binary>>,
+				    N, Acc, Prev, F@_2, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bs:Len/binary, Rest2/binary>> = Rest,
+			   {id(d_msg_Validator(Bs, TrUserData), TrUserData),
+			    Rest2}
+			 end,
+    dfp_read_field_def_RequestInitChain(RestF, 0, 0,
+					cons(NewFValue, Prev, TrUserData), F@_2,
+					TrUserData).
 
-skip_varint_RequestEndBlock(<<1:1, _:7, Rest/binary>>,
-			    Z1, Z2, F@_1, TrUserData) ->
-    skip_varint_RequestEndBlock(Rest, Z1, Z2, F@_1,
-				TrUserData);
-skip_varint_RequestEndBlock(<<0:1, _:7, Rest/binary>>,
-			    Z1, Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
-				       TrUserData).
-
-skip_length_delimited_RequestEndBlock(<<1:1, X:7,
-					Rest/binary>>,
-				      N, Acc, F@_1, TrUserData)
+d_field_RequestInitChain_app_state_bytes(<<1:1, X:7,
+					   Rest/binary>>,
+					 N, Acc, F@_1, F@_2, TrUserData)
     when N < 57 ->
-    skip_length_delimited_RequestEndBlock(Rest, N + 7,
-					  X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestEndBlock(<<0:1, X:7,
-					Rest/binary>>,
-				      N, Acc, F@_1, TrUserData) ->
+    d_field_RequestInitChain_app_state_bytes(Rest, N + 7,
+					     X bsl N + Acc, F@_1, F@_2,
+					     TrUserData);
+d_field_RequestInitChain_app_state_bytes(<<0:1, X:7,
+					   Rest/binary>>,
+					 N, Acc, F@_1, _, TrUserData) ->
+    {NewFValue, RestF} = begin
+			   Len = X bsl N + Acc,
+			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
+			   {binary:copy(Bytes), Rest2}
+			 end,
+    dfp_read_field_def_RequestInitChain(RestF, 0, 0, F@_1,
+					NewFValue, TrUserData).
+
+skip_varint_RequestInitChain(<<1:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, TrUserData) ->
+    skip_varint_RequestInitChain(Rest, Z1, Z2, F@_1, F@_2,
+				 TrUserData);
+skip_varint_RequestInitChain(<<0:1, _:7, Rest/binary>>,
+			     Z1, Z2, F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
+
+skip_length_delimited_RequestInitChain(<<1:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, TrUserData)
+    when N < 57 ->
+    skip_length_delimited_RequestInitChain(Rest, N + 7,
+					   X bsl N + Acc, F@_1, F@_2,
+					   TrUserData);
+skip_length_delimited_RequestInitChain(<<0:1, X:7,
+					 Rest/binary>>,
+				       N, Acc, F@_1, F@_2, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestEndBlock(Rest2, 0, 0, F@_1,
-				       TrUserData).
+    dfp_read_field_def_RequestInitChain(Rest2, 0, 0, F@_1,
+					F@_2, TrUserData).
 
-skip_group_RequestEndBlock(Bin, FNum, Z2, F@_1,
-			   TrUserData) ->
+skip_group_RequestInitChain(Bin, FNum, Z2, F@_1, F@_2,
+			    TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestEndBlock(Rest, 0, Z2, F@_1,
-				       TrUserData).
+    dfp_read_field_def_RequestInitChain(Rest, 0, Z2, F@_1,
+					F@_2, TrUserData).
 
-skip_32_RequestEndBlock(<<_:32, Rest/binary>>, Z1, Z2,
-			F@_1, TrUserData) ->
-    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
-				       TrUserData).
+skip_32_RequestInitChain(<<_:32, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
 
-skip_64_RequestEndBlock(<<_:64, Rest/binary>>, Z1, Z2,
-			F@_1, TrUserData) ->
-    dfp_read_field_def_RequestEndBlock(Rest, Z1, Z2, F@_1,
-				       TrUserData).
+skip_64_RequestInitChain(<<_:64, Rest/binary>>, Z1, Z2,
+			 F@_1, F@_2, TrUserData) ->
+    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
+					F@_2, TrUserData).
 
 d_msg_RequestFlush(Bin, TrUserData) ->
     dfp_read_field_def_RequestFlush(Bin, 0, 0, TrUserData).
@@ -6741,318 +7521,102 @@ skip_64_RequestFlush(<<_:64, Rest/binary>>, Z1, Z2,
     dfp_read_field_def_RequestFlush(Rest, Z1, Z2,
 				    TrUserData).
 
-d_msg_RequestInitChain(Bin, TrUserData) ->
-    dfp_read_field_def_RequestInitChain(Bin, 0, 0,
-					id([], TrUserData), TrUserData).
-
-dfp_read_field_def_RequestInitChain(<<10, Rest/binary>>,
-				    Z1, Z2, F@_1, TrUserData) ->
-    d_field_RequestInitChain_validators(Rest, Z1, Z2, F@_1,
-					TrUserData);
-dfp_read_field_def_RequestInitChain(<<>>, 0, 0, R1,
-				    TrUserData) ->
-    #'RequestInitChain'{validators =
-			    lists_reverse(R1, TrUserData)};
-dfp_read_field_def_RequestInitChain(Other, Z1, Z2, F@_1,
-				    TrUserData) ->
-    dg_read_field_def_RequestInitChain(Other, Z1, Z2, F@_1,
-				       TrUserData).
-
-dg_read_field_def_RequestInitChain(<<1:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_RequestInitChain(Rest, N + 7,
-				       X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestInitChain(<<0:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_RequestInitChain_validators(Rest, 0, 0, F@_1,
-					      TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_RequestInitChain(Rest, 0, 0, F@_1,
-					     TrUserData);
-	    1 ->
-		skip_64_RequestInitChain(Rest, 0, 0, F@_1, TrUserData);
-	    2 ->
-		skip_length_delimited_RequestInitChain(Rest, 0, 0, F@_1,
-						       TrUserData);
-	    3 ->
-		skip_group_RequestInitChain(Rest, Key bsr 3, 0, F@_1,
-					    TrUserData);
-	    5 ->
-		skip_32_RequestInitChain(Rest, 0, 0, F@_1, TrUserData)
-	  end
-    end;
-dg_read_field_def_RequestInitChain(<<>>, 0, 0, R1,
-				   TrUserData) ->
-    #'RequestInitChain'{validators =
-			    lists_reverse(R1, TrUserData)}.
-
-d_field_RequestInitChain_validators(<<1:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_RequestInitChain_validators(Rest, N + 7,
-					X bsl N + Acc, F@_1, TrUserData);
-d_field_RequestInitChain_validators(<<0:1, X:7,
-				      Rest/binary>>,
-				    N, Acc, Prev, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bs:Len/binary, Rest2/binary>> = Rest,
-			   {id(d_msg_Validator(Bs, TrUserData), TrUserData),
-			    Rest2}
-			 end,
-    dfp_read_field_def_RequestInitChain(RestF, 0, 0,
-					cons(NewFValue, Prev, TrUserData),
-					TrUserData).
-
-skip_varint_RequestInitChain(<<1:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, TrUserData) ->
-    skip_varint_RequestInitChain(Rest, Z1, Z2, F@_1,
-				 TrUserData);
-skip_varint_RequestInitChain(<<0:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
-					TrUserData).
-
-skip_length_delimited_RequestInitChain(<<1:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestInitChain(Rest, N + 7,
-					   X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestInitChain(<<0:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestInitChain(Rest2, 0, 0, F@_1,
-					TrUserData).
-
-skip_group_RequestInitChain(Bin, FNum, Z2, F@_1,
-			    TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestInitChain(Rest, 0, Z2, F@_1,
-					TrUserData).
-
-skip_32_RequestInitChain(<<_:32, Rest/binary>>, Z1, Z2,
-			 F@_1, TrUserData) ->
-    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
-					TrUserData).
-
-skip_64_RequestInitChain(<<_:64, Rest/binary>>, Z1, Z2,
-			 F@_1, TrUserData) ->
-    dfp_read_field_def_RequestInitChain(Rest, Z1, Z2, F@_1,
-					TrUserData).
-
-d_msg_RequestInfo(Bin, TrUserData) ->
-    dfp_read_field_def_RequestInfo(Bin, 0, 0,
+d_msg_RequestEcho(Bin, TrUserData) ->
+    dfp_read_field_def_RequestEcho(Bin, 0, 0,
 				   id([], TrUserData), TrUserData).
 
-dfp_read_field_def_RequestInfo(<<10, Rest/binary>>, Z1,
+dfp_read_field_def_RequestEcho(<<10, Rest/binary>>, Z1,
 			       Z2, F@_1, TrUserData) ->
-    d_field_RequestInfo_version(Rest, Z1, Z2, F@_1,
+    d_field_RequestEcho_message(Rest, Z1, Z2, F@_1,
 				TrUserData);
-dfp_read_field_def_RequestInfo(<<>>, 0, 0, F@_1, _) ->
-    #'RequestInfo'{version = F@_1};
-dfp_read_field_def_RequestInfo(Other, Z1, Z2, F@_1,
+dfp_read_field_def_RequestEcho(<<>>, 0, 0, F@_1, _) ->
+    #'RequestEcho'{message = F@_1};
+dfp_read_field_def_RequestEcho(Other, Z1, Z2, F@_1,
 			       TrUserData) ->
-    dg_read_field_def_RequestInfo(Other, Z1, Z2, F@_1,
+    dg_read_field_def_RequestEcho(Other, Z1, Z2, F@_1,
 				  TrUserData).
 
-dg_read_field_def_RequestInfo(<<1:1, X:7, Rest/binary>>,
+dg_read_field_def_RequestEcho(<<1:1, X:7, Rest/binary>>,
 			      N, Acc, F@_1, TrUserData)
     when N < 32 - 7 ->
-    dg_read_field_def_RequestInfo(Rest, N + 7,
+    dg_read_field_def_RequestEcho(Rest, N + 7,
 				  X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestInfo(<<0:1, X:7, Rest/binary>>,
+dg_read_field_def_RequestEcho(<<0:1, X:7, Rest/binary>>,
 			      N, Acc, F@_1, TrUserData) ->
     Key = X bsl N + Acc,
     case Key of
       10 ->
-	  d_field_RequestInfo_version(Rest, 0, 0, F@_1,
+	  d_field_RequestEcho_message(Rest, 0, 0, F@_1,
 				      TrUserData);
       _ ->
 	  case Key band 7 of
 	    0 ->
-		skip_varint_RequestInfo(Rest, 0, 0, F@_1, TrUserData);
-	    1 -> skip_64_RequestInfo(Rest, 0, 0, F@_1, TrUserData);
+		skip_varint_RequestEcho(Rest, 0, 0, F@_1, TrUserData);
+	    1 -> skip_64_RequestEcho(Rest, 0, 0, F@_1, TrUserData);
 	    2 ->
-		skip_length_delimited_RequestInfo(Rest, 0, 0, F@_1,
+		skip_length_delimited_RequestEcho(Rest, 0, 0, F@_1,
 						  TrUserData);
 	    3 ->
-		skip_group_RequestInfo(Rest, Key bsr 3, 0, F@_1,
+		skip_group_RequestEcho(Rest, Key bsr 3, 0, F@_1,
 				       TrUserData);
-	    5 -> skip_32_RequestInfo(Rest, 0, 0, F@_1, TrUserData)
+	    5 -> skip_32_RequestEcho(Rest, 0, 0, F@_1, TrUserData)
 	  end
     end;
-dg_read_field_def_RequestInfo(<<>>, 0, 0, F@_1, _) ->
-    #'RequestInfo'{version = F@_1}.
+dg_read_field_def_RequestEcho(<<>>, 0, 0, F@_1, _) ->
+    #'RequestEcho'{message = F@_1}.
 
-d_field_RequestInfo_version(<<1:1, X:7, Rest/binary>>,
+d_field_RequestEcho_message(<<1:1, X:7, Rest/binary>>,
 			    N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    d_field_RequestInfo_version(Rest, N + 7, X bsl N + Acc,
+    d_field_RequestEcho_message(Rest, N + 7, X bsl N + Acc,
 				F@_1, TrUserData);
-d_field_RequestInfo_version(<<0:1, X:7, Rest/binary>>,
+d_field_RequestEcho_message(<<0:1, X:7, Rest/binary>>,
 			    N, Acc, _, TrUserData) ->
     {NewFValue, RestF} = begin
 			   Len = X bsl N + Acc,
 			   <<Utf8:Len/binary, Rest2/binary>> = Rest,
 			   {unicode:characters_to_list(Utf8, unicode), Rest2}
 			 end,
-    dfp_read_field_def_RequestInfo(RestF, 0, 0, NewFValue,
+    dfp_read_field_def_RequestEcho(RestF, 0, 0, NewFValue,
 				   TrUserData).
 
-skip_varint_RequestInfo(<<1:1, _:7, Rest/binary>>, Z1,
+skip_varint_RequestEcho(<<1:1, _:7, Rest/binary>>, Z1,
 			Z2, F@_1, TrUserData) ->
-    skip_varint_RequestInfo(Rest, Z1, Z2, F@_1, TrUserData);
-skip_varint_RequestInfo(<<0:1, _:7, Rest/binary>>, Z1,
+    skip_varint_RequestEcho(Rest, Z1, Z2, F@_1, TrUserData);
+skip_varint_RequestEcho(<<0:1, _:7, Rest/binary>>, Z1,
 			Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
 				   TrUserData).
 
-skip_length_delimited_RequestInfo(<<1:1, X:7,
+skip_length_delimited_RequestEcho(<<1:1, X:7,
 				    Rest/binary>>,
 				  N, Acc, F@_1, TrUserData)
     when N < 57 ->
-    skip_length_delimited_RequestInfo(Rest, N + 7,
+    skip_length_delimited_RequestEcho(Rest, N + 7,
 				      X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestInfo(<<0:1, X:7,
+skip_length_delimited_RequestEcho(<<0:1, X:7,
 				    Rest/binary>>,
 				  N, Acc, F@_1, TrUserData) ->
     Length = X bsl N + Acc,
     <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestInfo(Rest2, 0, 0, F@_1,
+    dfp_read_field_def_RequestEcho(Rest2, 0, 0, F@_1,
 				   TrUserData).
 
-skip_group_RequestInfo(Bin, FNum, Z2, F@_1,
+skip_group_RequestEcho(Bin, FNum, Z2, F@_1,
 		       TrUserData) ->
     {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestInfo(Rest, 0, Z2, F@_1,
+    dfp_read_field_def_RequestEcho(Rest, 0, Z2, F@_1,
 				   TrUserData).
 
-skip_32_RequestInfo(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
+skip_32_RequestEcho(<<_:32, Rest/binary>>, Z1, Z2, F@_1,
 		    TrUserData) ->
-    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
 				   TrUserData).
 
-skip_64_RequestInfo(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
+skip_64_RequestEcho(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
 		    TrUserData) ->
-    dfp_read_field_def_RequestInfo(Rest, Z1, Z2, F@_1,
+    dfp_read_field_def_RequestEcho(Rest, Z1, Z2, F@_1,
 				   TrUserData).
-
-d_msg_RequestDeliverTx(Bin, TrUserData) ->
-    dfp_read_field_def_RequestDeliverTx(Bin, 0, 0,
-					id(<<>>, TrUserData), TrUserData).
-
-dfp_read_field_def_RequestDeliverTx(<<10, Rest/binary>>,
-				    Z1, Z2, F@_1, TrUserData) ->
-    d_field_RequestDeliverTx_tx(Rest, Z1, Z2, F@_1,
-				TrUserData);
-dfp_read_field_def_RequestDeliverTx(<<>>, 0, 0, F@_1,
-				    _) ->
-    #'RequestDeliverTx'{tx = F@_1};
-dfp_read_field_def_RequestDeliverTx(Other, Z1, Z2, F@_1,
-				    TrUserData) ->
-    dg_read_field_def_RequestDeliverTx(Other, Z1, Z2, F@_1,
-				       TrUserData).
-
-dg_read_field_def_RequestDeliverTx(<<1:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, TrUserData)
-    when N < 32 - 7 ->
-    dg_read_field_def_RequestDeliverTx(Rest, N + 7,
-				       X bsl N + Acc, F@_1, TrUserData);
-dg_read_field_def_RequestDeliverTx(<<0:1, X:7,
-				     Rest/binary>>,
-				   N, Acc, F@_1, TrUserData) ->
-    Key = X bsl N + Acc,
-    case Key of
-      10 ->
-	  d_field_RequestDeliverTx_tx(Rest, 0, 0, F@_1,
-				      TrUserData);
-      _ ->
-	  case Key band 7 of
-	    0 ->
-		skip_varint_RequestDeliverTx(Rest, 0, 0, F@_1,
-					     TrUserData);
-	    1 ->
-		skip_64_RequestDeliverTx(Rest, 0, 0, F@_1, TrUserData);
-	    2 ->
-		skip_length_delimited_RequestDeliverTx(Rest, 0, 0, F@_1,
-						       TrUserData);
-	    3 ->
-		skip_group_RequestDeliverTx(Rest, Key bsr 3, 0, F@_1,
-					    TrUserData);
-	    5 ->
-		skip_32_RequestDeliverTx(Rest, 0, 0, F@_1, TrUserData)
-	  end
-    end;
-dg_read_field_def_RequestDeliverTx(<<>>, 0, 0, F@_1,
-				   _) ->
-    #'RequestDeliverTx'{tx = F@_1}.
-
-d_field_RequestDeliverTx_tx(<<1:1, X:7, Rest/binary>>,
-			    N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    d_field_RequestDeliverTx_tx(Rest, N + 7, X bsl N + Acc,
-				F@_1, TrUserData);
-d_field_RequestDeliverTx_tx(<<0:1, X:7, Rest/binary>>,
-			    N, Acc, _, TrUserData) ->
-    {NewFValue, RestF} = begin
-			   Len = X bsl N + Acc,
-			   <<Bytes:Len/binary, Rest2/binary>> = Rest,
-			   {binary:copy(Bytes), Rest2}
-			 end,
-    dfp_read_field_def_RequestDeliverTx(RestF, 0, 0,
-					NewFValue, TrUserData).
-
-skip_varint_RequestDeliverTx(<<1:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, TrUserData) ->
-    skip_varint_RequestDeliverTx(Rest, Z1, Z2, F@_1,
-				 TrUserData);
-skip_varint_RequestDeliverTx(<<0:1, _:7, Rest/binary>>,
-			     Z1, Z2, F@_1, TrUserData) ->
-    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
-					TrUserData).
-
-skip_length_delimited_RequestDeliverTx(<<1:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, TrUserData)
-    when N < 57 ->
-    skip_length_delimited_RequestDeliverTx(Rest, N + 7,
-					   X bsl N + Acc, F@_1, TrUserData);
-skip_length_delimited_RequestDeliverTx(<<0:1, X:7,
-					 Rest/binary>>,
-				       N, Acc, F@_1, TrUserData) ->
-    Length = X bsl N + Acc,
-    <<_:Length/binary, Rest2/binary>> = Rest,
-    dfp_read_field_def_RequestDeliverTx(Rest2, 0, 0, F@_1,
-					TrUserData).
-
-skip_group_RequestDeliverTx(Bin, FNum, Z2, F@_1,
-			    TrUserData) ->
-    {_, Rest} = read_group(Bin, FNum),
-    dfp_read_field_def_RequestDeliverTx(Rest, 0, Z2, F@_1,
-					TrUserData).
-
-skip_32_RequestDeliverTx(<<_:32, Rest/binary>>, Z1, Z2,
-			 F@_1, TrUserData) ->
-    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
-					TrUserData).
-
-skip_64_RequestDeliverTx(<<_:64, Rest/binary>>, Z1, Z2,
-			 F@_1, TrUserData) ->
-    dfp_read_field_def_RequestDeliverTx(Rest, Z1, Z2, F@_1,
-					TrUserData).
 
 d_msg_Request(Bin, TrUserData) ->
     dfp_read_field_def_Request(Bin, 0, 0,
@@ -7466,10 +8030,6 @@ skip_64_Request(<<_:64, Rest/binary>>, Z1, Z2, F@_1,
     dfp_read_field_def_Request(Rest, Z1, Z2, F@_1,
 			       TrUserData).
 
-'d_enum_KVPair.Type'(0) -> 'STRING';
-'d_enum_KVPair.Type'(1) -> 'INT';
-'d_enum_KVPair.Type'(V) -> V.
-
 read_group(Bin, FieldNum) ->
     {NumBytes, EndTagLen} = read_gr_b(Bin, 0, 0, 0, 0, FieldNum),
     <<Group:NumBytes/binary, _:EndTagLen/binary, Rest/binary>> = Bin,
@@ -7534,35 +8094,36 @@ merge_msgs(Prev, New, Opts)
     when element(1, Prev) =:= element(1, New) ->
     TrUserData = proplists:get_value(user_data, Opts),
     case Prev of
-      #'RequestSetOption'{} ->
-	  merge_msg_RequestSetOption(Prev, New, TrUserData);
+      #'RequestDeliverTx'{} ->
+	  merge_msg_RequestDeliverTx(Prev, New, TrUserData);
+      #'KI64Pair'{} ->
+	  merge_msg_KI64Pair(Prev, New, TrUserData);
+      #'KVPair'{} -> merge_msg_KVPair(Prev, New, TrUserData);
+      #'ResponseDeliverTx'{} ->
+	  merge_msg_ResponseDeliverTx(Prev, New, TrUserData);
+      #'ResponseFlush'{} ->
+	  merge_msg_ResponseFlush(Prev, New, TrUserData);
+      #'ResponseCommit'{} ->
+	  merge_msg_ResponseCommit(Prev, New, TrUserData);
+      #'RequestCheckTx'{} ->
+	  merge_msg_RequestCheckTx(Prev, New, TrUserData);
+      #'Evidence'{} ->
+	  merge_msg_Evidence(Prev, New, TrUserData);
+      #'ResponseInfo'{} ->
+	  merge_msg_ResponseInfo(Prev, New, TrUserData);
+      #'ResponseCheckTx'{} ->
+	  merge_msg_ResponseCheckTx(Prev, New, TrUserData);
       #'PartSetHeader'{} ->
 	  merge_msg_PartSetHeader(Prev, New, TrUserData);
       #'BlockID'{} ->
 	  merge_msg_BlockID(Prev, New, TrUserData);
-      #'Evidence'{} ->
-	  merge_msg_Evidence(Prev, New, TrUserData);
       #'Header'{} -> merge_msg_Header(Prev, New, TrUserData);
-      #'RequestBeginBlock'{} ->
-	  merge_msg_RequestBeginBlock(Prev, New, TrUserData);
+      #'RequestEndBlock'{} ->
+	  merge_msg_RequestEndBlock(Prev, New, TrUserData);
       #'ResponseBeginBlock'{} ->
 	  merge_msg_ResponseBeginBlock(Prev, New, TrUserData);
-      #'RequestEcho'{} ->
-	  merge_msg_RequestEcho(Prev, New, TrUserData);
-      #'RequestCheckTx'{} ->
-	  merge_msg_RequestCheckTx(Prev, New, TrUserData);
-      #'ResponseInfo'{} ->
-	  merge_msg_ResponseInfo(Prev, New, TrUserData);
       #'ResponseEcho'{} ->
 	  merge_msg_ResponseEcho(Prev, New, TrUserData);
-      #'ResponseCheckTx'{} ->
-	  merge_msg_ResponseCheckTx(Prev, New, TrUserData);
-      #'RequestCommit'{} ->
-	  merge_msg_RequestCommit(Prev, New, TrUserData);
-      #'ResponseException'{} ->
-	  merge_msg_ResponseException(Prev, New, TrUserData);
-      #'ResponseCommit'{} ->
-	  merge_msg_ResponseCommit(Prev, New, TrUserData);
       #'BlockGossip'{} ->
 	  merge_msg_BlockGossip(Prev, New, TrUserData);
       #'TxSize'{} -> merge_msg_TxSize(Prev, New, TrUserData);
@@ -7574,47 +8135,226 @@ merge_msgs(Prev, New, Opts)
 	  merge_msg_Validator(Prev, New, TrUserData);
       #'ResponseEndBlock'{} ->
 	  merge_msg_ResponseEndBlock(Prev, New, TrUserData);
-      #'KVPair'{} -> merge_msg_KVPair(Prev, New, TrUserData);
-      #'ResponseDeliverTx'{} ->
-	  merge_msg_ResponseDeliverTx(Prev, New, TrUserData);
       #'ResponseQuery'{} ->
 	  merge_msg_ResponseQuery(Prev, New, TrUserData);
       #'ResponseInitChain'{} ->
 	  merge_msg_ResponseInitChain(Prev, New, TrUserData);
       #'ResponseSetOption'{} ->
 	  merge_msg_ResponseSetOption(Prev, New, TrUserData);
-      #'ResponseFlush'{} ->
-	  merge_msg_ResponseFlush(Prev, New, TrUserData);
+      #'ResponseException'{} ->
+	  merge_msg_ResponseException(Prev, New, TrUserData);
       #'Response'{} ->
 	  merge_msg_Response(Prev, New, TrUserData);
-      #'RequestQuery'{} ->
-	  merge_msg_RequestQuery(Prev, New, TrUserData);
-      #'RequestEndBlock'{} ->
-	  merge_msg_RequestEndBlock(Prev, New, TrUserData);
-      #'RequestFlush'{} ->
-	  merge_msg_RequestFlush(Prev, New, TrUserData);
-      #'RequestInitChain'{} ->
-	  merge_msg_RequestInitChain(Prev, New, TrUserData);
+      #'RequestBeginBlock'{} ->
+	  merge_msg_RequestBeginBlock(Prev, New, TrUserData);
+      #'RequestSetOption'{} ->
+	  merge_msg_RequestSetOption(Prev, New, TrUserData);
       #'RequestInfo'{} ->
 	  merge_msg_RequestInfo(Prev, New, TrUserData);
-      #'RequestDeliverTx'{} ->
-	  merge_msg_RequestDeliverTx(Prev, New, TrUserData);
+      #'RequestCommit'{} ->
+	  merge_msg_RequestCommit(Prev, New, TrUserData);
+      #'RequestQuery'{} ->
+	  merge_msg_RequestQuery(Prev, New, TrUserData);
+      #'RequestInitChain'{} ->
+	  merge_msg_RequestInitChain(Prev, New, TrUserData);
+      #'RequestFlush'{} ->
+	  merge_msg_RequestFlush(Prev, New, TrUserData);
+      #'RequestEcho'{} ->
+	  merge_msg_RequestEcho(Prev, New, TrUserData);
       #'Request'{} -> merge_msg_Request(Prev, New, TrUserData)
     end.
 
-merge_msg_RequestSetOption(#'RequestSetOption'{key =
-						   PFkey,
-					       value = PFvalue},
-			   #'RequestSetOption'{key = NFkey, value = NFvalue},
-			   _) ->
-    #'RequestSetOption'{key =
-			    if NFkey =:= undefined -> PFkey;
-			       true -> NFkey
-			    end,
-			value =
-			    if NFvalue =:= undefined -> PFvalue;
-			       true -> NFvalue
+merge_msg_RequestDeliverTx(#'RequestDeliverTx'{tx =
+						   PFtx},
+			   #'RequestDeliverTx'{tx = NFtx}, _) ->
+    #'RequestDeliverTx'{tx =
+			    if NFtx =:= undefined -> PFtx;
+			       true -> NFtx
 			    end}.
+
+merge_msg_KI64Pair(#'KI64Pair'{key = PFkey,
+			       value = PFvalue},
+		   #'KI64Pair'{key = NFkey, value = NFvalue}, _) ->
+    #'KI64Pair'{key =
+		    if NFkey =:= undefined -> PFkey;
+		       true -> NFkey
+		    end,
+		value =
+		    if NFvalue =:= undefined -> PFvalue;
+		       true -> NFvalue
+		    end}.
+
+merge_msg_KVPair(#'KVPair'{key = PFkey,
+			   value = PFvalue},
+		 #'KVPair'{key = NFkey, value = NFvalue}, _) ->
+    #'KVPair'{key =
+		  if NFkey =:= undefined -> PFkey;
+		     true -> NFkey
+		  end,
+	      value =
+		  if NFvalue =:= undefined -> PFvalue;
+		     true -> NFvalue
+		  end}.
+
+merge_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code =
+						     PFcode,
+						 data = PFdata, log = PFlog,
+						 info = PFinfo,
+						 gas_wanted = PFgas_wanted,
+						 gas_used = PFgas_used,
+						 tags = PFtags, fee = PFfee},
+			    #'ResponseDeliverTx'{code = NFcode, data = NFdata,
+						 log = NFlog, info = NFinfo,
+						 gas_wanted = NFgas_wanted,
+						 gas_used = NFgas_used,
+						 tags = NFtags, fee = NFfee},
+			    TrUserData) ->
+    #'ResponseDeliverTx'{code =
+			     if NFcode =:= undefined -> PFcode;
+				true -> NFcode
+			     end,
+			 data =
+			     if NFdata =:= undefined -> PFdata;
+				true -> NFdata
+			     end,
+			 log =
+			     if NFlog =:= undefined -> PFlog;
+				true -> NFlog
+			     end,
+			 info =
+			     if NFinfo =:= undefined -> PFinfo;
+				true -> NFinfo
+			     end,
+			 gas_wanted =
+			     if NFgas_wanted =:= undefined -> PFgas_wanted;
+				true -> NFgas_wanted
+			     end,
+			 gas_used =
+			     if NFgas_used =:= undefined -> PFgas_used;
+				true -> NFgas_used
+			     end,
+			 tags =
+			     if PFtags /= undefined, NFtags /= undefined ->
+				    'erlang_++'(PFtags, NFtags, TrUserData);
+				PFtags == undefined -> NFtags;
+				NFtags == undefined -> PFtags
+			     end,
+			 fee =
+			     if PFfee /= undefined, NFfee /= undefined ->
+				    merge_msg_KI64Pair(PFfee, NFfee,
+						       TrUserData);
+				PFfee == undefined -> NFfee;
+				NFfee == undefined -> PFfee
+			     end}.
+
+merge_msg_ResponseFlush(_Prev, New, _TrUserData) -> New.
+
+merge_msg_ResponseCommit(#'ResponseCommit'{data =
+					       PFdata},
+			 #'ResponseCommit'{data = NFdata}, _) ->
+    #'ResponseCommit'{data =
+			  if NFdata =:= undefined -> PFdata;
+			     true -> NFdata
+			  end}.
+
+merge_msg_RequestCheckTx(#'RequestCheckTx'{tx = PFtx},
+			 #'RequestCheckTx'{tx = NFtx}, _) ->
+    #'RequestCheckTx'{tx =
+			  if NFtx =:= undefined -> PFtx;
+			     true -> NFtx
+			  end}.
+
+merge_msg_Evidence(#'Evidence'{pub_key = PFpub_key,
+			       height = PFheight},
+		   #'Evidence'{pub_key = NFpub_key, height = NFheight},
+		   _) ->
+    #'Evidence'{pub_key =
+		    if NFpub_key =:= undefined -> PFpub_key;
+		       true -> NFpub_key
+		    end,
+		height =
+		    if NFheight =:= undefined -> PFheight;
+		       true -> NFheight
+		    end}.
+
+merge_msg_ResponseInfo(#'ResponseInfo'{data = PFdata,
+				       version = PFversion,
+				       last_block_height = PFlast_block_height,
+				       last_block_app_hash =
+					   PFlast_block_app_hash},
+		       #'ResponseInfo'{data = NFdata, version = NFversion,
+				       last_block_height = NFlast_block_height,
+				       last_block_app_hash =
+					   NFlast_block_app_hash},
+		       _) ->
+    #'ResponseInfo'{data =
+			if NFdata =:= undefined -> PFdata;
+			   true -> NFdata
+			end,
+		    version =
+			if NFversion =:= undefined -> PFversion;
+			   true -> NFversion
+			end,
+		    last_block_height =
+			if NFlast_block_height =:= undefined ->
+			       PFlast_block_height;
+			   true -> NFlast_block_height
+			end,
+		    last_block_app_hash =
+			if NFlast_block_app_hash =:= undefined ->
+			       PFlast_block_app_hash;
+			   true -> NFlast_block_app_hash
+			end}.
+
+merge_msg_ResponseCheckTx(#'ResponseCheckTx'{code =
+						 PFcode,
+					     data = PFdata, log = PFlog,
+					     info = PFinfo,
+					     gas_wanted = PFgas_wanted,
+					     gas_used = PFgas_used,
+					     tags = PFtags, fee = PFfee},
+			  #'ResponseCheckTx'{code = NFcode, data = NFdata,
+					     log = NFlog, info = NFinfo,
+					     gas_wanted = NFgas_wanted,
+					     gas_used = NFgas_used,
+					     tags = NFtags, fee = NFfee},
+			  TrUserData) ->
+    #'ResponseCheckTx'{code =
+			   if NFcode =:= undefined -> PFcode;
+			      true -> NFcode
+			   end,
+		       data =
+			   if NFdata =:= undefined -> PFdata;
+			      true -> NFdata
+			   end,
+		       log =
+			   if NFlog =:= undefined -> PFlog;
+			      true -> NFlog
+			   end,
+		       info =
+			   if NFinfo =:= undefined -> PFinfo;
+			      true -> NFinfo
+			   end,
+		       gas_wanted =
+			   if NFgas_wanted =:= undefined -> PFgas_wanted;
+			      true -> NFgas_wanted
+			   end,
+		       gas_used =
+			   if NFgas_used =:= undefined -> PFgas_used;
+			      true -> NFgas_used
+			   end,
+		       tags =
+			   if PFtags /= undefined, NFtags /= undefined ->
+				  'erlang_++'(PFtags, NFtags, TrUserData);
+			      PFtags == undefined -> NFtags;
+			      NFtags == undefined -> PFtags
+			   end,
+		       fee =
+			   if PFfee /= undefined, NFfee /= undefined ->
+				  merge_msg_KI64Pair(PFfee, NFfee, TrUserData);
+			      PFfee == undefined -> NFfee;
+			      NFfee == undefined -> PFfee
+			   end}.
 
 merge_msg_PartSetHeader(#'PartSetHeader'{total =
 					     PFtotal,
@@ -7643,19 +8383,6 @@ merge_msg_BlockID(#'BlockID'{hash = PFhash,
 		      PFparts == undefined -> NFparts;
 		      NFparts == undefined -> PFparts
 		   end}.
-
-merge_msg_Evidence(#'Evidence'{pub_key = PFpub_key,
-			       height = PFheight},
-		   #'Evidence'{pub_key = NFpub_key, height = NFheight},
-		   _) ->
-    #'Evidence'{pub_key =
-		    if NFpub_key =:= undefined -> PFpub_key;
-		       true -> NFpub_key
-		    end,
-		height =
-		    if NFheight =:= undefined -> PFheight;
-		       true -> NFheight
-		    end}.
 
 merge_msg_Header(#'Header'{chain_id = PFchain_id,
 			   height = PFheight, time = PFtime,
@@ -7714,100 +8441,16 @@ merge_msg_Header(#'Header'{chain_id = PFchain_id,
 		     true -> NFapp_hash
 		  end}.
 
-merge_msg_RequestBeginBlock(#'RequestBeginBlock'{hash =
-						     PFhash,
-						 header = PFheader,
-						 absent_validators =
-						     PFabsent_validators,
-						 byzantine_validators =
-						     PFbyzantine_validators},
-			    #'RequestBeginBlock'{hash = NFhash,
-						 header = NFheader,
-						 absent_validators =
-						     NFabsent_validators,
-						 byzantine_validators =
-						     NFbyzantine_validators},
-			    TrUserData) ->
-    #'RequestBeginBlock'{hash =
-			     if NFhash =:= undefined -> PFhash;
-				true -> NFhash
-			     end,
-			 header =
-			     if PFheader /= undefined, NFheader /= undefined ->
-				    merge_msg_Header(PFheader, NFheader,
-						     TrUserData);
-				PFheader == undefined -> NFheader;
-				NFheader == undefined -> PFheader
-			     end,
-			 absent_validators =
-			     if PFabsent_validators /= undefined,
-				NFabsent_validators /= undefined ->
-				    'erlang_++'(PFabsent_validators,
-						NFabsent_validators,
-						TrUserData);
-				PFabsent_validators == undefined ->
-				    NFabsent_validators;
-				NFabsent_validators == undefined ->
-				    PFabsent_validators
-			     end,
-			 byzantine_validators =
-			     if PFbyzantine_validators /= undefined,
-				NFbyzantine_validators /= undefined ->
-				    'erlang_++'(PFbyzantine_validators,
-						NFbyzantine_validators,
-						TrUserData);
-				PFbyzantine_validators == undefined ->
-				    NFbyzantine_validators;
-				NFbyzantine_validators == undefined ->
-				    PFbyzantine_validators
-			     end}.
+merge_msg_RequestEndBlock(#'RequestEndBlock'{height =
+						 PFheight},
+			  #'RequestEndBlock'{height = NFheight}, _) ->
+    #'RequestEndBlock'{height =
+			   if NFheight =:= undefined -> PFheight;
+			      true -> NFheight
+			   end}.
 
 merge_msg_ResponseBeginBlock(_Prev, New, _TrUserData) ->
     New.
-
-merge_msg_RequestEcho(#'RequestEcho'{message =
-					 PFmessage},
-		      #'RequestEcho'{message = NFmessage}, _) ->
-    #'RequestEcho'{message =
-		       if NFmessage =:= undefined -> PFmessage;
-			  true -> NFmessage
-		       end}.
-
-merge_msg_RequestCheckTx(#'RequestCheckTx'{tx = PFtx},
-			 #'RequestCheckTx'{tx = NFtx}, _) ->
-    #'RequestCheckTx'{tx =
-			  if NFtx =:= undefined -> PFtx;
-			     true -> NFtx
-			  end}.
-
-merge_msg_ResponseInfo(#'ResponseInfo'{data = PFdata,
-				       version = PFversion,
-				       last_block_height = PFlast_block_height,
-				       last_block_app_hash =
-					   PFlast_block_app_hash},
-		       #'ResponseInfo'{data = NFdata, version = NFversion,
-				       last_block_height = NFlast_block_height,
-				       last_block_app_hash =
-					   NFlast_block_app_hash},
-		       _) ->
-    #'ResponseInfo'{data =
-			if NFdata =:= undefined -> PFdata;
-			   true -> NFdata
-			end,
-		    version =
-			if NFversion =:= undefined -> PFversion;
-			   true -> NFversion
-			end,
-		    last_block_height =
-			if NFlast_block_height =:= undefined ->
-			       PFlast_block_height;
-			   true -> NFlast_block_height
-			end,
-		    last_block_app_hash =
-			if NFlast_block_app_hash =:= undefined ->
-			       PFlast_block_app_hash;
-			   true -> NFlast_block_app_hash
-			end}.
 
 merge_msg_ResponseEcho(#'ResponseEcho'{message =
 					   PFmessage},
@@ -7816,64 +8459,6 @@ merge_msg_ResponseEcho(#'ResponseEcho'{message =
 			if NFmessage =:= undefined -> PFmessage;
 			   true -> NFmessage
 			end}.
-
-merge_msg_ResponseCheckTx(#'ResponseCheckTx'{code =
-						 PFcode,
-					     data = PFdata, log = PFlog,
-					     gas = PFgas, fee = PFfee},
-			  #'ResponseCheckTx'{code = NFcode, data = NFdata,
-					     log = NFlog, gas = NFgas,
-					     fee = NFfee},
-			  _) ->
-    #'ResponseCheckTx'{code =
-			   if NFcode =:= undefined -> PFcode;
-			      true -> NFcode
-			   end,
-		       data =
-			   if NFdata =:= undefined -> PFdata;
-			      true -> NFdata
-			   end,
-		       log =
-			   if NFlog =:= undefined -> PFlog;
-			      true -> NFlog
-			   end,
-		       gas =
-			   if NFgas =:= undefined -> PFgas;
-			      true -> NFgas
-			   end,
-		       fee =
-			   if NFfee =:= undefined -> PFfee;
-			      true -> NFfee
-			   end}.
-
-merge_msg_RequestCommit(_Prev, New, _TrUserData) -> New.
-
-merge_msg_ResponseException(#'ResponseException'{error =
-						     PFerror},
-			    #'ResponseException'{error = NFerror}, _) ->
-    #'ResponseException'{error =
-			     if NFerror =:= undefined -> PFerror;
-				true -> NFerror
-			     end}.
-
-merge_msg_ResponseCommit(#'ResponseCommit'{code =
-					       PFcode,
-					   data = PFdata, log = PFlog},
-			 #'ResponseCommit'{code = NFcode, data = NFdata,
-					   log = NFlog},
-			 _) ->
-    #'ResponseCommit'{code =
-			  if NFcode =:= undefined -> PFcode;
-			     true -> NFcode
-			  end,
-		      data =
-			  if NFdata =:= undefined -> PFdata;
-			     true -> NFdata
-			  end,
-		      log =
-			  if NFlog =:= undefined -> PFlog;
-			     true -> NFlog
-			  end}.
 
 merge_msg_BlockGossip(#'BlockGossip'{block_part_size_bytes
 					 = PFblock_part_size_bytes},
@@ -7995,69 +8580,27 @@ merge_msg_ResponseEndBlock(#'ResponseEndBlock'{validator_updates
 				   PFconsensus_param_updates
 			    end}.
 
-merge_msg_KVPair(#'KVPair'{key = PFkey,
-			   value_type = PFvalue_type,
-			   value_string = PFvalue_string,
-			   value_int = PFvalue_int},
-		 #'KVPair'{key = NFkey, value_type = NFvalue_type,
-			   value_string = NFvalue_string,
-			   value_int = NFvalue_int},
-		 _) ->
-    #'KVPair'{key =
-		  if NFkey =:= undefined -> PFkey;
-		     true -> NFkey
-		  end,
-	      value_type =
-		  if NFvalue_type =:= undefined -> PFvalue_type;
-		     true -> NFvalue_type
-		  end,
-	      value_string =
-		  if NFvalue_string =:= undefined -> PFvalue_string;
-		     true -> NFvalue_string
-		  end,
-	      value_int =
-		  if NFvalue_int =:= undefined -> PFvalue_int;
-		     true -> NFvalue_int
-		  end}.
-
-merge_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code =
-						     PFcode,
-						 data = PFdata, log = PFlog,
-						 tags = PFtags},
-			    #'ResponseDeliverTx'{code = NFcode, data = NFdata,
-						 log = NFlog, tags = NFtags},
-			    TrUserData) ->
-    #'ResponseDeliverTx'{code =
-			     if NFcode =:= undefined -> PFcode;
-				true -> NFcode
-			     end,
-			 data =
-			     if NFdata =:= undefined -> PFdata;
-				true -> NFdata
-			     end,
-			 log =
-			     if NFlog =:= undefined -> PFlog;
-				true -> NFlog
-			     end,
-			 tags =
-			     if PFtags /= undefined, NFtags /= undefined ->
-				    'erlang_++'(PFtags, NFtags, TrUserData);
-				PFtags == undefined -> NFtags;
-				NFtags == undefined -> PFtags
-			     end}.
-
 merge_msg_ResponseQuery(#'ResponseQuery'{code = PFcode,
+					 log = PFlog, info = PFinfo,
 					 index = PFindex, key = PFkey,
 					 value = PFvalue, proof = PFproof,
-					 height = PFheight, log = PFlog},
-			#'ResponseQuery'{code = NFcode, index = NFindex,
+					 height = PFheight},
+			#'ResponseQuery'{code = NFcode, log = NFlog,
+					 info = NFinfo, index = NFindex,
 					 key = NFkey, value = NFvalue,
-					 proof = NFproof, height = NFheight,
-					 log = NFlog},
+					 proof = NFproof, height = NFheight},
 			_) ->
     #'ResponseQuery'{code =
 			 if NFcode =:= undefined -> PFcode;
 			    true -> NFcode
+			 end,
+		     log =
+			 if NFlog =:= undefined -> PFlog;
+			    true -> NFlog
+			 end,
+		     info =
+			 if NFinfo =:= undefined -> PFinfo;
+			    true -> NFinfo
 			 end,
 		     index =
 			 if NFindex =:= undefined -> PFindex;
@@ -8078,10 +8621,6 @@ merge_msg_ResponseQuery(#'ResponseQuery'{code = PFcode,
 		     height =
 			 if NFheight =:= undefined -> PFheight;
 			    true -> NFheight
-			 end,
-		     log =
-			 if NFlog =:= undefined -> PFlog;
-			    true -> NFlog
 			 end}.
 
 merge_msg_ResponseInitChain(_Prev, New, _TrUserData) ->
@@ -8089,8 +8628,9 @@ merge_msg_ResponseInitChain(_Prev, New, _TrUserData) ->
 
 merge_msg_ResponseSetOption(#'ResponseSetOption'{code =
 						     PFcode,
-						 log = PFlog},
-			    #'ResponseSetOption'{code = NFcode, log = NFlog},
+						 log = PFlog, info = PFinfo},
+			    #'ResponseSetOption'{code = NFcode, log = NFlog,
+						 info = NFinfo},
 			    _) ->
     #'ResponseSetOption'{code =
 			     if NFcode =:= undefined -> PFcode;
@@ -8099,9 +8639,19 @@ merge_msg_ResponseSetOption(#'ResponseSetOption'{code =
 			 log =
 			     if NFlog =:= undefined -> PFlog;
 				true -> NFlog
+			     end,
+			 info =
+			     if NFinfo =:= undefined -> PFinfo;
+				true -> NFinfo
 			     end}.
 
-merge_msg_ResponseFlush(_Prev, New, _TrUserData) -> New.
+merge_msg_ResponseException(#'ResponseException'{error =
+						     PFerror},
+			    #'ResponseException'{error = NFerror}, _) ->
+    #'ResponseException'{error =
+			     if NFerror =:= undefined -> PFerror;
+				true -> NFerror
+			     end}.
 
 merge_msg_Response(#'Response'{value = PFvalue},
 		   #'Response'{value = NFvalue}, TrUserData) ->
@@ -8159,6 +8709,78 @@ merge_msg_Response(#'Response'{value = PFvalue},
 		      _ -> NFvalue
 		    end}.
 
+merge_msg_RequestBeginBlock(#'RequestBeginBlock'{hash =
+						     PFhash,
+						 header = PFheader,
+						 absent_validators =
+						     PFabsent_validators,
+						 byzantine_validators =
+						     PFbyzantine_validators},
+			    #'RequestBeginBlock'{hash = NFhash,
+						 header = NFheader,
+						 absent_validators =
+						     NFabsent_validators,
+						 byzantine_validators =
+						     NFbyzantine_validators},
+			    TrUserData) ->
+    #'RequestBeginBlock'{hash =
+			     if NFhash =:= undefined -> PFhash;
+				true -> NFhash
+			     end,
+			 header =
+			     if PFheader /= undefined, NFheader /= undefined ->
+				    merge_msg_Header(PFheader, NFheader,
+						     TrUserData);
+				PFheader == undefined -> NFheader;
+				NFheader == undefined -> PFheader
+			     end,
+			 absent_validators =
+			     if PFabsent_validators /= undefined,
+				NFabsent_validators /= undefined ->
+				    'erlang_++'(PFabsent_validators,
+						NFabsent_validators,
+						TrUserData);
+				PFabsent_validators == undefined ->
+				    NFabsent_validators;
+				NFabsent_validators == undefined ->
+				    PFabsent_validators
+			     end,
+			 byzantine_validators =
+			     if PFbyzantine_validators /= undefined,
+				NFbyzantine_validators /= undefined ->
+				    'erlang_++'(PFbyzantine_validators,
+						NFbyzantine_validators,
+						TrUserData);
+				PFbyzantine_validators == undefined ->
+				    NFbyzantine_validators;
+				NFbyzantine_validators == undefined ->
+				    PFbyzantine_validators
+			     end}.
+
+merge_msg_RequestSetOption(#'RequestSetOption'{key =
+						   PFkey,
+					       value = PFvalue},
+			   #'RequestSetOption'{key = NFkey, value = NFvalue},
+			   _) ->
+    #'RequestSetOption'{key =
+			    if NFkey =:= undefined -> PFkey;
+			       true -> NFkey
+			    end,
+			value =
+			    if NFvalue =:= undefined -> PFvalue;
+			       true -> NFvalue
+			    end}.
+
+merge_msg_RequestInfo(#'RequestInfo'{version =
+					 PFversion},
+		      #'RequestInfo'{version = NFversion}, _) ->
+    #'RequestInfo'{version =
+		       if NFversion =:= undefined -> PFversion;
+			  true -> NFversion
+		       end}.
+
+merge_msg_RequestCommit(_Prev, New, _TrUserData) -> New.
+
 merge_msg_RequestQuery(#'RequestQuery'{data = PFdata,
 				       path = PFpath, height = PFheight,
 				       prove = PFprove},
@@ -8182,19 +8804,13 @@ merge_msg_RequestQuery(#'RequestQuery'{data = PFdata,
 			   true -> NFprove
 			end}.
 
-merge_msg_RequestEndBlock(#'RequestEndBlock'{height =
-						 PFheight},
-			  #'RequestEndBlock'{height = NFheight}, _) ->
-    #'RequestEndBlock'{height =
-			   if NFheight =:= undefined -> PFheight;
-			      true -> NFheight
-			   end}.
-
-merge_msg_RequestFlush(_Prev, New, _TrUserData) -> New.
-
 merge_msg_RequestInitChain(#'RequestInitChain'{validators
-						   = PFvalidators},
-			   #'RequestInitChain'{validators = NFvalidators},
+						   = PFvalidators,
+					       app_state_bytes =
+						   PFapp_state_bytes},
+			   #'RequestInitChain'{validators = NFvalidators,
+					       app_state_bytes =
+						   NFapp_state_bytes},
 			   TrUserData) ->
     #'RequestInitChain'{validators =
 			    if PFvalidators /= undefined,
@@ -8203,23 +8819,22 @@ merge_msg_RequestInitChain(#'RequestInitChain'{validators
 					       TrUserData);
 			       PFvalidators == undefined -> NFvalidators;
 			       NFvalidators == undefined -> PFvalidators
+			    end,
+			app_state_bytes =
+			    if NFapp_state_bytes =:= undefined ->
+				   PFapp_state_bytes;
+			       true -> NFapp_state_bytes
 			    end}.
 
-merge_msg_RequestInfo(#'RequestInfo'{version =
-					 PFversion},
-		      #'RequestInfo'{version = NFversion}, _) ->
-    #'RequestInfo'{version =
-		       if NFversion =:= undefined -> PFversion;
-			  true -> NFversion
+merge_msg_RequestFlush(_Prev, New, _TrUserData) -> New.
+
+merge_msg_RequestEcho(#'RequestEcho'{message =
+					 PFmessage},
+		      #'RequestEcho'{message = NFmessage}, _) ->
+    #'RequestEcho'{message =
+		       if NFmessage =:= undefined -> PFmessage;
+			  true -> NFmessage
 		       end}.
-
-merge_msg_RequestDeliverTx(#'RequestDeliverTx'{tx =
-						   PFtx},
-			   #'RequestDeliverTx'{tx = NFtx}, _) ->
-    #'RequestDeliverTx'{tx =
-			    if NFtx =:= undefined -> PFtx;
-			       true -> NFtx
-			    end}.
 
 merge_msg_Request(#'Request'{value = PFvalue},
 		  #'Request'{value = NFvalue}, TrUserData) ->
@@ -8279,43 +8894,45 @@ verify_msg(Msg) -> verify_msg(Msg, []).
 verify_msg(Msg, Opts) ->
     TrUserData = proplists:get_value(user_data, Opts),
     case Msg of
-      #'RequestSetOption'{} ->
-	  v_msg_RequestSetOption(Msg, ['RequestSetOption'],
+      #'RequestDeliverTx'{} ->
+	  v_msg_RequestDeliverTx(Msg, ['RequestDeliverTx'],
 				 TrUserData);
+      #'KI64Pair'{} ->
+	  v_msg_KI64Pair(Msg, ['KI64Pair'], TrUserData);
+      #'KVPair'{} ->
+	  v_msg_KVPair(Msg, ['KVPair'], TrUserData);
+      #'ResponseDeliverTx'{} ->
+	  v_msg_ResponseDeliverTx(Msg, ['ResponseDeliverTx'],
+				  TrUserData);
+      #'ResponseFlush'{} ->
+	  v_msg_ResponseFlush(Msg, ['ResponseFlush'], TrUserData);
+      #'ResponseCommit'{} ->
+	  v_msg_ResponseCommit(Msg, ['ResponseCommit'],
+			       TrUserData);
+      #'RequestCheckTx'{} ->
+	  v_msg_RequestCheckTx(Msg, ['RequestCheckTx'],
+			       TrUserData);
+      #'Evidence'{} ->
+	  v_msg_Evidence(Msg, ['Evidence'], TrUserData);
+      #'ResponseInfo'{} ->
+	  v_msg_ResponseInfo(Msg, ['ResponseInfo'], TrUserData);
+      #'ResponseCheckTx'{} ->
+	  v_msg_ResponseCheckTx(Msg, ['ResponseCheckTx'],
+				TrUserData);
       #'PartSetHeader'{} ->
 	  v_msg_PartSetHeader(Msg, ['PartSetHeader'], TrUserData);
       #'BlockID'{} ->
 	  v_msg_BlockID(Msg, ['BlockID'], TrUserData);
-      #'Evidence'{} ->
-	  v_msg_Evidence(Msg, ['Evidence'], TrUserData);
       #'Header'{} ->
 	  v_msg_Header(Msg, ['Header'], TrUserData);
-      #'RequestBeginBlock'{} ->
-	  v_msg_RequestBeginBlock(Msg, ['RequestBeginBlock'],
-				  TrUserData);
+      #'RequestEndBlock'{} ->
+	  v_msg_RequestEndBlock(Msg, ['RequestEndBlock'],
+				TrUserData);
       #'ResponseBeginBlock'{} ->
 	  v_msg_ResponseBeginBlock(Msg, ['ResponseBeginBlock'],
 				   TrUserData);
-      #'RequestEcho'{} ->
-	  v_msg_RequestEcho(Msg, ['RequestEcho'], TrUserData);
-      #'RequestCheckTx'{} ->
-	  v_msg_RequestCheckTx(Msg, ['RequestCheckTx'],
-			       TrUserData);
-      #'ResponseInfo'{} ->
-	  v_msg_ResponseInfo(Msg, ['ResponseInfo'], TrUserData);
       #'ResponseEcho'{} ->
 	  v_msg_ResponseEcho(Msg, ['ResponseEcho'], TrUserData);
-      #'ResponseCheckTx'{} ->
-	  v_msg_ResponseCheckTx(Msg, ['ResponseCheckTx'],
-				TrUserData);
-      #'RequestCommit'{} ->
-	  v_msg_RequestCommit(Msg, ['RequestCommit'], TrUserData);
-      #'ResponseException'{} ->
-	  v_msg_ResponseException(Msg, ['ResponseException'],
-				  TrUserData);
-      #'ResponseCommit'{} ->
-	  v_msg_ResponseCommit(Msg, ['ResponseCommit'],
-			       TrUserData);
       #'BlockGossip'{} ->
 	  v_msg_BlockGossip(Msg, ['BlockGossip'], TrUserData);
       #'TxSize'{} ->
@@ -8330,11 +8947,6 @@ verify_msg(Msg, Opts) ->
       #'ResponseEndBlock'{} ->
 	  v_msg_ResponseEndBlock(Msg, ['ResponseEndBlock'],
 				 TrUserData);
-      #'KVPair'{} ->
-	  v_msg_KVPair(Msg, ['KVPair'], TrUserData);
-      #'ResponseDeliverTx'{} ->
-	  v_msg_ResponseDeliverTx(Msg, ['ResponseDeliverTx'],
-				  TrUserData);
       #'ResponseQuery'{} ->
 	  v_msg_ResponseQuery(Msg, ['ResponseQuery'], TrUserData);
       #'ResponseInitChain'{} ->
@@ -8343,44 +8955,212 @@ verify_msg(Msg, Opts) ->
       #'ResponseSetOption'{} ->
 	  v_msg_ResponseSetOption(Msg, ['ResponseSetOption'],
 				  TrUserData);
-      #'ResponseFlush'{} ->
-	  v_msg_ResponseFlush(Msg, ['ResponseFlush'], TrUserData);
+      #'ResponseException'{} ->
+	  v_msg_ResponseException(Msg, ['ResponseException'],
+				  TrUserData);
       #'Response'{} ->
 	  v_msg_Response(Msg, ['Response'], TrUserData);
-      #'RequestQuery'{} ->
-	  v_msg_RequestQuery(Msg, ['RequestQuery'], TrUserData);
-      #'RequestEndBlock'{} ->
-	  v_msg_RequestEndBlock(Msg, ['RequestEndBlock'],
-				TrUserData);
-      #'RequestFlush'{} ->
-	  v_msg_RequestFlush(Msg, ['RequestFlush'], TrUserData);
-      #'RequestInitChain'{} ->
-	  v_msg_RequestInitChain(Msg, ['RequestInitChain'],
+      #'RequestBeginBlock'{} ->
+	  v_msg_RequestBeginBlock(Msg, ['RequestBeginBlock'],
+				  TrUserData);
+      #'RequestSetOption'{} ->
+	  v_msg_RequestSetOption(Msg, ['RequestSetOption'],
 				 TrUserData);
       #'RequestInfo'{} ->
 	  v_msg_RequestInfo(Msg, ['RequestInfo'], TrUserData);
-      #'RequestDeliverTx'{} ->
-	  v_msg_RequestDeliverTx(Msg, ['RequestDeliverTx'],
+      #'RequestCommit'{} ->
+	  v_msg_RequestCommit(Msg, ['RequestCommit'], TrUserData);
+      #'RequestQuery'{} ->
+	  v_msg_RequestQuery(Msg, ['RequestQuery'], TrUserData);
+      #'RequestInitChain'{} ->
+	  v_msg_RequestInitChain(Msg, ['RequestInitChain'],
 				 TrUserData);
+      #'RequestFlush'{} ->
+	  v_msg_RequestFlush(Msg, ['RequestFlush'], TrUserData);
+      #'RequestEcho'{} ->
+	  v_msg_RequestEcho(Msg, ['RequestEcho'], TrUserData);
       #'Request'{} ->
 	  v_msg_Request(Msg, ['Request'], TrUserData);
       _ -> mk_type_error(not_a_known_message, Msg, [])
     end.
 
 
--dialyzer({nowarn_function,v_msg_RequestSetOption/3}).
-v_msg_RequestSetOption(#'RequestSetOption'{key = F1,
-					   value = F2},
+-dialyzer({nowarn_function,v_msg_RequestDeliverTx/3}).
+v_msg_RequestDeliverTx(#'RequestDeliverTx'{tx = F1},
 		       Path, _) ->
     if F1 == undefined -> ok;
-       true -> v_type_string(F1, [key | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_string(F2, [value | Path])
+       true -> v_type_bytes(F1, [tx | Path])
     end,
     ok;
-v_msg_RequestSetOption(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestSetOption'}, X,
+v_msg_RequestDeliverTx(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestDeliverTx'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_KI64Pair/3}).
+v_msg_KI64Pair(#'KI64Pair'{key = F1, value = F2}, Path,
+	       _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [key | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_int64(F2, [value | Path])
+    end,
+    ok;
+v_msg_KI64Pair(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'KI64Pair'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_KVPair/3}).
+v_msg_KVPair(#'KVPair'{key = F1, value = F2}, Path,
+	     _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [key | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_bytes(F2, [value | Path])
+    end,
+    ok;
+v_msg_KVPair(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'KVPair'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_ResponseDeliverTx/3}).
+v_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code = F1,
+					     data = F2, log = F3, info = F4,
+					     gas_wanted = F5, gas_used = F6,
+					     tags = F7, fee = F8},
+			Path, TrUserData) ->
+    if F1 == undefined -> ok;
+       true -> v_type_uint32(F1, [code | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_bytes(F2, [data | Path])
+    end,
+    if F3 == undefined -> ok;
+       true -> v_type_string(F3, [log | Path])
+    end,
+    if F4 == undefined -> ok;
+       true -> v_type_string(F4, [info | Path])
+    end,
+    if F5 == undefined -> ok;
+       true -> v_type_int64(F5, [gas_wanted | Path])
+    end,
+    if F6 == undefined -> ok;
+       true -> v_type_int64(F6, [gas_used | Path])
+    end,
+    if is_list(F7) ->
+	   _ = [v_msg_KVPair(Elem, [tags | Path], TrUserData)
+		|| Elem <- F7],
+	   ok;
+       true ->
+	   mk_type_error({invalid_list_of, {msg, 'KVPair'}}, F7,
+			 [tags | Path])
+    end,
+    if F8 == undefined -> ok;
+       true -> v_msg_KI64Pair(F8, [fee | Path], TrUserData)
+    end,
+    ok;
+v_msg_ResponseDeliverTx(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseDeliverTx'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_ResponseFlush/3}).
+v_msg_ResponseFlush(#'ResponseFlush'{}, _Path, _) -> ok;
+v_msg_ResponseFlush(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseFlush'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_ResponseCommit/3}).
+v_msg_ResponseCommit(#'ResponseCommit'{data = F1}, Path,
+		     _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [data | Path])
+    end,
+    ok;
+v_msg_ResponseCommit(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseCommit'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_RequestCheckTx/3}).
+v_msg_RequestCheckTx(#'RequestCheckTx'{tx = F1}, Path,
+		     _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [tx | Path])
+    end,
+    ok;
+v_msg_RequestCheckTx(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestCheckTx'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_Evidence/3}).
+v_msg_Evidence(#'Evidence'{pub_key = F1, height = F2},
+	       Path, _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [pub_key | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_int64(F2, [height | Path])
+    end,
+    ok;
+v_msg_Evidence(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'Evidence'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_ResponseInfo/3}).
+v_msg_ResponseInfo(#'ResponseInfo'{data = F1,
+				   version = F2, last_block_height = F3,
+				   last_block_app_hash = F4},
+		   Path, _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_string(F1, [data | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_string(F2, [version | Path])
+    end,
+    if F3 == undefined -> ok;
+       true -> v_type_int64(F3, [last_block_height | Path])
+    end,
+    if F4 == undefined -> ok;
+       true -> v_type_bytes(F4, [last_block_app_hash | Path])
+    end,
+    ok;
+v_msg_ResponseInfo(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseInfo'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_ResponseCheckTx/3}).
+v_msg_ResponseCheckTx(#'ResponseCheckTx'{code = F1,
+					 data = F2, log = F3, info = F4,
+					 gas_wanted = F5, gas_used = F6,
+					 tags = F7, fee = F8},
+		      Path, TrUserData) ->
+    if F1 == undefined -> ok;
+       true -> v_type_uint32(F1, [code | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_bytes(F2, [data | Path])
+    end,
+    if F3 == undefined -> ok;
+       true -> v_type_string(F3, [log | Path])
+    end,
+    if F4 == undefined -> ok;
+       true -> v_type_string(F4, [info | Path])
+    end,
+    if F5 == undefined -> ok;
+       true -> v_type_int64(F5, [gas_wanted | Path])
+    end,
+    if F6 == undefined -> ok;
+       true -> v_type_int64(F6, [gas_used | Path])
+    end,
+    if is_list(F7) ->
+	   _ = [v_msg_KVPair(Elem, [tags | Path], TrUserData)
+		|| Elem <- F7],
+	   ok;
+       true ->
+	   mk_type_error({invalid_list_of, {msg, 'KVPair'}}, F7,
+			 [tags | Path])
+    end,
+    if F8 == undefined -> ok;
+       true -> v_msg_KI64Pair(F8, [fee | Path], TrUserData)
+    end,
+    ok;
+v_msg_ResponseCheckTx(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseCheckTx'}, X,
 		  Path).
 
 -dialyzer({nowarn_function,v_msg_PartSetHeader/3}).
@@ -8410,19 +9190,6 @@ v_msg_BlockID(#'BlockID'{hash = F1, parts = F2}, Path,
     ok;
 v_msg_BlockID(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'BlockID'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_Evidence/3}).
-v_msg_Evidence(#'Evidence'{pub_key = F1, height = F2},
-	       Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_bytes(F1, [pub_key | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_int64(F2, [height | Path])
-    end,
-    ok;
-v_msg_Evidence(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'Evidence'}, X, Path).
 
 -dialyzer({nowarn_function,v_msg_Header/3}).
 v_msg_Header(#'Header'{chain_id = F1, height = F2,
@@ -8462,38 +9229,15 @@ v_msg_Header(#'Header'{chain_id = F1, height = F2,
 v_msg_Header(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'Header'}, X, Path).
 
--dialyzer({nowarn_function,v_msg_RequestBeginBlock/3}).
-v_msg_RequestBeginBlock(#'RequestBeginBlock'{hash = F1,
-					     header = F2,
-					     absent_validators = F3,
-					     byzantine_validators = F4},
-			Path, TrUserData) ->
+-dialyzer({nowarn_function,v_msg_RequestEndBlock/3}).
+v_msg_RequestEndBlock(#'RequestEndBlock'{height = F1},
+		      Path, _) ->
     if F1 == undefined -> ok;
-       true -> v_type_bytes(F1, [hash | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_msg_Header(F2, [header | Path], TrUserData)
-    end,
-    if is_list(F3) ->
-	   _ = [v_type_int32(Elem, [absent_validators | Path])
-		|| Elem <- F3],
-	   ok;
-       true ->
-	   mk_type_error({invalid_list_of, int32}, F3,
-			 [absent_validators | Path])
-    end,
-    if is_list(F4) ->
-	   _ = [v_msg_Evidence(Elem, [byzantine_validators | Path],
-			       TrUserData)
-		|| Elem <- F4],
-	   ok;
-       true ->
-	   mk_type_error({invalid_list_of, {msg, 'Evidence'}}, F4,
-			 [byzantine_validators | Path])
+       true -> v_type_int64(F1, [height | Path])
     end,
     ok;
-v_msg_RequestBeginBlock(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestBeginBlock'}, X,
+v_msg_RequestEndBlock(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestEndBlock'}, X,
 		  Path).
 
 -dialyzer({nowarn_function,v_msg_ResponseBeginBlock/3}).
@@ -8504,48 +9248,6 @@ v_msg_ResponseBeginBlock(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ResponseBeginBlock'}, X,
 		  Path).
 
--dialyzer({nowarn_function,v_msg_RequestEcho/3}).
-v_msg_RequestEcho(#'RequestEcho'{message = F1}, Path,
-		  _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_string(F1, [message | Path])
-    end,
-    ok;
-v_msg_RequestEcho(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestEcho'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_RequestCheckTx/3}).
-v_msg_RequestCheckTx(#'RequestCheckTx'{tx = F1}, Path,
-		     _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_bytes(F1, [tx | Path])
-    end,
-    ok;
-v_msg_RequestCheckTx(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestCheckTx'}, X,
-		  Path).
-
--dialyzer({nowarn_function,v_msg_ResponseInfo/3}).
-v_msg_ResponseInfo(#'ResponseInfo'{data = F1,
-				   version = F2, last_block_height = F3,
-				   last_block_app_hash = F4},
-		   Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_string(F1, [data | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_string(F2, [version | Path])
-    end,
-    if F3 == undefined -> ok;
-       true -> v_type_int64(F3, [last_block_height | Path])
-    end,
-    if F4 == undefined -> ok;
-       true -> v_type_bytes(F4, [last_block_app_hash | Path])
-    end,
-    ok;
-v_msg_ResponseInfo(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseInfo'}, X, Path).
-
 -dialyzer({nowarn_function,v_msg_ResponseEcho/3}).
 v_msg_ResponseEcho(#'ResponseEcho'{message = F1}, Path,
 		   _) ->
@@ -8555,66 +9257,6 @@ v_msg_ResponseEcho(#'ResponseEcho'{message = F1}, Path,
     ok;
 v_msg_ResponseEcho(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ResponseEcho'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_ResponseCheckTx/3}).
-v_msg_ResponseCheckTx(#'ResponseCheckTx'{code = F1,
-					 data = F2, log = F3, gas = F4,
-					 fee = F5},
-		      Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_uint32(F1, [code | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_bytes(F2, [data | Path])
-    end,
-    if F3 == undefined -> ok;
-       true -> v_type_string(F3, [log | Path])
-    end,
-    if F4 == undefined -> ok;
-       true -> v_type_int64(F4, [gas | Path])
-    end,
-    if F5 == undefined -> ok;
-       true -> v_type_int64(F5, [fee | Path])
-    end,
-    ok;
-v_msg_ResponseCheckTx(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseCheckTx'}, X,
-		  Path).
-
--dialyzer({nowarn_function,v_msg_RequestCommit/3}).
-v_msg_RequestCommit(#'RequestCommit'{}, _Path, _) -> ok;
-v_msg_RequestCommit(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestCommit'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_ResponseException/3}).
-v_msg_ResponseException(#'ResponseException'{error =
-						 F1},
-			Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_string(F1, [error | Path])
-    end,
-    ok;
-v_msg_ResponseException(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseException'}, X,
-		  Path).
-
--dialyzer({nowarn_function,v_msg_ResponseCommit/3}).
-v_msg_ResponseCommit(#'ResponseCommit'{code = F1,
-				       data = F2, log = F3},
-		     Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_uint32(F1, [code | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_bytes(F2, [data | Path])
-    end,
-    if F3 == undefined -> ok;
-       true -> v_type_string(F3, [log | Path])
-    end,
-    ok;
-v_msg_ResponseCommit(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseCommit'}, X,
-		  Path).
 
 -dialyzer({nowarn_function,v_msg_BlockGossip/3}).
 v_msg_BlockGossip(#'BlockGossip'{block_part_size_bytes =
@@ -8715,77 +9357,34 @@ v_msg_ResponseEndBlock(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ResponseEndBlock'}, X,
 		  Path).
 
--dialyzer({nowarn_function,v_msg_KVPair/3}).
-v_msg_KVPair(#'KVPair'{key = F1, value_type = F2,
-		       value_string = F3, value_int = F4},
-	     Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_string(F1, [key | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> 'v_enum_KVPair.Type'(F2, [value_type | Path])
-    end,
-    if F3 == undefined -> ok;
-       true -> v_type_string(F3, [value_string | Path])
-    end,
-    if F4 == undefined -> ok;
-       true -> v_type_int64(F4, [value_int | Path])
-    end,
-    ok;
-v_msg_KVPair(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'KVPair'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_ResponseDeliverTx/3}).
-v_msg_ResponseDeliverTx(#'ResponseDeliverTx'{code = F1,
-					     data = F2, log = F3, tags = F4},
-			Path, TrUserData) ->
-    if F1 == undefined -> ok;
-       true -> v_type_uint32(F1, [code | Path])
-    end,
-    if F2 == undefined -> ok;
-       true -> v_type_bytes(F2, [data | Path])
-    end,
-    if F3 == undefined -> ok;
-       true -> v_type_string(F3, [log | Path])
-    end,
-    if is_list(F4) ->
-	   _ = [v_msg_KVPair(Elem, [tags | Path], TrUserData)
-		|| Elem <- F4],
-	   ok;
-       true ->
-	   mk_type_error({invalid_list_of, {msg, 'KVPair'}}, F4,
-			 [tags | Path])
-    end,
-    ok;
-v_msg_ResponseDeliverTx(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseDeliverTx'}, X,
-		  Path).
-
 -dialyzer({nowarn_function,v_msg_ResponseQuery/3}).
 v_msg_ResponseQuery(#'ResponseQuery'{code = F1,
-				     index = F2, key = F3, value = F4,
-				     proof = F5, height = F6, log = F7},
+				     log = F2, info = F3, index = F4, key = F5,
+				     value = F6, proof = F7, height = F8},
 		    Path, _) ->
     if F1 == undefined -> ok;
        true -> v_type_uint32(F1, [code | Path])
     end,
     if F2 == undefined -> ok;
-       true -> v_type_int64(F2, [index | Path])
+       true -> v_type_string(F2, [log | Path])
     end,
     if F3 == undefined -> ok;
-       true -> v_type_bytes(F3, [key | Path])
+       true -> v_type_string(F3, [info | Path])
     end,
     if F4 == undefined -> ok;
-       true -> v_type_bytes(F4, [value | Path])
+       true -> v_type_int64(F4, [index | Path])
     end,
     if F5 == undefined -> ok;
-       true -> v_type_bytes(F5, [proof | Path])
+       true -> v_type_bytes(F5, [key | Path])
     end,
     if F6 == undefined -> ok;
-       true -> v_type_int64(F6, [height | Path])
+       true -> v_type_bytes(F6, [value | Path])
     end,
     if F7 == undefined -> ok;
-       true -> v_type_string(F7, [log | Path])
+       true -> v_type_bytes(F7, [proof | Path])
+    end,
+    if F8 == undefined -> ok;
+       true -> v_type_int64(F8, [height | Path])
     end,
     ok;
 v_msg_ResponseQuery(X, Path, _TrUserData) ->
@@ -8801,7 +9400,7 @@ v_msg_ResponseInitChain(X, Path, _TrUserData) ->
 
 -dialyzer({nowarn_function,v_msg_ResponseSetOption/3}).
 v_msg_ResponseSetOption(#'ResponseSetOption'{code = F1,
-					     log = F2},
+					     log = F2, info = F3},
 			Path, _) ->
     if F1 == undefined -> ok;
        true -> v_type_uint32(F1, [code | Path])
@@ -8809,15 +9408,25 @@ v_msg_ResponseSetOption(#'ResponseSetOption'{code = F1,
     if F2 == undefined -> ok;
        true -> v_type_string(F2, [log | Path])
     end,
+    if F3 == undefined -> ok;
+       true -> v_type_string(F3, [info | Path])
+    end,
     ok;
 v_msg_ResponseSetOption(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'ResponseSetOption'}, X,
 		  Path).
 
--dialyzer({nowarn_function,v_msg_ResponseFlush/3}).
-v_msg_ResponseFlush(#'ResponseFlush'{}, _Path, _) -> ok;
-v_msg_ResponseFlush(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'ResponseFlush'}, X, Path).
+-dialyzer({nowarn_function,v_msg_ResponseException/3}).
+v_msg_ResponseException(#'ResponseException'{error =
+						 F1},
+			Path, _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_string(F1, [error | Path])
+    end,
+    ok;
+v_msg_ResponseException(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'ResponseException'}, X,
+		  Path).
 
 -dialyzer({nowarn_function,v_msg_Response/3}).
 v_msg_Response(#'Response'{value = F1}, Path,
@@ -8864,6 +9473,70 @@ v_msg_Response(#'Response'{value = F1}, Path,
     end,
     ok.
 
+-dialyzer({nowarn_function,v_msg_RequestBeginBlock/3}).
+v_msg_RequestBeginBlock(#'RequestBeginBlock'{hash = F1,
+					     header = F2,
+					     absent_validators = F3,
+					     byzantine_validators = F4},
+			Path, TrUserData) ->
+    if F1 == undefined -> ok;
+       true -> v_type_bytes(F1, [hash | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_msg_Header(F2, [header | Path], TrUserData)
+    end,
+    if is_list(F3) ->
+	   _ = [v_type_int32(Elem, [absent_validators | Path])
+		|| Elem <- F3],
+	   ok;
+       true ->
+	   mk_type_error({invalid_list_of, int32}, F3,
+			 [absent_validators | Path])
+    end,
+    if is_list(F4) ->
+	   _ = [v_msg_Evidence(Elem, [byzantine_validators | Path],
+			       TrUserData)
+		|| Elem <- F4],
+	   ok;
+       true ->
+	   mk_type_error({invalid_list_of, {msg, 'Evidence'}}, F4,
+			 [byzantine_validators | Path])
+    end,
+    ok;
+v_msg_RequestBeginBlock(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestBeginBlock'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_RequestSetOption/3}).
+v_msg_RequestSetOption(#'RequestSetOption'{key = F1,
+					   value = F2},
+		       Path, _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_string(F1, [key | Path])
+    end,
+    if F2 == undefined -> ok;
+       true -> v_type_string(F2, [value | Path])
+    end,
+    ok;
+v_msg_RequestSetOption(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestSetOption'}, X,
+		  Path).
+
+-dialyzer({nowarn_function,v_msg_RequestInfo/3}).
+v_msg_RequestInfo(#'RequestInfo'{version = F1}, Path,
+		  _) ->
+    if F1 == undefined -> ok;
+       true -> v_type_string(F1, [version | Path])
+    end,
+    ok;
+v_msg_RequestInfo(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestInfo'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_RequestCommit/3}).
+v_msg_RequestCommit(#'RequestCommit'{}, _Path, _) -> ok;
+v_msg_RequestCommit(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestCommit'}, X, Path).
+
 -dialyzer({nowarn_function,v_msg_RequestQuery/3}).
 v_msg_RequestQuery(#'RequestQuery'{data = F1, path = F2,
 				   height = F3, prove = F4},
@@ -8884,25 +9557,10 @@ v_msg_RequestQuery(#'RequestQuery'{data = F1, path = F2,
 v_msg_RequestQuery(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'RequestQuery'}, X, Path).
 
--dialyzer({nowarn_function,v_msg_RequestEndBlock/3}).
-v_msg_RequestEndBlock(#'RequestEndBlock'{height = F1},
-		      Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_int64(F1, [height | Path])
-    end,
-    ok;
-v_msg_RequestEndBlock(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestEndBlock'}, X,
-		  Path).
-
--dialyzer({nowarn_function,v_msg_RequestFlush/3}).
-v_msg_RequestFlush(#'RequestFlush'{}, _Path, _) -> ok;
-v_msg_RequestFlush(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestFlush'}, X, Path).
-
 -dialyzer({nowarn_function,v_msg_RequestInitChain/3}).
 v_msg_RequestInitChain(#'RequestInitChain'{validators =
-					       F1},
+					       F1,
+					   app_state_bytes = F2},
 		       Path, TrUserData) ->
     if is_list(F1) ->
 	   _ = [v_msg_Validator(Elem, [validators | Path],
@@ -8913,31 +9571,28 @@ v_msg_RequestInitChain(#'RequestInitChain'{validators =
 	   mk_type_error({invalid_list_of, {msg, 'Validator'}}, F1,
 			 [validators | Path])
     end,
+    if F2 == undefined -> ok;
+       true -> v_type_bytes(F2, [app_state_bytes | Path])
+    end,
     ok;
 v_msg_RequestInitChain(X, Path, _TrUserData) ->
     mk_type_error({expected_msg, 'RequestInitChain'}, X,
 		  Path).
 
--dialyzer({nowarn_function,v_msg_RequestInfo/3}).
-v_msg_RequestInfo(#'RequestInfo'{version = F1}, Path,
+-dialyzer({nowarn_function,v_msg_RequestFlush/3}).
+v_msg_RequestFlush(#'RequestFlush'{}, _Path, _) -> ok;
+v_msg_RequestFlush(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestFlush'}, X, Path).
+
+-dialyzer({nowarn_function,v_msg_RequestEcho/3}).
+v_msg_RequestEcho(#'RequestEcho'{message = F1}, Path,
 		  _) ->
     if F1 == undefined -> ok;
-       true -> v_type_string(F1, [version | Path])
+       true -> v_type_string(F1, [message | Path])
     end,
     ok;
-v_msg_RequestInfo(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestInfo'}, X, Path).
-
--dialyzer({nowarn_function,v_msg_RequestDeliverTx/3}).
-v_msg_RequestDeliverTx(#'RequestDeliverTx'{tx = F1},
-		       Path, _) ->
-    if F1 == undefined -> ok;
-       true -> v_type_bytes(F1, [tx | Path])
-    end,
-    ok;
-v_msg_RequestDeliverTx(X, Path, _TrUserData) ->
-    mk_type_error({expected_msg, 'RequestDeliverTx'}, X,
-		  Path).
+v_msg_RequestEcho(X, Path, _TrUserData) ->
+    mk_type_error({expected_msg, 'RequestEcho'}, X, Path).
 
 -dialyzer({nowarn_function,v_msg_Request/3}).
 v_msg_Request(#'Request'{value = F1}, Path,
@@ -8980,25 +9635,6 @@ v_msg_Request(#'Request'{value = F1}, Path,
       _ -> mk_type_error(invalid_oneof, F1, [value | Path])
     end,
     ok.
-
--dialyzer({nowarn_function,'v_enum_KVPair.Type'/2}).
-'v_enum_KVPair.Type'('STRING', _Path) -> ok;
-'v_enum_KVPair.Type'('INT', _Path) -> ok;
-'v_enum_KVPair.Type'(V, Path) when is_integer(V) ->
-    v_type_sint32(V, Path);
-'v_enum_KVPair.Type'(X, Path) ->
-    mk_type_error({invalid_enum, 'KVPair.Type'}, X, Path).
-
--dialyzer({nowarn_function,v_type_sint32/2}).
-v_type_sint32(N, _Path)
-    when -2147483648 =< N, N =< 2147483647 ->
-    ok;
-v_type_sint32(N, Path) when is_integer(N) ->
-    mk_type_error({value_out_of_range, sint32, signed, 32},
-		  N, Path);
-v_type_sint32(X, Path) ->
-    mk_type_error({bad_integer, sint32, signed, 32}, X,
-		  Path).
 
 -dialyzer({nowarn_function,v_type_int32/2}).
 v_type_int32(N, _Path)
@@ -9087,12 +9723,82 @@ cons(Elem, Acc, _TrUserData) -> [Elem | Acc].
 'erlang_++'(A, B, _TrUserData) -> A ++ B.
 
 get_msg_defs() ->
-    [{{enum, 'KVPair.Type'}, [{'STRING', 0}, {'INT', 1}]},
-     {{msg, 'RequestSetOption'},
-      [#field{name = key, fnum = 1, rnum = 2, type = string,
-	      occurrence = optional, opts = []},
-       #field{name = value, fnum = 2, rnum = 3, type = string,
+    [{{msg, 'RequestDeliverTx'},
+      [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
 	      occurrence = optional, opts = []}]},
+     {{msg, 'KI64Pair'},
+      [#field{name = key, fnum = 1, rnum = 2, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = value, fnum = 2, rnum = 3, type = int64,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'KVPair'},
+      [#field{name = key, fnum = 1, rnum = 2, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = value, fnum = 2, rnum = 3, type = bytes,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'ResponseDeliverTx'},
+      [#field{name = code, fnum = 1, rnum = 2, type = uint32,
+	      occurrence = optional, opts = []},
+       #field{name = data, fnum = 2, rnum = 3, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = log, fnum = 3, rnum = 4, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = info, fnum = 4, rnum = 5, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = gas_wanted, fnum = 5, rnum = 6,
+	      type = int64, occurrence = optional, opts = []},
+       #field{name = gas_used, fnum = 6, rnum = 7,
+	      type = int64, occurrence = optional, opts = []},
+       #field{name = tags, fnum = 7, rnum = 8,
+	      type = {msg, 'KVPair'}, occurrence = repeated,
+	      opts =
+		  [{[gogoproto, '.', nullable], false},
+		   {[gogoproto, '.', jsontag], "tags,omitempty"}]},
+       #field{name = fee, fnum = 8, rnum = 9,
+	      type = {msg, 'KI64Pair'}, occurrence = optional,
+	      opts = [{[gogoproto, '.', nullable], false}]}]},
+     {{msg, 'ResponseFlush'}, []},
+     {{msg, 'ResponseCommit'},
+      [#field{name = data, fnum = 2, rnum = 2, type = bytes,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'RequestCheckTx'},
+      [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'Evidence'},
+      [#field{name = pub_key, fnum = 1, rnum = 2,
+	      type = bytes, occurrence = optional, opts = []},
+       #field{name = height, fnum = 2, rnum = 3, type = int64,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'ResponseInfo'},
+      [#field{name = data, fnum = 1, rnum = 2, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = version, fnum = 2, rnum = 3,
+	      type = string, occurrence = optional, opts = []},
+       #field{name = last_block_height, fnum = 3, rnum = 4,
+	      type = int64, occurrence = optional, opts = []},
+       #field{name = last_block_app_hash, fnum = 4, rnum = 5,
+	      type = bytes, occurrence = optional, opts = []}]},
+     {{msg, 'ResponseCheckTx'},
+      [#field{name = code, fnum = 1, rnum = 2, type = uint32,
+	      occurrence = optional, opts = []},
+       #field{name = data, fnum = 2, rnum = 3, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = log, fnum = 3, rnum = 4, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = info, fnum = 4, rnum = 5, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = gas_wanted, fnum = 5, rnum = 6,
+	      type = int64, occurrence = optional, opts = []},
+       #field{name = gas_used, fnum = 6, rnum = 7,
+	      type = int64, occurrence = optional, opts = []},
+       #field{name = tags, fnum = 7, rnum = 8,
+	      type = {msg, 'KVPair'}, occurrence = repeated,
+	      opts =
+		  [{[gogoproto, '.', nullable], false},
+		   {[gogoproto, '.', jsontag], "tags,omitempty"}]},
+       #field{name = fee, fnum = 8, rnum = 9,
+	      type = {msg, 'KI64Pair'}, occurrence = optional,
+	      opts = [{[gogoproto, '.', nullable], false}]}]},
      {{msg, 'PartSetHeader'},
       [#field{name = total, fnum = 1, rnum = 2, type = int32,
 	      occurrence = optional, opts = []},
@@ -9103,12 +9809,7 @@ get_msg_defs() ->
 	      occurrence = optional, opts = []},
        #field{name = parts, fnum = 2, rnum = 3,
 	      type = {msg, 'PartSetHeader'}, occurrence = optional,
-	      opts = []}]},
-     {{msg, 'Evidence'},
-      [#field{name = pub_key, fnum = 1, rnum = 2,
-	      type = bytes, occurrence = optional, opts = []},
-       #field{name = height, fnum = 2, rnum = 3, type = int64,
-	      occurrence = optional, opts = []}]},
+	      opts = [{[gogoproto, '.', nullable], false}]}]},
      {{msg, 'Header'},
       [#field{name = chain_id, fnum = 1, rnum = 2,
 	      type = string, occurrence = optional,
@@ -9121,7 +9822,9 @@ get_msg_defs() ->
 	      occurrence = optional, opts = []},
        #field{name = last_block_id, fnum = 5, rnum = 6,
 	      type = {msg, 'BlockID'}, occurrence = optional,
-	      opts = [{[gogoproto, '.', customname], "LastBlockID"}]},
+	      opts =
+		  [{[gogoproto, '.', customname], "LastBlockID"},
+		   {[gogoproto, '.', nullable], false}]},
        #field{name = last_commit_hash, fnum = 6, rnum = 7,
 	      type = bytes, occurrence = optional, opts = []},
        #field{name = data_hash, fnum = 7, rnum = 8,
@@ -9130,66 +9833,13 @@ get_msg_defs() ->
 	      type = bytes, occurrence = optional, opts = []},
        #field{name = app_hash, fnum = 9, rnum = 10,
 	      type = bytes, occurrence = optional, opts = []}]},
-     {{msg, 'RequestBeginBlock'},
-      [#field{name = hash, fnum = 1, rnum = 2, type = bytes,
-	      occurrence = optional, opts = []},
-       #field{name = header, fnum = 2, rnum = 3,
-	      type = {msg, 'Header'}, occurrence = optional,
-	      opts = []},
-       #field{name = absent_validators, fnum = 3, rnum = 4,
-	      type = int32, occurrence = repeated, opts = [packed]},
-       #field{name = byzantine_validators, fnum = 4, rnum = 5,
-	      type = {msg, 'Evidence'}, occurrence = repeated,
-	      opts = []}]},
-     {{msg, 'ResponseBeginBlock'}, []},
-     {{msg, 'RequestEcho'},
-      [#field{name = message, fnum = 1, rnum = 2,
-	      type = string, occurrence = optional, opts = []}]},
-     {{msg, 'RequestCheckTx'},
-      [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
+     {{msg, 'RequestEndBlock'},
+      [#field{name = height, fnum = 1, rnum = 2, type = int64,
 	      occurrence = optional, opts = []}]},
-     {{msg, 'ResponseInfo'},
-      [#field{name = data, fnum = 1, rnum = 2, type = string,
-	      occurrence = optional, opts = []},
-       #field{name = version, fnum = 2, rnum = 3,
-	      type = string, occurrence = optional, opts = []},
-       #field{name = last_block_height, fnum = 3, rnum = 4,
-	      type = int64, occurrence = optional, opts = []},
-       #field{name = last_block_app_hash, fnum = 4, rnum = 5,
-	      type = bytes, occurrence = optional, opts = []}]},
+     {{msg, 'ResponseBeginBlock'}, []},
      {{msg, 'ResponseEcho'},
       [#field{name = message, fnum = 1, rnum = 2,
 	      type = string, occurrence = optional, opts = []}]},
-     {{msg, 'ResponseCheckTx'},
-      [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	      occurrence = optional, opts = []},
-       #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = log, fnum = 3, rnum = 4, type = string,
-	      occurrence = optional, opts = []},
-       #field{name = gas, fnum = 4, rnum = 5, type = int64,
-	      occurrence = optional, opts = []},
-       #field{name = fee, fnum = 5, rnum = 6, type = int64,
-	      occurrence = optional, opts = []}]},
-     {{msg, 'RequestCommit'}, []},
-     {{msg, 'ResponseException'},
-      [#field{name = error, fnum = 1, rnum = 2, type = string,
-	      occurrence = optional, opts = []}]},
-     {{msg, 'ResponseCommit'},
-      [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	      occurrence = optional, opts = []},
-       #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = log, fnum = 3, rnum = 4, type = string,
-	      occurrence = optional, opts = []}]},
      {{msg, 'BlockGossip'},
       [#field{name = block_part_size_bytes, fnum = 1,
 	      rnum = 2, type = int32, occurrence = optional,
@@ -9224,68 +9874,38 @@ get_msg_defs() ->
      {{msg, 'ResponseEndBlock'},
       [#field{name = validator_updates, fnum = 1, rnum = 2,
 	      type = {msg, 'Validator'}, occurrence = repeated,
-	      opts = []},
+	      opts = [{[gogoproto, '.', nullable], false}]},
        #field{name = consensus_param_updates, fnum = 2,
 	      rnum = 3, type = {msg, 'ConsensusParams'},
 	      occurrence = optional, opts = []}]},
-     {{msg, 'KVPair'},
-      [#field{name = key, fnum = 1, rnum = 2, type = string,
-	      occurrence = optional, opts = []},
-       #field{name = value_type, fnum = 2, rnum = 3,
-	      type = {enum, 'KVPair.Type'}, occurrence = optional,
-	      opts = []},
-       #field{name = value_string, fnum = 3, rnum = 4,
-	      type = string, occurrence = optional, opts = []},
-       #field{name = value_int, fnum = 4, rnum = 5,
-	      type = int64, occurrence = optional, opts = []}]},
-     {{msg, 'ResponseDeliverTx'},
-      [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	      occurrence = optional, opts = []},
-       #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = log, fnum = 3, rnum = 4, type = string,
-	      occurrence = optional, opts = []},
-       #field{name = tags, fnum = 4, rnum = 5,
-	      type = {msg, 'KVPair'}, occurrence = repeated,
-	      opts = []}]},
      {{msg, 'ResponseQuery'},
       [#field{name = code, fnum = 1, rnum = 2, type = uint32,
 	      occurrence = optional, opts = []},
-       #field{name = index, fnum = 2, rnum = 3, type = int64,
+       #field{name = log, fnum = 3, rnum = 3, type = string,
 	      occurrence = optional, opts = []},
-       #field{name = key, fnum = 3, rnum = 4, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = value, fnum = 4, rnum = 5, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = proof, fnum = 5, rnum = 6, type = bytes,
-	      occurrence = optional,
-	      opts =
-		  [{[gogoproto, '.', customtype],
-		    "github.com/tendermint/go-wire/data.Bytes"},
-		   {[gogoproto, '.', nullable], false}]},
-       #field{name = height, fnum = 6, rnum = 7, type = int64,
+       #field{name = info, fnum = 4, rnum = 4, type = string,
 	      occurrence = optional, opts = []},
-       #field{name = log, fnum = 7, rnum = 8, type = string,
+       #field{name = index, fnum = 5, rnum = 5, type = int64,
+	      occurrence = optional, opts = []},
+       #field{name = key, fnum = 6, rnum = 6, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = value, fnum = 7, rnum = 7, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = proof, fnum = 8, rnum = 8, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = height, fnum = 9, rnum = 9, type = int64,
 	      occurrence = optional, opts = []}]},
      {{msg, 'ResponseInitChain'}, []},
      {{msg, 'ResponseSetOption'},
       [#field{name = code, fnum = 1, rnum = 2, type = uint32,
 	      occurrence = optional, opts = []},
-       #field{name = log, fnum = 2, rnum = 3, type = string,
+       #field{name = log, fnum = 3, rnum = 3, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = info, fnum = 4, rnum = 4, type = string,
 	      occurrence = optional, opts = []}]},
-     {{msg, 'ResponseFlush'}, []},
+     {{msg, 'ResponseException'},
+      [#field{name = error, fnum = 1, rnum = 2, type = string,
+	      occurrence = optional, opts = []}]},
      {{msg, 'Response'},
       [#gpb_oneof{name = value, rnum = 2,
 		  fields =
@@ -9325,6 +9945,26 @@ get_msg_defs() ->
 		       #field{name = commit, fnum = 12, rnum = 2,
 			      type = {msg, 'ResponseCommit'},
 			      occurrence = optional, opts = []}]}]},
+     {{msg, 'RequestBeginBlock'},
+      [#field{name = hash, fnum = 1, rnum = 2, type = bytes,
+	      occurrence = optional, opts = []},
+       #field{name = header, fnum = 2, rnum = 3,
+	      type = {msg, 'Header'}, occurrence = optional,
+	      opts = [{[gogoproto, '.', nullable], false}]},
+       #field{name = absent_validators, fnum = 3, rnum = 4,
+	      type = int32, occurrence = repeated, opts = [packed]},
+       #field{name = byzantine_validators, fnum = 4, rnum = 5,
+	      type = {msg, 'Evidence'}, occurrence = repeated,
+	      opts = [{[gogoproto, '.', nullable], false}]}]},
+     {{msg, 'RequestSetOption'},
+      [#field{name = key, fnum = 1, rnum = 2, type = string,
+	      occurrence = optional, opts = []},
+       #field{name = value, fnum = 2, rnum = 3, type = string,
+	      occurrence = optional, opts = []}]},
+     {{msg, 'RequestInfo'},
+      [#field{name = version, fnum = 1, rnum = 2,
+	      type = string, occurrence = optional, opts = []}]},
+     {{msg, 'RequestCommit'}, []},
      {{msg, 'RequestQuery'},
       [#field{name = data, fnum = 1, rnum = 2, type = bytes,
 	      occurrence = optional, opts = []},
@@ -9334,20 +9974,16 @@ get_msg_defs() ->
 	      occurrence = optional, opts = []},
        #field{name = prove, fnum = 4, rnum = 5, type = bool,
 	      occurrence = optional, opts = []}]},
-     {{msg, 'RequestEndBlock'},
-      [#field{name = height, fnum = 1, rnum = 2, type = int64,
-	      occurrence = optional, opts = []}]},
-     {{msg, 'RequestFlush'}, []},
      {{msg, 'RequestInitChain'},
       [#field{name = validators, fnum = 1, rnum = 2,
 	      type = {msg, 'Validator'}, occurrence = repeated,
-	      opts = []}]},
-     {{msg, 'RequestInfo'},
-      [#field{name = version, fnum = 1, rnum = 2,
+	      opts = [{[gogoproto, '.', nullable], false}]},
+       #field{name = app_state_bytes, fnum = 2, rnum = 3,
+	      type = bytes, occurrence = optional, opts = []}]},
+     {{msg, 'RequestFlush'}, []},
+     {{msg, 'RequestEcho'},
+      [#field{name = message, fnum = 1, rnum = 2,
 	      type = string, occurrence = optional, opts = []}]},
-     {{msg, 'RequestDeliverTx'},
-      [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
-	      occurrence = optional, opts = []}]},
      {{msg, 'Request'},
       [#gpb_oneof{name = value, rnum = 2,
 		  fields =
@@ -9387,39 +10023,39 @@ get_msg_defs() ->
 
 
 get_msg_names() ->
-    ['RequestSetOption', 'PartSetHeader', 'BlockID',
-     'Evidence', 'Header', 'RequestBeginBlock',
-     'ResponseBeginBlock', 'RequestEcho', 'RequestCheckTx',
-     'ResponseInfo', 'ResponseEcho', 'ResponseCheckTx',
-     'RequestCommit', 'ResponseException', 'ResponseCommit',
+    ['RequestDeliverTx', 'KI64Pair', 'KVPair',
+     'ResponseDeliverTx', 'ResponseFlush', 'ResponseCommit',
+     'RequestCheckTx', 'Evidence', 'ResponseInfo',
+     'ResponseCheckTx', 'PartSetHeader', 'BlockID', 'Header',
+     'RequestEndBlock', 'ResponseBeginBlock', 'ResponseEcho',
      'BlockGossip', 'TxSize', 'BlockSize', 'ConsensusParams',
-     'Validator', 'ResponseEndBlock', 'KVPair',
-     'ResponseDeliverTx', 'ResponseQuery',
+     'Validator', 'ResponseEndBlock', 'ResponseQuery',
      'ResponseInitChain', 'ResponseSetOption',
-     'ResponseFlush', 'Response', 'RequestQuery',
-     'RequestEndBlock', 'RequestFlush', 'RequestInitChain',
-     'RequestInfo', 'RequestDeliverTx', 'Request'].
+     'ResponseException', 'Response', 'RequestBeginBlock',
+     'RequestSetOption', 'RequestInfo', 'RequestCommit',
+     'RequestQuery', 'RequestInitChain', 'RequestFlush',
+     'RequestEcho', 'Request'].
 
 
 get_group_names() -> [].
 
 
 get_msg_or_group_names() ->
-    ['RequestSetOption', 'PartSetHeader', 'BlockID',
-     'Evidence', 'Header', 'RequestBeginBlock',
-     'ResponseBeginBlock', 'RequestEcho', 'RequestCheckTx',
-     'ResponseInfo', 'ResponseEcho', 'ResponseCheckTx',
-     'RequestCommit', 'ResponseException', 'ResponseCommit',
+    ['RequestDeliverTx', 'KI64Pair', 'KVPair',
+     'ResponseDeliverTx', 'ResponseFlush', 'ResponseCommit',
+     'RequestCheckTx', 'Evidence', 'ResponseInfo',
+     'ResponseCheckTx', 'PartSetHeader', 'BlockID', 'Header',
+     'RequestEndBlock', 'ResponseBeginBlock', 'ResponseEcho',
      'BlockGossip', 'TxSize', 'BlockSize', 'ConsensusParams',
-     'Validator', 'ResponseEndBlock', 'KVPair',
-     'ResponseDeliverTx', 'ResponseQuery',
+     'Validator', 'ResponseEndBlock', 'ResponseQuery',
      'ResponseInitChain', 'ResponseSetOption',
-     'ResponseFlush', 'Response', 'RequestQuery',
-     'RequestEndBlock', 'RequestFlush', 'RequestInitChain',
-     'RequestInfo', 'RequestDeliverTx', 'Request'].
+     'ResponseException', 'Response', 'RequestBeginBlock',
+     'RequestSetOption', 'RequestInfo', 'RequestCommit',
+     'RequestQuery', 'RequestInitChain', 'RequestFlush',
+     'RequestEcho', 'Request'].
 
 
-get_enum_names() -> ['KVPair.Type'].
+get_enum_names() -> [].
 
 
 fetch_msg_def(MsgName) ->
@@ -9429,18 +10065,87 @@ fetch_msg_def(MsgName) ->
     end.
 
 
+-spec fetch_enum_def(_) -> no_return().
 fetch_enum_def(EnumName) ->
-    case find_enum_def(EnumName) of
-      Es when is_list(Es) -> Es;
-      error -> erlang:error({no_such_enum, EnumName})
-    end.
+    erlang:error({no_such_enum, EnumName}).
 
 
-find_msg_def('RequestSetOption') ->
-    [#field{name = key, fnum = 1, rnum = 2, type = string,
-	    occurrence = optional, opts = []},
-     #field{name = value, fnum = 2, rnum = 3, type = string,
+find_msg_def('RequestDeliverTx') ->
+    [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
 	    occurrence = optional, opts = []}];
+find_msg_def('KI64Pair') ->
+    [#field{name = key, fnum = 1, rnum = 2, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = value, fnum = 2, rnum = 3, type = int64,
+	    occurrence = optional, opts = []}];
+find_msg_def('KVPair') ->
+    [#field{name = key, fnum = 1, rnum = 2, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = value, fnum = 2, rnum = 3, type = bytes,
+	    occurrence = optional, opts = []}];
+find_msg_def('ResponseDeliverTx') ->
+    [#field{name = code, fnum = 1, rnum = 2, type = uint32,
+	    occurrence = optional, opts = []},
+     #field{name = data, fnum = 2, rnum = 3, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = log, fnum = 3, rnum = 4, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = info, fnum = 4, rnum = 5, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = gas_wanted, fnum = 5, rnum = 6,
+	    type = int64, occurrence = optional, opts = []},
+     #field{name = gas_used, fnum = 6, rnum = 7,
+	    type = int64, occurrence = optional, opts = []},
+     #field{name = tags, fnum = 7, rnum = 8,
+	    type = {msg, 'KVPair'}, occurrence = repeated,
+	    opts =
+		[{[gogoproto, '.', nullable], false},
+		 {[gogoproto, '.', jsontag], "tags,omitempty"}]},
+     #field{name = fee, fnum = 8, rnum = 9,
+	    type = {msg, 'KI64Pair'}, occurrence = optional,
+	    opts = [{[gogoproto, '.', nullable], false}]}];
+find_msg_def('ResponseFlush') -> [];
+find_msg_def('ResponseCommit') ->
+    [#field{name = data, fnum = 2, rnum = 2, type = bytes,
+	    occurrence = optional, opts = []}];
+find_msg_def('RequestCheckTx') ->
+    [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
+	    occurrence = optional, opts = []}];
+find_msg_def('Evidence') ->
+    [#field{name = pub_key, fnum = 1, rnum = 2,
+	    type = bytes, occurrence = optional, opts = []},
+     #field{name = height, fnum = 2, rnum = 3, type = int64,
+	    occurrence = optional, opts = []}];
+find_msg_def('ResponseInfo') ->
+    [#field{name = data, fnum = 1, rnum = 2, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = version, fnum = 2, rnum = 3,
+	    type = string, occurrence = optional, opts = []},
+     #field{name = last_block_height, fnum = 3, rnum = 4,
+	    type = int64, occurrence = optional, opts = []},
+     #field{name = last_block_app_hash, fnum = 4, rnum = 5,
+	    type = bytes, occurrence = optional, opts = []}];
+find_msg_def('ResponseCheckTx') ->
+    [#field{name = code, fnum = 1, rnum = 2, type = uint32,
+	    occurrence = optional, opts = []},
+     #field{name = data, fnum = 2, rnum = 3, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = log, fnum = 3, rnum = 4, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = info, fnum = 4, rnum = 5, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = gas_wanted, fnum = 5, rnum = 6,
+	    type = int64, occurrence = optional, opts = []},
+     #field{name = gas_used, fnum = 6, rnum = 7,
+	    type = int64, occurrence = optional, opts = []},
+     #field{name = tags, fnum = 7, rnum = 8,
+	    type = {msg, 'KVPair'}, occurrence = repeated,
+	    opts =
+		[{[gogoproto, '.', nullable], false},
+		 {[gogoproto, '.', jsontag], "tags,omitempty"}]},
+     #field{name = fee, fnum = 8, rnum = 9,
+	    type = {msg, 'KI64Pair'}, occurrence = optional,
+	    opts = [{[gogoproto, '.', nullable], false}]}];
 find_msg_def('PartSetHeader') ->
     [#field{name = total, fnum = 1, rnum = 2, type = int32,
 	    occurrence = optional, opts = []},
@@ -9451,12 +10156,7 @@ find_msg_def('BlockID') ->
 	    occurrence = optional, opts = []},
      #field{name = parts, fnum = 2, rnum = 3,
 	    type = {msg, 'PartSetHeader'}, occurrence = optional,
-	    opts = []}];
-find_msg_def('Evidence') ->
-    [#field{name = pub_key, fnum = 1, rnum = 2,
-	    type = bytes, occurrence = optional, opts = []},
-     #field{name = height, fnum = 2, rnum = 3, type = int64,
-	    occurrence = optional, opts = []}];
+	    opts = [{[gogoproto, '.', nullable], false}]}];
 find_msg_def('Header') ->
     [#field{name = chain_id, fnum = 1, rnum = 2,
 	    type = string, occurrence = optional,
@@ -9469,7 +10169,9 @@ find_msg_def('Header') ->
 	    occurrence = optional, opts = []},
      #field{name = last_block_id, fnum = 5, rnum = 6,
 	    type = {msg, 'BlockID'}, occurrence = optional,
-	    opts = [{[gogoproto, '.', customname], "LastBlockID"}]},
+	    opts =
+		[{[gogoproto, '.', customname], "LastBlockID"},
+		 {[gogoproto, '.', nullable], false}]},
      #field{name = last_commit_hash, fnum = 6, rnum = 7,
 	    type = bytes, occurrence = optional, opts = []},
      #field{name = data_hash, fnum = 7, rnum = 8,
@@ -9478,66 +10180,13 @@ find_msg_def('Header') ->
 	    type = bytes, occurrence = optional, opts = []},
      #field{name = app_hash, fnum = 9, rnum = 10,
 	    type = bytes, occurrence = optional, opts = []}];
-find_msg_def('RequestBeginBlock') ->
-    [#field{name = hash, fnum = 1, rnum = 2, type = bytes,
-	    occurrence = optional, opts = []},
-     #field{name = header, fnum = 2, rnum = 3,
-	    type = {msg, 'Header'}, occurrence = optional,
-	    opts = []},
-     #field{name = absent_validators, fnum = 3, rnum = 4,
-	    type = int32, occurrence = repeated, opts = [packed]},
-     #field{name = byzantine_validators, fnum = 4, rnum = 5,
-	    type = {msg, 'Evidence'}, occurrence = repeated,
-	    opts = []}];
-find_msg_def('ResponseBeginBlock') -> [];
-find_msg_def('RequestEcho') ->
-    [#field{name = message, fnum = 1, rnum = 2,
-	    type = string, occurrence = optional, opts = []}];
-find_msg_def('RequestCheckTx') ->
-    [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
+find_msg_def('RequestEndBlock') ->
+    [#field{name = height, fnum = 1, rnum = 2, type = int64,
 	    occurrence = optional, opts = []}];
-find_msg_def('ResponseInfo') ->
-    [#field{name = data, fnum = 1, rnum = 2, type = string,
-	    occurrence = optional, opts = []},
-     #field{name = version, fnum = 2, rnum = 3,
-	    type = string, occurrence = optional, opts = []},
-     #field{name = last_block_height, fnum = 3, rnum = 4,
-	    type = int64, occurrence = optional, opts = []},
-     #field{name = last_block_app_hash, fnum = 4, rnum = 5,
-	    type = bytes, occurrence = optional, opts = []}];
+find_msg_def('ResponseBeginBlock') -> [];
 find_msg_def('ResponseEcho') ->
     [#field{name = message, fnum = 1, rnum = 2,
 	    type = string, occurrence = optional, opts = []}];
-find_msg_def('ResponseCheckTx') ->
-    [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	    occurrence = optional, opts = []},
-     #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = log, fnum = 3, rnum = 4, type = string,
-	    occurrence = optional, opts = []},
-     #field{name = gas, fnum = 4, rnum = 5, type = int64,
-	    occurrence = optional, opts = []},
-     #field{name = fee, fnum = 5, rnum = 6, type = int64,
-	    occurrence = optional, opts = []}];
-find_msg_def('RequestCommit') -> [];
-find_msg_def('ResponseException') ->
-    [#field{name = error, fnum = 1, rnum = 2, type = string,
-	    occurrence = optional, opts = []}];
-find_msg_def('ResponseCommit') ->
-    [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	    occurrence = optional, opts = []},
-     #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = log, fnum = 3, rnum = 4, type = string,
-	    occurrence = optional, opts = []}];
 find_msg_def('BlockGossip') ->
     [#field{name = block_part_size_bytes, fnum = 1,
 	    rnum = 2, type = int32, occurrence = optional,
@@ -9572,68 +10221,38 @@ find_msg_def('Validator') ->
 find_msg_def('ResponseEndBlock') ->
     [#field{name = validator_updates, fnum = 1, rnum = 2,
 	    type = {msg, 'Validator'}, occurrence = repeated,
-	    opts = []},
+	    opts = [{[gogoproto, '.', nullable], false}]},
      #field{name = consensus_param_updates, fnum = 2,
 	    rnum = 3, type = {msg, 'ConsensusParams'},
 	    occurrence = optional, opts = []}];
-find_msg_def('KVPair') ->
-    [#field{name = key, fnum = 1, rnum = 2, type = string,
-	    occurrence = optional, opts = []},
-     #field{name = value_type, fnum = 2, rnum = 3,
-	    type = {enum, 'KVPair.Type'}, occurrence = optional,
-	    opts = []},
-     #field{name = value_string, fnum = 3, rnum = 4,
-	    type = string, occurrence = optional, opts = []},
-     #field{name = value_int, fnum = 4, rnum = 5,
-	    type = int64, occurrence = optional, opts = []}];
-find_msg_def('ResponseDeliverTx') ->
-    [#field{name = code, fnum = 1, rnum = 2, type = uint32,
-	    occurrence = optional, opts = []},
-     #field{name = data, fnum = 2, rnum = 3, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = log, fnum = 3, rnum = 4, type = string,
-	    occurrence = optional, opts = []},
-     #field{name = tags, fnum = 4, rnum = 5,
-	    type = {msg, 'KVPair'}, occurrence = repeated,
-	    opts = []}];
 find_msg_def('ResponseQuery') ->
     [#field{name = code, fnum = 1, rnum = 2, type = uint32,
 	    occurrence = optional, opts = []},
-     #field{name = index, fnum = 2, rnum = 3, type = int64,
+     #field{name = log, fnum = 3, rnum = 3, type = string,
 	    occurrence = optional, opts = []},
-     #field{name = key, fnum = 3, rnum = 4, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = value, fnum = 4, rnum = 5, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = proof, fnum = 5, rnum = 6, type = bytes,
-	    occurrence = optional,
-	    opts =
-		[{[gogoproto, '.', customtype],
-		  "github.com/tendermint/go-wire/data.Bytes"},
-		 {[gogoproto, '.', nullable], false}]},
-     #field{name = height, fnum = 6, rnum = 7, type = int64,
+     #field{name = info, fnum = 4, rnum = 4, type = string,
 	    occurrence = optional, opts = []},
-     #field{name = log, fnum = 7, rnum = 8, type = string,
+     #field{name = index, fnum = 5, rnum = 5, type = int64,
+	    occurrence = optional, opts = []},
+     #field{name = key, fnum = 6, rnum = 6, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = value, fnum = 7, rnum = 7, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = proof, fnum = 8, rnum = 8, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = height, fnum = 9, rnum = 9, type = int64,
 	    occurrence = optional, opts = []}];
 find_msg_def('ResponseInitChain') -> [];
 find_msg_def('ResponseSetOption') ->
     [#field{name = code, fnum = 1, rnum = 2, type = uint32,
 	    occurrence = optional, opts = []},
-     #field{name = log, fnum = 2, rnum = 3, type = string,
+     #field{name = log, fnum = 3, rnum = 3, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = info, fnum = 4, rnum = 4, type = string,
 	    occurrence = optional, opts = []}];
-find_msg_def('ResponseFlush') -> [];
+find_msg_def('ResponseException') ->
+    [#field{name = error, fnum = 1, rnum = 2, type = string,
+	    occurrence = optional, opts = []}];
 find_msg_def('Response') ->
     [#gpb_oneof{name = value, rnum = 2,
 		fields =
@@ -9673,6 +10292,26 @@ find_msg_def('Response') ->
 		     #field{name = commit, fnum = 12, rnum = 2,
 			    type = {msg, 'ResponseCommit'},
 			    occurrence = optional, opts = []}]}];
+find_msg_def('RequestBeginBlock') ->
+    [#field{name = hash, fnum = 1, rnum = 2, type = bytes,
+	    occurrence = optional, opts = []},
+     #field{name = header, fnum = 2, rnum = 3,
+	    type = {msg, 'Header'}, occurrence = optional,
+	    opts = [{[gogoproto, '.', nullable], false}]},
+     #field{name = absent_validators, fnum = 3, rnum = 4,
+	    type = int32, occurrence = repeated, opts = [packed]},
+     #field{name = byzantine_validators, fnum = 4, rnum = 5,
+	    type = {msg, 'Evidence'}, occurrence = repeated,
+	    opts = [{[gogoproto, '.', nullable], false}]}];
+find_msg_def('RequestSetOption') ->
+    [#field{name = key, fnum = 1, rnum = 2, type = string,
+	    occurrence = optional, opts = []},
+     #field{name = value, fnum = 2, rnum = 3, type = string,
+	    occurrence = optional, opts = []}];
+find_msg_def('RequestInfo') ->
+    [#field{name = version, fnum = 1, rnum = 2,
+	    type = string, occurrence = optional, opts = []}];
+find_msg_def('RequestCommit') -> [];
 find_msg_def('RequestQuery') ->
     [#field{name = data, fnum = 1, rnum = 2, type = bytes,
 	    occurrence = optional, opts = []},
@@ -9682,20 +10321,16 @@ find_msg_def('RequestQuery') ->
 	    occurrence = optional, opts = []},
      #field{name = prove, fnum = 4, rnum = 5, type = bool,
 	    occurrence = optional, opts = []}];
-find_msg_def('RequestEndBlock') ->
-    [#field{name = height, fnum = 1, rnum = 2, type = int64,
-	    occurrence = optional, opts = []}];
-find_msg_def('RequestFlush') -> [];
 find_msg_def('RequestInitChain') ->
     [#field{name = validators, fnum = 1, rnum = 2,
 	    type = {msg, 'Validator'}, occurrence = repeated,
-	    opts = []}];
-find_msg_def('RequestInfo') ->
-    [#field{name = version, fnum = 1, rnum = 2,
+	    opts = [{[gogoproto, '.', nullable], false}]},
+     #field{name = app_state_bytes, fnum = 2, rnum = 3,
+	    type = bytes, occurrence = optional, opts = []}];
+find_msg_def('RequestFlush') -> [];
+find_msg_def('RequestEcho') ->
+    [#field{name = message, fnum = 1, rnum = 2,
 	    type = string, occurrence = optional, opts = []}];
-find_msg_def('RequestDeliverTx') ->
-    [#field{name = tx, fnum = 1, rnum = 2, type = bytes,
-	    occurrence = optional, opts = []}];
 find_msg_def('Request') ->
     [#gpb_oneof{name = value, rnum = 2,
 		fields =
@@ -9735,25 +10370,18 @@ find_msg_def('Request') ->
 find_msg_def(_) -> error.
 
 
-find_enum_def('KVPair.Type') ->
-    [{'STRING', 0}, {'INT', 1}];
 find_enum_def(_) -> error.
 
 
-enum_symbol_by_value('KVPair.Type', Value) ->
-    'enum_symbol_by_value_KVPair.Type'(Value).
+-spec enum_symbol_by_value(_, _) -> no_return().
+enum_symbol_by_value(E, V) ->
+    erlang:error({no_enum_defs, E, V}).
 
 
-enum_value_by_symbol('KVPair.Type', Sym) ->
-    'enum_value_by_symbol_KVPair.Type'(Sym).
+-spec enum_value_by_symbol(_, _) -> no_return().
+enum_value_by_symbol(E, V) ->
+    erlang:error({no_enum_defs, E, V}).
 
-
-'enum_symbol_by_value_KVPair.Type'(0) -> 'STRING';
-'enum_symbol_by_value_KVPair.Type'(1) -> 'INT'.
-
-
-'enum_value_by_symbol_KVPair.Type'('STRING') -> 0;
-'enum_value_by_symbol_KVPair.Type'('INT') -> 1.
 
 
 get_service_names() -> ['ABCIApplication'].

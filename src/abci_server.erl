@@ -15,6 +15,10 @@
 -behaviour(ranch_protocol).
 
 -include_lib("include/abci.hrl").
+-ifdef(TEST).
+-include_lib("triq/include/triq.hrl").
+-include_lib("eunit/include/eunit.hrl").
+-endif.
 
 %% API.
 -export([start_link/4]).
@@ -93,15 +97,51 @@ terminate(_Reason, _State) ->
 code_change(_OldVsn, State, _Extra) ->
     {ok, State}.
 
+-spec decode_varint(binary()) -> none | {non_neg_integer(), binary()}.
+decode_varint(<<0:1, Int:7, Rest/binary>>) ->
+    {Int, Rest};
+decode_varint(<<1:1, Int:7, TailBin/binary>>) ->
+    case decode_varint(TailBin) of
+        none ->
+            none;
+        {TailInt, RestBin} ->
+            {Int + (TailInt bsl 7), RestBin}
+    end;
+decode_varint(_) ->
+    none.
+
+-spec decode_zigzag(binary()) -> none | {integer(), binary()}.
+decode_zigzag(Bin) ->
+    case decode_varint(Bin) of
+        none ->
+            none;
+        {VarInt, RestBin} ->
+            Int =
+                case VarInt band 1 of
+                    1 ->
+                        -((VarInt + 1) bsr 1);
+                    0 ->
+                        VarInt bsr 1
+                end,
+            {Int, RestBin}
+    end.
+
 -spec unpack_requests(binary()) -> {list(abci:'Request'()), Rest :: binary()}.
-unpack_requests(Data) ->
-    case Data of
-        <<LengthLength, Length:LengthLength/unit:8, Msg:Length/binary, Rest1/binary>> ->
-            Request = abci:decode_msg(Msg, 'Request'),
-            {RestRequests, Rest2} = unpack_requests(Rest1),
-            {[Request|RestRequests], Rest2};
-        _ ->
-            {[], Data}
+unpack_requests(<<>>) ->
+    {[], <<>>};
+unpack_requests(DataBin) ->
+    case decode_zigzag(DataBin) of
+        none ->
+            {[], DataBin};
+        {Length, RestBin} ->
+            case RestBin of
+                <<Msg:Length/binary, RestBin2/binary>> ->
+                    Request = abci:decode_msg(Msg, 'Request'),
+                    {RestRequests, RestBin3} = unpack_requests(RestBin2),
+                    {[Request|RestRequests], RestBin3};
+                _ ->
+                    {[], DataBin}
+            end
     end.
 
 -spec handle_requests(list(abci:'Request'()), #state{}) -> #state{}.
@@ -125,48 +165,49 @@ handle_requests([], State) ->
 send_response(ResponseValue, #state{socket=Socket, transport=Transport}) ->
     EncodedResponse = abci:encode_msg(#'Response'{value=ResponseValue}),
     %% io:format("Response: ~w~n", [EncodedResponse]),
-    EncodedLength = encode_length(byte_size(EncodedResponse)),
+    EncodedLength = encode_zigzag(byte_size(EncodedResponse)),
     FullResponse = <<EncodedLength/binary, EncodedResponse/binary>>,
     _ = Transport:setopts(Socket, [{active, once}]),
     ok = Transport:send(Socket, FullResponse),
     ok.
 
--spec encode_length(integer()) -> binary().
-encode_length(Length) ->
-    LengthBin = binary:encode_unsigned(Length),
-    LengthSize = byte_size(LengthBin),
-    <<LengthSize, LengthBin:LengthSize/binary>>.
-
+-spec encode_zigzag(integer()) -> binary().
+encode_zigzag(Int) ->
+    gpb:encode_varint(
+      case Int >= 0 of
+          true ->
+              2 * Int;
+          %% Dialyzer here correctly points that we won’t ever encode negative lengths.
+          %% Why therefore does ABCI use zigzag encoding for lengths instead of ordinary varint?
+          false ->
+              -2 * Int - 1
+      end).
+-dialyzer({no_match, encode_zigzag/1}).
+
 -ifdef(TEST).
--include_lib("eunit/include/eunit.hrl").
-
 unpack_requests_test_() ->
     [?_assertEqual(
         {[#'Request'{value={info, #'RequestInfo'{}}},
           #'Request'{value={flush, #'RequestFlush'{}}}],
          <<>>},
-        unpack_requests(<<1,2,34,0,1,2,26,0>>)),
+        unpack_requests(<<2#000000100,34,0,2#00000100,26,0>>)),
      ?_assertEqual(
         {[#'Request'{value={info, #'RequestInfo'{}}},
           #'Request'{value={flush, #'RequestFlush'{}}}],
          <<10,11>>},
-        unpack_requests(<<1,2,34,0,1,2,26,0,10,11>>))].
+        unpack_requests(<<2#00000100,34,0,2#00000100,26,0,10,11>>))].
 
-encode_length_test_() ->
+encode_zigzag_test_() ->
     [?_assertEqual(
-        <<1, 1>>,
-        encode_length(1)),
+        <<2#10101100, 2#00000010>>,
+        encode_zigzag(150)),
      ?_assertEqual(
-        <<1, 3>>,
-        encode_length(3)),
-     ?_assertEqual(
-        <<1, 255>>,
-        encode_length(255)),
-     ?_assertEqual(
-        <<2, 1, 0>>,
-        encode_length(256)),
-     ?_assertEqual(
-        <<3, 1, 0, 0>>,
-        encode_length(65536)
-       )].
+        <<2#10101011, 2#00000010>>,
+        encode_zigzag(-150))].
+
+prop_zigzag_encode_decode() ->
+    ?FORALL(
+       I,
+       int(),
+       {I, <<>>} =:= decode_zigzag(encode_zigzag(I))).
 -endif.
