@@ -8,3 +8,4 @@ ebin/
 *.d
 doc/*
 !doc/overview.edoc
+.erlang.mk/
