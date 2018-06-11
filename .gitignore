@@ -9,3 +9,5 @@ ebin/
 doc/*
 !doc/overview.edoc
 .erlang.mk/
+include/abci.hrl
+src/abci.erl

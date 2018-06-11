@@ -1,6 +1,6 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.5.0
+PROJECT_VERSION = 0.6.0
 
 DEPS = gpb ranch
 dep_gpb = git https://github.com/tomas-abrahamsson/gpb 4.0.2
@@ -14,7 +14,13 @@ SP = 4
 
 include erlang.mk
 
-.PHONY: gpb
-gpb: deps
-	./deps/gpb/bin/protoc-erl -o-erl src/ -o-hrl include/ -type -il -I include/ abci.proto
-	sed -i 's/-include("abci.hrl")\./-include_lib("include\/abci.hrl")./' src/abci.erl
+GPB_GENERATED_FILES = include/abci.hrl src/abci.erl
+
+$(PROJECT).d:: $(GPB_GENERATED_FILES)
+
+$(GPB_GENERATED_FILES):: include/abci.proto
+	$(gen_verbose) ./deps/gpb/bin/protoc-erl -o-erl src/ -o-hrl include/ -type -il -I include/ abci.proto
+	$(gen_verbose) sed -i 's/-include("abci.hrl")\./-include_lib("include\/abci.hrl")./' src/abci.erl
+
+clean::
+	$(gen_verbose) rm -f $(GPB_GENERATED_FILES)

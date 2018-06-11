@@ -18,7 +18,7 @@ Write function specifications. To run Dialyzer, execute `make dialyzer`.
 
 No hard line length limit is imposed.
 
-If you want to regenerate Protocol Buffers code after fetching new version of `include/abci.proto`, comment out eventual Go-related imports in that file, inline other imports and execute `make gpb`.
+If you want to update `include/abci.proto` to a new version fetched from ABCI repository (where it is named `types.proto`), comment out eventual Go-related imports in that file and inline other imports.
 
 ## License
 
