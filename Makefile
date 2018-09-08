@@ -1,6 +1,6 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.7.1
+PROJECT_VERSION = 0.7.2
 
 DEPS = ranch
 dep_ranch = git https://github.com/ninenines/ranch 1.3.2
@@ -27,7 +27,10 @@ ABCI_PROTO_SOURCE = github.com/tendermint/tendermint/abci/types/types.proto
 $(ABCI_PROTO_SOURCE):
 	$(gen_verbose) git submodule update --init
 
-include/abci.proto: $(ABCI_PROTO_SOURCE)
+include:
+	$(gen_verbose) mkdir include
+
+include/abci.proto: $(ABCI_PROTO_SOURCE) | include
 	$(gen_verbose) cp $(ABCI_PROTO_SOURCE) include/abci.proto
 	$(gen_verbose) sed -i 's@package types;@package abci;@' include/abci.proto
 
