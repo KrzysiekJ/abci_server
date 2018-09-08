@@ -14,7 +14,7 @@ Run `make docs` and open `doc/index.html`.
 
 To run tests, execute `make tests`.
 
-Write function specifications. To run Dialyzer, execute `make dialyzer`.
+Write function specifications. To run Dialyzer, execute `make dialyze`.
 
 To perform all checks, execute `make check`.
 
