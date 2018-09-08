@@ -126,7 +126,7 @@ decode_zigzag(Bin) ->
             {Int, RestBin}
     end.
 
--spec unpack_requests(binary()) -> {list(abci:'Request'()), Rest :: binary()}.
+-spec unpack_requests(binary()) -> {list(abci:'abci.Request'()), Rest :: binary()}.
 unpack_requests(<<>>) ->
     {[], <<>>};
 unpack_requests(DataBin) ->
@@ -136,7 +136,7 @@ unpack_requests(DataBin) ->
         {Length, RestBin} ->
             case RestBin of
                 <<Msg:Length/binary, RestBin2/binary>> ->
-                    Request = abci:decode_msg(Msg, 'Request'),
+                    Request = abci:decode_msg(Msg, 'abci.Request'),
                     {RestRequests, RestBin3} = unpack_requests(RestBin2),
                     {[Request|RestRequests], RestBin3};
                 _ ->
@@ -144,15 +144,15 @@ unpack_requests(DataBin) ->
             end
     end.
 
--spec handle_requests(list(abci:'Request'()), #state{}) -> #state{}.
-handle_requests([#'Request'{value={MsgName, RequestValue}}|RestRequests], State=#state{callback_mod=CallbackMod}) ->
+-spec handle_requests(list(abci:'abci.Request'()), #state{}) -> #state{}.
+handle_requests([#'abci.Request'{value={MsgName, RequestValue}}|RestRequests], State=#state{callback_mod=CallbackMod}) ->
     %% io:format("Received request ~w~n", [RequestValue]),
     ResponseValue =
         case RequestValue of
-            #'RequestFlush'{} ->
-                #'ResponseFlush'{};
-            #'RequestEcho'{message=Message} ->
-                #'ResponseEcho'{message=Message};
+            #'abci.RequestFlush'{} ->
+                #'abci.ResponseFlush'{};
+            #'abci.RequestEcho'{message=Message} ->
+                #'abci.ResponseEcho'{message=Message};
             _ ->
                 CallbackMod:handle_request(RequestValue)
         end,
@@ -163,7 +163,7 @@ handle_requests([], State) ->
 
 -spec send_response(any(), #state{}) -> ok.
 send_response(ResponseValue, #state{socket=Socket, transport=Transport}) ->
-    EncodedResponse = abci:encode_msg(#'Response'{value=ResponseValue}),
+    EncodedResponse = abci:encode_msg(#'abci.Response'{value=ResponseValue}),
     %% io:format("Response: ~w~n", [EncodedResponse]),
     EncodedLength = encode_zigzag(byte_size(EncodedResponse)),
     FullResponse = <<EncodedLength/binary, EncodedResponse/binary>>,
@@ -171,29 +171,46 @@ send_response(ResponseValue, #state{socket=Socket, transport=Transport}) ->
     ok = Transport:send(Socket, FullResponse),
     ok.
 
+-spec encode_varint(non_neg_integer()) -> binary().
+encode_varint(Int) ->
+    encode_varint(Int, <<>>).
+
+-spec encode_varint(non_neg_integer(), binary()) -> binary().
+encode_varint(Int, Acc) ->
+    Group = Int rem 128,
+    Rest = Int bsr 7,
+    case Rest of
+        0 ->
+            <<Acc/binary, 0:1, Group:7>>;
+        _ ->
+            encode_varint(Rest, <<Acc/binary, 1:1, Group:7>>)
+    end.
+
 -spec encode_zigzag(integer()) -> binary().
 encode_zigzag(Int) ->
-    gpb:encode_varint(
-      case Int >= 0 of
-          true ->
-              2 * Int;
-          %% Dialyzer here correctly points that we won’t ever encode negative lengths.
-          %% Why therefore does ABCI use zigzag encoding for lengths instead of ordinary varint?
-          false ->
-              -2 * Int - 1
-      end).
+    ZigzagInt =
+        case Int >= 0 of
+            true ->
+                2 * Int;
+            %% Dialyzer here correctly points that we won’t ever encode negative lengths.
+            %% Why therefore does ABCI use zigzag encoding for lengths instead of ordinary varint?
+            false ->
+                -2 * Int - 1
+        end,
+    encode_varint(ZigzagInt).
+
 -dialyzer({no_match, encode_zigzag/1}).
 
 -ifdef(TEST).
 unpack_requests_test_() ->
     [?_assertEqual(
-        {[#'Request'{value={info, #'RequestInfo'{}}},
-          #'Request'{value={flush, #'RequestFlush'{}}}],
+        {[#'abci.Request'{value={info, #'abci.RequestInfo'{}}},
+          #'abci.Request'{value={flush, #'abci.RequestFlush'{}}}],
          <<>>},
         unpack_requests(<<2#000000100,34,0,2#00000100,26,0>>)),
      ?_assertEqual(
-        {[#'Request'{value={info, #'RequestInfo'{}}},
-          #'Request'{value={flush, #'RequestFlush'{}}}],
+        {[#'abci.Request'{value={info, #'abci.RequestInfo'{}}},
+          #'abci.Request'{value={flush, #'abci.RequestFlush'{}}}],
          <<10,11>>},
         unpack_requests(<<2#00000100,34,0,2#00000100,26,0,10,11>>))].
 

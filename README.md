@@ -16,9 +16,9 @@ To run tests, execute `make tests`.
 
 Write function specifications. To run Dialyzer, execute `make dialyzer`.
 
-No hard line length limit is imposed.
+To perform all checks, execute `make check`.
 
-If you want to update `include/abci.proto` to a new version fetched from ABCI repository (where it is named `types.proto`), comment out eventual Go-related imports in that file and inline other imports.
+No hard line length limit is imposed.
 
 ## License
 

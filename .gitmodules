@@ -1,0 +1,6 @@
+[submodule "github.com/tendermint/tendermint"]
+	path = github.com/tendermint/tendermint
+	url = https://github.com/tendermint/tendermint.git
+[submodule "github.com/gogo/protobuf"]
+	path = github.com/gogo/protobuf
+	url = https://github.com/gogo/protobuf.git

@@ -10,4 +10,5 @@ doc/*
 !doc/overview.edoc
 .erlang.mk/
 include/abci.hrl
+include/abci.proto
 src/abci.erl

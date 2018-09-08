@@ -14,23 +14,23 @@
 
 -include_lib("include/abci.hrl").
 
--type request() :: abci:'RequestInfo'() |
-                   abci:'RequestBeginBlock'() |
-                   abci:'RequestCheckTx'() |
-                   abci:'RequestCommit'() |
-                   abci:'RequestEndBlock'() |
-                   abci:'RequestInitChain'() |
-                   abci:'RequestQuery'() |
-                   abci:'RequestSetOption'().
--type response() :: abci:'ResponseInitChain'() |
-                    abci:'ResponseEndBlock'() |
-                    abci:'ResponseInfo'() |
-                    abci:'ResponseSetOption'() |
-                    abci:'ResponseCheckTx'() |
-                    abci:'ResponseDeliverTx'() |
-                    abci:'ResponseBeginBlock'() |
-                    abci:'ResponseQuery'() |
-                    abci:'ResponseCommit'().
+-type request() :: abci:'abci.RequestInfo'() |
+                   abci:'abci.RequestBeginBlock'() |
+                   abci:'abci.RequestCheckTx'() |
+                   abci:'abci.RequestCommit'() |
+                   abci:'abci.RequestEndBlock'() |
+                   abci:'abci.RequestInitChain'() |
+                   abci:'abci.RequestQuery'() |
+                   abci:'abci.RequestSetOption'().
+-type response() :: abci:'abci.ResponseInitChain'() |
+                    abci:'abci.ResponseEndBlock'() |
+                    abci:'abci.ResponseInfo'() |
+                    abci:'abci.ResponseSetOption'() |
+                    abci:'abci.ResponseCheckTx'() |
+                    abci:'abci.ResponseDeliverTx'() |
+                    abci:'abci.ResponseBeginBlock'() |
+                    abci:'abci.ResponseQuery'() |
+                    abci:'abci.ResponseCommit'().
 
 -export_type(
    [request/0,
