@@ -3,10 +3,10 @@
 @reference <a href="https://github.com/KrzysiekJ/abci_counter">An example application</a>.
 @doc An Erlang application that allows writing <a href="https://github.com/tendermint/abci">Application Blockchain Interface</a> servers.
 
-To start a server on port `46658' that delegates calls to the `foo' module, write:
+To start a server on port `26658' that delegates calls to the `foo' module, write:
 
 ```
-{ok, _} = abci_server:start_listener(foo, 46658).
+{ok, _} = abci_server:start_listener(foo, 26658).
 '''
 
 To stop this server, write:
@@ -19,7 +19,7 @@ If you instead want to put the server into your own supervision tree, you may us
 
 ```
 #{id => abci_server,
-  start => {abci_server_sup, start_link, [{foo, 46658}]},
+  start => {abci_server_sup, start_link, [{foo, 26658}]},
   type => supervisor},
 '''
 
