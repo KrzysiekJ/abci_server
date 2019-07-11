@@ -1,6 +1,6 @@
 PROJECT = abci_server
 PROJECT_DESCRIPTION = An Application Blockchain Interface server
-PROJECT_VERSION = 0.9.0
+PROJECT_VERSION = 0.10.0
 
 DEPS = ranch
 dep_ranch = git https://github.com/ninenines/ranch 1.3.2
