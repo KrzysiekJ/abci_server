@@ -126,7 +126,7 @@ decode_zigzag(Bin) ->
             {Int, RestBin}
     end.
 
--spec unpack_requests(binary()) -> {list(abci:'abci.Request'()), Rest :: binary()}.
+-spec unpack_requests(binary()) -> {list(abci:'tendermint.abci.types.Request'()), Rest :: binary()}.
 unpack_requests(<<>>) ->
     {[], <<>>};
 unpack_requests(DataBin) ->
@@ -136,7 +136,7 @@ unpack_requests(DataBin) ->
         {Length, RestBin} ->
             case RestBin of
                 <<Msg:Length/binary, RestBin2/binary>> ->
-                    Request = abci:decode_msg(Msg, 'abci.Request'),
+                    Request = abci:decode_msg(Msg, 'tendermint.abci.types.Request'),
                     {RestRequests, RestBin3} = unpack_requests(RestBin2),
                     {[Request|RestRequests], RestBin3};
                 _ ->
@@ -144,15 +144,15 @@ unpack_requests(DataBin) ->
             end
     end.
 
--spec handle_requests(list(abci:'abci.Request'()), #state{}) -> #state{}.
-handle_requests([#'abci.Request'{value={MsgName, RequestValue}}|RestRequests], State=#state{callback_mod=CallbackMod}) ->
+-spec handle_requests(list(abci:'tendermint.abci.types.Request'()), #state{}) -> #state{}.
+handle_requests([#'tendermint.abci.types.Request'{value={MsgName, RequestValue}}|RestRequests], State=#state{callback_mod=CallbackMod}) ->
     %% io:format("Received request ~w~n", [RequestValue]),
     ResponseValue =
         case RequestValue of
-            #'abci.RequestFlush'{} ->
-                #'abci.ResponseFlush'{};
-            #'abci.RequestEcho'{message=Message} ->
-                #'abci.ResponseEcho'{message=Message};
+            #'tendermint.abci.types.RequestFlush'{} ->
+                #'tendermint.abci.types.ResponseFlush'{};
+            #'tendermint.abci.types.RequestEcho'{message=Message} ->
+                #'tendermint.abci.types.ResponseEcho'{message=Message};
             _ ->
                 CallbackMod:handle_request(RequestValue)
         end,
@@ -163,7 +163,7 @@ handle_requests([], State) ->
 
 -spec send_response(any(), #state{}) -> ok.
 send_response(ResponseValue, #state{socket=Socket, transport=Transport}) ->
-    EncodedResponse = abci:encode_msg(#'abci.Response'{value=ResponseValue}),
+    EncodedResponse = abci:encode_msg(#'tendermint.abci.types.Response'{value=ResponseValue}),
     %% io:format("Response: ~w~n", [EncodedResponse]),
     EncodedLength = encode_zigzag(byte_size(EncodedResponse)),
     FullResponse = <<EncodedLength/binary, EncodedResponse/binary>>,
@@ -204,13 +204,13 @@ encode_zigzag(Int) ->
 -ifdef(TEST).
 unpack_requests_test_() ->
     [?_assertEqual(
-        {[#'abci.Request'{value={info, #'abci.RequestInfo'{}}},
-          #'abci.Request'{value={flush, #'abci.RequestFlush'{}}}],
+        {[#'tendermint.abci.types.Request'{value={info, #'tendermint.abci.types.RequestInfo'{}}},
+          #'tendermint.abci.types.Request'{value={flush, #'tendermint.abci.types.RequestFlush'{}}}],
          <<>>},
         unpack_requests(<<2#000000100,34,0,2#00000100,26,0>>)),
      ?_assertEqual(
-        {[#'abci.Request'{value={info, #'abci.RequestInfo'{}}},
-          #'abci.Request'{value={flush, #'abci.RequestFlush'{}}}],
+        {[#'tendermint.abci.types.Request'{value={info, #'tendermint.abci.types.RequestInfo'{}}},
+          #'tendermint.abci.types.Request'{value={flush, #'tendermint.abci.types.RequestFlush'{}}}],
          <<10,11>>},
         unpack_requests(<<2#00000100,34,0,2#00000100,26,0,10,11>>))].
 
