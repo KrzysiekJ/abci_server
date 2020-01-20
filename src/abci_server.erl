@@ -82,9 +82,10 @@ handle_call(_Request, _From, State) ->
 handle_cast(_Msg, State) ->
     {noreply, State}.
 
-handle_info({tcp, Socket, Data}, State=#state{socket=Socket, buffered=Buffered}) ->
+handle_info({tcp, Socket, Data}, State=#state{socket=Socket, buffered=Buffered, transport=Transport}) ->
     {Requests, Rest} = unpack_requests(<<Buffered/binary, Data/binary>>),
     NewState = handle_requests(Requests, State#state{buffered=Rest}),
+    ok = Transport:setopts(Socket, [{active, once}]),
     {noreply, NewState};
 handle_info({tcp_closed, Socket}, State=#state{socket=Socket}) ->
     {stop, normal, State};
@@ -167,7 +168,6 @@ send_response(ResponseValue, #state{socket=Socket, transport=Transport}) ->
     %% io:format("Response: ~w~n", [EncodedResponse]),
     EncodedLength = encode_zigzag(byte_size(EncodedResponse)),
     FullResponse = <<EncodedLength/binary, EncodedResponse/binary>>,
-    _ = Transport:setopts(Socket, [{active, once}]),
     ok = Transport:send(Socket, FullResponse),
     ok.
 
